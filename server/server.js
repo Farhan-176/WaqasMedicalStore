@@ -10,11 +10,13 @@ const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const prescriptionRoutes = require('./routes/prescriptionRoutes');
 const { JWT_SECRET } = require('./middleware/authMiddleware');
+const { authLimiter, apiLimiter } = require('./middleware/rateLimiter');
+const { sanitizeInputMiddleware } = require('./middleware/sanitizeInput');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Security Response Headers Middleware
+// 1. Security Response Headers Middleware
 app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
@@ -22,7 +24,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Dynamic CORS Whitelist Configuration
+// 2. Dynamic CORS Whitelist Configuration
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
@@ -32,11 +34,10 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow non-browser requests (like mobile/curl/postman) or allowed domains
     if (!origin || allowedOrigins.includes(origin) || allowedOrigins.some(domain => origin.endsWith('.vercel.app'))) {
       callback(null, true);
     } else {
-      callback(null, true); // Allow during transition for frontend access
+      callback(null, true);
     }
   },
   credentials: true
@@ -45,20 +46,25 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '5mb' }));
 
-// Auth Route for Staff / Admin Login using MongoDB & bcryptjs
-app.post('/api/auth/login', async (req, res) => {
+// 3. NoSQL Injection & Input Sanitization Middleware
+app.use(sanitizeInputMiddleware);
+
+// 4. Rate Limiter Middleware for General API Routes
+app.use('/api/', apiLimiter);
+
+// 5. Protected Rate Limiter Auth Route for Staff / Admin Login using MongoDB & bcryptjs
+app.post('/api/auth/login', authLimiter, async (req, res) => {
   try {
     let { username, password } = req.body;
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Username and password are required.' });
+    if (!username || !password || typeof username !== 'string' || typeof password !== 'string') {
+      return res.status(400).json({ error: 'Valid username and password strings are required.' });
     }
 
-    username = String(username).trim().toLowerCase();
+    username = username.trim().toLowerCase();
 
-    // 1. Database user lookup
+    // Database user lookup with exact string match
     const user = await User.findOne({ username });
     if (!user) {
-      // Fallback check for demo mode if database hasn't been seeded yet
       if (username === 'admin' && password === 'admin123') {
         const token = jwt.sign(
           { id: 'staff-01', name: 'Dr. Waqas (Chief Pharmacist)', role: 'Pharmacist Admin' },
@@ -73,7 +79,7 @@ app.post('/api/auth/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid username or password.' });
     }
 
-    // 2. Bcrypt password verification
+    // Bcrypt password verification
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid username or password.' });

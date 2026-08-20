@@ -6,7 +6,22 @@ const { adminOnly } = require('../middleware/authMiddleware');
 
 // Storage configuration for prescription uploads
 const storage = multer.memoryStorage();
-const upload = multer({ limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB limit
+
+// Strict File Filter: Only allow legitimate image files
+const imageFileFilter = (req, file, cb) => {
+  const allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+  if (allowedMimeTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Security error: Only PNG, JPG, JPEG, and WEBP prescription image files are allowed.'), false);
+  }
+};
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 8 * 1024 * 1024 }, // 8MB limit
+  fileFilter: imageFileFilter
+});
 
 // POST /api/prescriptions/upload - Customer Upload Rx Photo
 router.post('/upload', upload.single('prescriptionImage'), async (req, res) => {
@@ -14,8 +29,6 @@ router.post('/upload', upload.single('prescriptionImage'), async (req, res) => {
     const { customerName, phone, address, notes } = req.body;
     const prescriptionId = 'RX-' + Math.floor(100 + Math.random() * 900);
     
-    // In production, buffer streams to Cloudinary directly:
-    // const result = await cloudinary.uploader.upload_stream(...)
     const mockCloudinaryUrl = req.file ? `https://res.cloudinary.com/waqasmedical/image/upload/rx_${Date.now()}.jpg` : 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80';
 
     const newRx = new Prescription({
