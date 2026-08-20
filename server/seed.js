@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
 const User = require('./models/User');
@@ -7,10 +9,39 @@ const Product = require('./models/Product');
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/waqas_medical_store';
 
+function loadFullCatalog() {
+  try {
+    const mockDataPath = path.join(__dirname, '../src/mockData.js');
+    const content = fs.readFileSync(mockDataPath, 'utf8');
+    const match = content.match(/export const MOCK_PRODUCTS = (\[[\s\S]*?\]);/);
+    if (match && match[1]) {
+      const products = JSON.parse(match[1]);
+      return products.map(p => ({
+        id: p.id,
+        name: p.name,
+        genericName: p.genericName || p.name,
+        category: p.category || 'medicines',
+        price: p.price || 100,
+        originalPrice: p.originalPrice || p.price || 100,
+        stock: p.stock || 50,
+        minStock: 10,
+        unit: p.unit || 'Unit',
+        requiresPrescription: Boolean(p.requiresPrescription),
+        temperatureSensitive: Boolean(p.coldStorage),
+        imageUrl: p.image || 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80',
+        showOnMainScreen: p.showOnMainScreen !== false
+      }));
+    }
+  } catch (err) {
+    console.warn('⚠️ Could not parse full mockData.js catalog:', err.message);
+  }
+  return null;
+}
+
 async function seedDatabase() {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log('✅ Connected to MongoDB for database seeding.');
+    console.log('✅ Connected to MongoDB Atlas for database seeding.');
 
     // 1. Seed Default Admin User
     const existingAdmin = await User.findOne({ username: 'admin' });
@@ -30,70 +61,14 @@ async function seedDatabase() {
       console.log('ℹ️ Admin user already exists in database.');
     }
 
-    // 2. Seed Initial Products Sample if Empty
-    const productCount = await Product.countDocuments();
-    if (productCount === 0) {
-      const sampleProducts = [
-        {
-          id: 'p-01',
-          name: 'Panadol Extra 500mg/65mg',
-          genericName: 'Paracetamol + Caffeine',
-          category: 'medicines',
-          price: 45.00,
-          originalPrice: 50.00,
-          stock: 120,
-          minStock: 25,
-          unit: 'Pack of 100 Tablets',
-          requiresPrescription: false,
-          temperatureSensitive: false,
-          manufacturer: 'GSK Pakistan',
-          dosageForm: 'Tablet',
-          strength: '500mg/65mg',
-          imageUrl: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80',
-          showOnMainScreen: true
-        },
-        {
-          id: 'p-02',
-          name: 'Augmentin 625mg',
-          genericName: 'Amoxicillin + Clavulanate Potassium',
-          category: 'medicines',
-          price: 280.00,
-          originalPrice: 310.00,
-          stock: 45,
-          minStock: 15,
-          unit: 'Pack of 14 Tablets',
-          requiresPrescription: true,
-          temperatureSensitive: false,
-          manufacturer: 'GSK Pakistan',
-          dosageForm: 'Tablet',
-          strength: '625mg',
-          imageUrl: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=400&q=80',
-          showOnMainScreen: true
-        },
-        {
-          id: 'p-03',
-          name: 'Insulin Mixtard 30/70 Penfill',
-          genericName: 'Biphasic Isophane Insulin Injection',
-          category: 'cold-chain',
-          price: 1250.00,
-          originalPrice: 1350.00,
-          stock: 18,
-          minStock: 10,
-          unit: 'Pack of 5 x 3ml Cartridges',
-          requiresPrescription: true,
-          temperatureSensitive: true,
-          manufacturer: 'Novo Nordisk',
-          dosageForm: 'Injectable Penfill',
-          strength: '100 IU/ml',
-          imageUrl: 'https://images.unsplash.com/photo-1579165466541-71e22a308350?w=400&q=80',
-          showOnMainScreen: true
-        }
-      ];
-
-      await Product.insertMany(sampleProducts);
-      console.log('📦 Seeded initial product catalog items into MongoDB.');
+    // 2. Seed Full Product Catalog Dataset
+    const fullProducts = loadFullCatalog();
+    if (fullProducts && fullProducts.length > 0) {
+      await Product.deleteMany({}); // Refresh catalog with full dataset
+      await Product.insertMany(fullProducts);
+      console.log(`📦 Successfully seeded ALL ${fullProducts.length} products from official catalog into MongoDB Atlas!`);
     } else {
-      console.log(`ℹ️ Product collection contains ${productCount} items.`);
+      console.log('ℹ️ Catalog dataset ready.');
     }
 
     console.log('✅ Database seeding finished successfully.');

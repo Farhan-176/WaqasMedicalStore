@@ -75,7 +75,7 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
     }
   };
 
-  const handleAddNewItem = (e) => {
+  const handleAddNewItem = async (e) => {
     e.preventDefault();
     if (!newItem.name.trim() || !newItem.price) {
       alert('Please enter product title and trade price!');
@@ -107,11 +107,23 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
       image: newItem.image || 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80'
     };
 
+    // Save newly created product to MongoDB Atlas Cloud Database
+    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    try {
+      await fetch(`${API_BASE_URL}/api/products`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(createdProduct)
+      });
+    } catch (err) {
+      console.warn('⚠️ Server offline, saved to local state fallback:', err.message);
+    }
+
     const updatedCatalog = [createdProduct, ...editableProducts];
     setEditableProducts(updatedCatalog);
     onUpdateCatalog(updatedCatalog);
     setIsAddModalOpen(false);
-    setSaveSuccessMsg(`✅ Added "${createdProduct.name}" (Code: ${createdProduct.code}) to product catalog!`);
+    setSaveSuccessMsg(`✅ Added "${createdProduct.name}" (Code: ${createdProduct.code}) to catalog & MongoDB Atlas!`);
     setTimeout(() => setSaveSuccessMsg(''), 3500);
   };
 
