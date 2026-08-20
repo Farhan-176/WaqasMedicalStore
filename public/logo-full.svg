@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="grad-icon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0d9488"/>
+    </linearGradient>
+    <linearGradient id="grad-leaf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Circular Emblem -->
+  <circle cx="60" cy="60" r="50" fill="url(#grad-icon)" />
+  
+  <!-- Outer Pulse Circle Line -->
+  <circle cx="60" cy="60" r="44" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.3" />
+  
+  <!-- Medical Cross -->
+  <path d="M 50 36 H 70 V 50 H 84 V 70 H 70 V 84 H 50 V 70 H 36 V 50 H 50 Z" fill="#ffffff" />
+
+  <!-- Integrated Leaf Motif -->
+  <path d="M 60 20 C 75 20 85 32 85 45 C 85 48 83 50 80 50 C 70 50 60 40 60 20 Z" fill="url(#grad-leaf)" />
+  
+  <!-- Pulse Line Accent -->
+  <path d="M 30 60 L 42 60 L 47 48 L 54 72 L 60 55 L 65 65 L 70 60 L 90 60" fill="none" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Typography: WAQAS -->
+  <text x="130" y="62" font-family="'Plus Jakarta Sans', 'Inter', 'Segoe UI', sans-serif" font-weight="900" font-size="52" fill="#0f172a" letter-spacing="-1">WAQAS</text>
+
+  <!-- Typography: MEDICAL STORE -->
+  <text x="130" y="96" font-family="'Plus Jakarta Sans', 'Inter', 'Segoe UI', sans-serif" font-weight="800" font-size="26" fill="#0d9488" letter-spacing="2">MEDICAL STORE</text>
+</svg>
