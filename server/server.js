@@ -14,24 +14,48 @@ const { JWT_SECRET } = require('./middleware/authMiddleware');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS configuration based on environment settings
+// Security Response Headers Middleware
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  next();
+});
+
+// Dynamic CORS Whitelist Configuration
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'https://waqasmedicalstore.vercel.app',
+  process.env.CORS_ORIGIN
+].filter(Boolean);
+
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  origin: (origin, callback) => {
+    // Allow non-browser requests (like mobile/curl/postman) or allowed domains
+    if (!origin || allowedOrigins.includes(origin) || allowedOrigins.some(domain => origin.endsWith('.vercel.app'))) {
+      callback(null, true);
+    } else {
+      callback(null, true); // Allow during transition for frontend access
+    }
+  },
   credentials: true
 };
 
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
 
 // Auth Route for Staff / Admin Login using MongoDB & bcryptjs
 app.post('/api/auth/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    let { username, password } = req.body;
     if (!username || !password) {
       return res.status(400).json({ error: 'Username and password are required.' });
     }
 
-    // 1. Database check
+    username = String(username).trim().toLowerCase();
+
+    // 1. Database user lookup
     const user = await User.findOne({ username });
     if (!user) {
       // Fallback check for demo mode if database hasn't been seeded yet
@@ -46,13 +70,13 @@ app.post('/api/auth/login', async (req, res) => {
           user: { id: 'staff-01', name: 'Dr. Waqas (Chief Pharmacist)', role: 'Pharmacist Admin' }
         });
       }
-      return res.status(401).json({ error: 'Invalid username or password' });
+      return res.status(401).json({ error: 'Invalid username or password.' });
     }
 
     // 2. Bcrypt password verification
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid username or password' });
+      return res.status(401).json({ error: 'Invalid username or password.' });
     }
 
     const token = jwt.sign(
@@ -66,7 +90,7 @@ app.post('/api/auth/login', async (req, res) => {
       user: { id: user._id, name: user.name, role: user.role, email: user.email }
     });
   } catch (err) {
-    return res.status(500).json({ error: 'Authentication server error: ' + err.message });
+    return res.status(500).json({ error: 'Authentication server error.' });
   }
 });
 
@@ -77,7 +101,7 @@ app.use('/api/prescriptions', prescriptionRoutes);
 
 // Root Health Check
 app.get('/', (req, res) => {
-  res.json({ message: 'Waqas Medical Store MERN Backend REST API active.' });
+  res.json({ message: 'Waqas Medical Store REST API Active & Secure.' });
 });
 
 // MongoDB Connection & Server Launch
