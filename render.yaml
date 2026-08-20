@@ -1,0 +1,14 @@
+# Render.com Backend Deployment Manifest
+services:
+  - type: web
+    name: waqas-medical-api
+    env: node
+    buildCommand: npm install
+    startCommand: node server/server.js
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
