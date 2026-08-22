@@ -8,10 +8,11 @@ import CheckoutModal from './components/CheckoutModal';
 import OrderTrackingModal from './components/OrderTrackingModal';
 import TrackOrderModal from './components/TrackOrderModal';
 import AdminLoginModal from './components/AdminLoginModal';
+import RetailerOrderHistoryModal from './components/RetailerOrderHistoryModal';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from './adminMockData';
 import { INITIAL_RETAILERS } from './retailersData';
 import { MOCK_CATEGORIES, MOCK_PRODUCTS } from './mockData';
-import { ShieldCheck, Truck, RefreshCw, Package, CheckCircle2, AlertCircle, Store, LogOut, Sparkles } from 'lucide-react';
+import { ShieldCheck, Truck, RefreshCw, Package, CheckCircle2, AlertCircle, Store, LogOut, Sparkles, FileText } from 'lucide-react';
 import './App.css';
 
 const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
@@ -32,6 +33,7 @@ export default function App() {
 
   // Retailer Auth State (B2B wholesale pricing)
   const [retailerUser, setRetailerUser] = useState(null);
+  const [isRetailerHistoryOpen, setIsRetailerHistoryOpen] = useState(false);
 
   // Order Tracking State
   const [activeOrder, setActiveOrder] = useState(null);
@@ -116,6 +118,17 @@ export default function App() {
     }
   };
 
+  const handleReOrder = (pastItems) => {
+    setCart(pastItems.map(item => ({
+      ...item,
+      id: item.productId || item.id,
+      quantity: item.quantity,
+      price: item.price
+    })));
+    setIsCartOpen(true);
+    showToast(`Added ${pastItems.length} items to your cart from past order! 🛒`, 'success');
+  };
+
   const handleRetailerLogout = () => {
     setRetailerUser(null);
     setCart([]);
@@ -191,6 +204,7 @@ export default function App() {
         retailerUser={retailerUser}
         onRetailerLogout={handleRetailerLogout}
         onOpenTrackOrder={() => setIsTrackOrderOpen(true)}
+        onOpenRetailerHistory={() => setIsRetailerHistoryOpen(true)}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
@@ -204,9 +218,14 @@ export default function App() {
               <strong>B2B Wholesale Portal Active:</strong> Logged in as <strong>{retailerUser.name}</strong> ({retailerUser.area}). All catalog rates are unlocked at wholesale trade prices.
             </span>
           </div>
-          <button className="btn-exit-retailer" onClick={handleRetailerLogout}>
-            <LogOut size={13} /> Exit Wholesale Mode
-          </button>
+          <div className="retailer-banner-actions">
+            <button className="btn-banner-history" onClick={() => setIsRetailerHistoryOpen(true)}>
+              <FileText size={13} /> My Order History & Invoices
+            </button>
+            <button className="btn-exit-retailer" onClick={handleRetailerLogout}>
+              <LogOut size={13} /> Exit Wholesale Mode
+            </button>
+          </div>
         </div>
       )}
 
@@ -346,6 +365,15 @@ export default function App() {
         orders={orders}
         activeOrder={activeOrder}
         onAdvanceStatus={handleAdvanceStatus}
+      />
+
+      {/* Retailer B2B Order History & Invoices Modal */}
+      <RetailerOrderHistoryModal 
+        isOpen={isRetailerHistoryOpen}
+        onClose={() => setIsRetailerHistoryOpen(false)}
+        retailerUser={retailerUser}
+        orders={orders}
+        onReOrder={handleReOrder}
       />
 
       {/* Unified Staff & Retailer Login Modal */}

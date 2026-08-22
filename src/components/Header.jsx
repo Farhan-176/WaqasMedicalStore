@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShoppingBag, Search, Phone, ShieldCheck, Store, Package, LogOut } from 'lucide-react';
+import { ShoppingBag, Search, Phone, ShieldCheck, Store, Package, LogOut, FileText } from 'lucide-react';
 
 export default function Header({ 
   cartCount, 
@@ -8,6 +8,7 @@ export default function Header({
   retailerUser,
   onRetailerLogout,
   onOpenTrackOrder,
+  onOpenRetailerHistory,
   searchQuery, 
   setSearchQuery
 }) {
@@ -57,17 +58,28 @@ export default function Header({
             <span>WhatsApp</span>
           </a>
 
-          {/* If Logged in as Retailer: Show Active Store Badge */}
+          {/* If Logged in as Retailer: Show Active Store Badge & Order History Button */}
           {retailerUser ? (
-            <div className="navbar-retailer-active-badge">
-              <Store size={15} color="#0d9488" />
-              <div className="retailer-name-compact">
-                <strong>{retailerUser.name}</strong>
-                <small>Wholesale Active</small>
-              </div>
-              <button className="btn-retailer-logout-mini" onClick={onRetailerLogout} title="Switch back to standard consumer prices">
-                <LogOut size={13} />
+            <div className="retailer-nav-group">
+              <button 
+                className="navbar-retailer-history-btn" 
+                onClick={onOpenRetailerHistory}
+                title="View your past wholesale orders, invoices, and delivery status"
+              >
+                <FileText size={15} />
+                <span>My Orders</span>
               </button>
+
+              <div className="navbar-retailer-active-badge">
+                <Store size={15} color="#0d9488" />
+                <div className="retailer-name-compact">
+                  <strong>{retailerUser.name}</strong>
+                  <small>Wholesale Active</small>
+                </div>
+                <button className="btn-retailer-logout-mini" onClick={onRetailerLogout} title="Switch back to standard consumer prices">
+                  <LogOut size={13} />
+                </button>
+              </div>
             </div>
           ) : (
             /* Unified Staff / Retailer Login Button */
