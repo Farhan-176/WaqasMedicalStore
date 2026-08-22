@@ -1,11 +1,15 @@
 import React from 'react';
-import { ShoppingBag, Upload, Search, Phone, ShieldCheck, Clock, MapPin } from 'lucide-react';
+import { ShoppingBag, Upload, Search, Phone, ShieldCheck, Clock, MapPin, Store, Package, LogOut } from 'lucide-react';
 
 export default function Header({ 
   cartCount, 
   onOpenCart, 
   onOpenPrescription, 
   onOpenAdminLogin,
+  retailerUser,
+  onOpenRetailerLogin,
+  onRetailerLogout,
+  onOpenTrackOrder,
   searchQuery, 
   setSearchQuery
 }) {
@@ -43,12 +47,39 @@ export default function Header({
 
         {/* Action Buttons */}
         <div className="header-actions">
+          {/* Order Tracking Button */}
+          <button className="navbar-track-btn" onClick={onOpenTrackOrder} title="Track your medicine delivery">
+            <Package size={15} />
+            <span>Track Order</span>
+          </button>
+
+          {/* Direct WhatsApp Ordering / Support */}
           <a href="https://wa.me/923000000000" target="_blank" rel="noreferrer" className="navbar-whatsapp-link">
             <Phone size={15} />
             <span>WhatsApp</span>
           </a>
 
-          <button className="navbar-staff-btn" onClick={onOpenAdminLogin}>
+          {/* B2B Retailer Portal Login / Active Indicator */}
+          {retailerUser ? (
+            <div className="navbar-retailer-active-badge">
+              <Store size={15} color="#0d9488" />
+              <div className="retailer-name-compact">
+                <strong>{retailerUser.name}</strong>
+                <small>B2B Wholesale</small>
+              </div>
+              <button className="btn-retailer-logout-mini" onClick={onRetailerLogout} title="Switch to Consumer retail pricing">
+                <LogOut size={13} />
+              </button>
+            </div>
+          ) : (
+            <button className="navbar-retailer-btn" onClick={onOpenRetailerLogin} title="Login for Wholesale Trade Rates">
+              <Store size={15} />
+              <span>Retailer Login</span>
+            </button>
+          )}
+
+          {/* Staff Login for Dr. Waqas */}
+          <button className="navbar-staff-btn" onClick={onOpenAdminLogin} title="Staff & Pharmacist Dashboard">
             <ShieldCheck size={15} />
             <span>Staff Login</span>
           </button>

@@ -6,14 +6,15 @@ import CartDrawer from './components/CartDrawer';
 import PrescriptionModal from './components/PrescriptionModal';
 import CheckoutModal from './components/CheckoutModal';
 import OrderTrackingModal from './components/OrderTrackingModal';
+import TrackOrderModal from './components/TrackOrderModal';
 import AdminLoginModal from './components/AdminLoginModal';
+import RetailerLoginModal from './components/RetailerLoginModal';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from './adminMockData';
 import { MOCK_CATEGORIES, MOCK_PRODUCTS } from './mockData';
-import { ShieldCheck, Truck, RefreshCw, Package, CheckCircle2, AlertCircle, X } from 'lucide-react';
+import { ShieldCheck, Truck, RefreshCw, Package, CheckCircle2, AlertCircle, Store, LogOut, Sparkles } from 'lucide-react';
 import './App.css';
 
 const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
-
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -23,12 +24,23 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedLetter, setSelectedLetter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
-  const [pickupMode, setPickupMode] = useState(false);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isPrescriptionOpen, setIsPrescriptionOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  // Retailer Auth State (B2B wholesale pricing)
+  const [retailerUser, setRetailerUser] = useState(null);
+  const [isRetailerLoginOpen, setIsRetailerLoginOpen] = useState(false);
+
+  // Order Tracking State
+  const [activeOrder, setActiveOrder] = useState(null);
+  const [isTrackingOpen, setIsTrackingOpen] = useState(false);
+  const [isTrackOrderOpen, setIsTrackOrderOpen] = useState(false);
+
+  // Admin Auth State
+  const [adminUser, setAdminUser] = useState(null);
+  const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
 
   // Auto hide intro splash screen after 2.5 seconds or allow tap to dismiss
   React.useEffect(() => {
@@ -37,14 +49,6 @@ export default function App() {
     }, 2500);
     return () => clearTimeout(timer);
   }, []);
-  
-  // Active Order & Tracking
-  const [activeOrder, setActiveOrder] = useState(null);
-  const [isTrackingOpen, setIsTrackingOpen] = useState(false);
-
-  // Admin Auth State
-  const [adminUser, setAdminUser] = useState(null);
-  const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
 
   const ALPHABET = ['ALL', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')];
 
@@ -57,7 +61,7 @@ export default function App() {
       const query = searchQuery.toLowerCase();
       const matchesSearch = 
         product.name.toLowerCase().includes(query) || 
-        product.genericName.toLowerCase().includes(query);
+        (product.genericName && product.genericName.toLowerCase().includes(query));
       return isVisibleOnMain && matchesCategory && matchesLetter && matchesSearch;
     })
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -110,6 +114,18 @@ export default function App() {
       setOrders(prev => prev.map(ord => ord.id === activeOrder.id ? { ...ord, status: nextStatus } : ord));
       showToast(`Order status updated to "${nextStatus}"`, 'info');
     }
+  };
+
+  const handleRetailerLoginSuccess = (user) => {
+    setRetailerUser(user);
+    setCart([]); // Reset cart so items recalculate with wholesale rates
+    showToast(`Welcome ${user.name}! Wholesale Trade Rates are now ACTIVE 🏢`, 'success');
+  };
+
+  const handleRetailerLogout = () => {
+    setRetailerUser(null);
+    setCart([]);
+    showToast('Switched back to Consumer Retail pricing.', 'info');
   };
 
   // If Admin is logged in, show full Admin Dashboard View wrapped in Suspense for code splitting
@@ -165,29 +181,26 @@ export default function App() {
         onOpenCart={() => setIsCartOpen(true)}
         onOpenPrescription={() => setIsPrescriptionOpen(true)}
         onOpenAdminLogin={() => setIsAdminLoginOpen(true)}
+        retailerUser={retailerUser}
+        onOpenRetailerLogin={() => setIsRetailerLoginOpen(true)}
+        onRetailerLogout={handleRetailerLogout}
+        onOpenTrackOrder={() => setIsTrackOrderOpen(true)}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
 
-      {/* Active Order Banner if an order is active */}
-      {activeOrder && (
-        <div className="active-order-banner">
+      {/* Active Retailer Wholesale Mode Notification Bar */}
+      {retailerUser && (
+        <div className="retailer-active-banner">
           <div className="banner-left">
-            <Package size={16} />
-            <span>Active Order: <strong>{activeOrder.id}</strong> — Status: <strong className="status-highlight">{activeOrder.status}</strong></span>
+            <Store size={18} color="#10b981" />
+            <span>
+              <strong>B2B Wholesale Portal Active:</strong> Logged in as <strong>{retailerUser.name}</strong> ({retailerUser.area}). All catalog rates are unlocked at wholesale trade prices.
+            </span>
           </div>
-          <div className="banner-right-actions">
-            <button className="btn-track-active" onClick={() => setIsTrackingOpen(true)}>
-              Track Progress
-            </button>
-            <button 
-              className="btn-dismiss-banner" 
-              onClick={() => setActiveOrder(null)}
-              title="Dismiss tracking banner"
-            >
-              <X size={15} />
-            </button>
-          </div>
+          <button className="btn-exit-retailer" onClick={handleRetailerLogout}>
+            <LogOut size={13} /> Exit Wholesale Mode
+          </button>
         </div>
       )}
 
@@ -196,9 +209,21 @@ export default function App() {
         {/* Pure Healthcare Hero Banner */}
         <section className="hero-banner">
           <div className="banner-content">
-            <span className="hero-badge">⚡ Instant Local Pharmacy Delivery</span>
-            <h2>Authentic Medicines & Daily Essentials Delivered</h2>
-            <p>Upload your doctor's prescription or browse our extensive range of genuine products with generic formula alternatives.</p>
+            <span className="hero-badge">
+              {retailerUser ? '🏢 B2B Wholesale Commercial Pharmacy Portal' : '⚡ Instant Local Pharmacy Delivery'}
+            </span>
+            <h2>
+              {retailerUser 
+                ? 'Wholesale Trade Medicines & Commercial Pharmacy Supply'
+                : 'Authentic Medicines & Daily Essentials Delivered'
+              }
+            </h2>
+            <p>
+              {retailerUser
+                ? 'Order bulk medicine packs, cartons, and verified pharmaceutical formulas with authorized commercial invoicing.'
+                : 'Upload your doctor\'s prescription or browse our extensive range of genuine products with generic formula alternatives.'
+              }
+            </p>
             <div className="hero-features">
               <span><ShieldCheck size={16} /> 100% Genuine Medicines</span>
               <span><Truck size={16} /> Fast Delivery in 45 Mins</span>
@@ -245,6 +270,11 @@ export default function App() {
               {selectedCategory === 'all' ? 'All Catalog Products' : selectedCategory.replace('-', ' ').toUpperCase()} 
               <span className="count-tag"> ({filteredProducts.length} items)</span>
             </h3>
+            {retailerUser && (
+              <span className="wholesale-pricing-active-tag">
+                <Sparkles size={13} /> Wholesale Trade Rates Active
+              </span>
+            )}
           </div>
 
           {filteredProducts.length === 0 ? (
@@ -259,6 +289,7 @@ export default function App() {
                   key={product.id}
                   product={product}
                   onAddToCart={handleAddToCart}
+                  isRetailer={Boolean(retailerUser)}
                 />
               ))}
             </div>
@@ -291,14 +322,31 @@ export default function App() {
         onClose={() => setIsCheckoutOpen(false)}
         cartItems={cart}
         onOrderPlaced={handleOrderPlaced}
+        retailerUser={retailerUser}
       />
 
-      {/* Live Order Tracking Modal */}
+      {/* Post-Checkout Live Order Tracking Confirmation Modal */}
       <OrderTrackingModal 
         isOpen={isTrackingOpen}
         onClose={() => setIsTrackingOpen(false)}
         order={activeOrder}
         onAdvanceStatus={handleAdvanceStatus}
+      />
+
+      {/* On-Demand Navbar Track Order Lookup Modal */}
+      <TrackOrderModal 
+        isOpen={isTrackOrderOpen}
+        onClose={() => setIsTrackOrderOpen(false)}
+        orders={orders}
+        activeOrder={activeOrder}
+        onAdvanceStatus={handleAdvanceStatus}
+      />
+
+      {/* B2B Retailer Login Modal */}
+      <RetailerLoginModal 
+        isOpen={isRetailerLoginOpen}
+        onClose={() => setIsRetailerLoginOpen(false)}
+        onLoginSuccess={handleRetailerLoginSuccess}
       />
 
       {/* Staff / Admin Login Modal */}

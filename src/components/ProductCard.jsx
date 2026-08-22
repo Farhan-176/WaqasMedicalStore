@@ -1,23 +1,31 @@
 import React, { useState } from 'react';
-import { Pill, AlertCircle, Snowflake, Plus, Check } from 'lucide-react';
+import { Pill, AlertCircle, Snowflake, Plus, Check, Store } from 'lucide-react';
 
-export default function ProductCard({ product, onAddToCart }) {
+export default function ProductCard({ product, onAddToCart, isRetailer = false }) {
   const [selectedPackaging, setSelectedPackaging] = useState('pack'); // 'pack' or 'strip'
 
   // Determine packaging mode ('both', 'pack', 'strip')
   const mode = product.packagingMode || (product.hasStripOption ? 'both' : 'pack');
   const stripsPerPack = Math.max(1, product.stripsPerPack || 10);
   
-  const packPrice = product.price;
-  const stripPrice = product.stripPrice || Math.round((packPrice / stripsPerPack) * 100) / 100;
+  // Dual-Tier Pricing Logic:
+  // Logged-in Retailers get wholesale trade price (product.price)
+  // Public Consumers get standard Consumer MRP (product.originalPrice || product.price)
+  const consumerPackPrice = product.originalPrice || product.price || 100;
+  const wholesalePackPrice = product.price || consumerPackPrice;
+
+  const packPrice = isRetailer ? wholesalePackPrice : consumerPackPrice;
+  const stripPrice = isRetailer 
+    ? (product.stripPrice || Math.round((wholesalePackPrice / stripsPerPack) * 100) / 100)
+    : Math.round((consumerPackPrice / stripsPerPack) * 100) / 100;
 
   // Active price based on selection or forced mode
   const effectivePackaging = mode === 'strip' ? 'strip' : (mode === 'pack' ? 'pack' : selectedPackaging);
   const activePrice = effectivePackaging === 'strip' ? stripPrice : packPrice;
 
-  // Strikethrough Original Price Calculation
+  // Strikethrough Reference (Wholesale shows MRP strikethrough to highlight savings)
   const discountPercent = product.discountPercent || 0;
-  const originalPrice = product.originalPrice || (discountPercent > 0 ? Math.round((activePrice / (1 - discountPercent / 100)) * 100) / 100 : null);
+  const mrpReference = product.originalPrice;
 
   const handleAdd = () => {
     const itemToAdd = {
@@ -25,13 +33,14 @@ export default function ProductCard({ product, onAddToCart }) {
       id: effectivePackaging === 'strip' ? `${product.id}_strip` : product.id,
       name: effectivePackaging === 'strip' ? `${product.name} (Per Strip)` : `${product.name} (Per Pack)`,
       unit: effectivePackaging === 'strip' ? 'Per Strip' : 'Per Pack',
-      price: activePrice
+      price: activePrice,
+      isWholesale: isRetailer
     };
     onAddToCart(itemToAdd);
   };
 
   return (
-    <div className="product-card">
+    <div className={`product-card ${isRetailer ? 'product-card-retailer' : ''}`}>
       {/* Product Image & Badges */}
       <div className="image-wrapper">
         <img 
@@ -44,10 +53,14 @@ export default function ProductCard({ product, onAddToCart }) {
           }}
         />
         
-        {/* Discount Badge */}
-        {discountPercent > 0 && (
-          <span className="badge badge-discount">
-            {discountPercent}% OFF
+        {/* Tier Pricing Badge */}
+        {isRetailer ? (
+          <span className="badge badge-retailer-wholesale">
+            <Store size={11} /> Wholesale Trade ({discountPercent}% OFF)
+          </span>
+        ) : (
+          <span className="badge badge-retail-price">
+            Standard Retail MRP
           </span>
         )}
 
@@ -73,7 +86,11 @@ export default function ProductCard({ product, onAddToCart }) {
 
       {/* Product Details */}
       <div className="product-details">
-        <span className="category-tag">{product.category ? product.category.replace('-', ' ') : 'Medicine'}</span>
+        <div className="card-top-category-row">
+          <span className="category-tag">{product.category ? product.category.replace('-', ' ') : 'Medicine'}</span>
+          {isRetailer && <span className="b2b-pill-tag">B2B Trade Rate</span>}
+        </div>
+
         <h3 className="product-title">{product.name}</h3>
         <p className="generic-name">Formula: <span>{product.genericName}</span></p>
 
@@ -117,14 +134,17 @@ export default function ProductCard({ product, onAddToCart }) {
               <span className="currency">Rs.</span>
               <span className="amount">{activePrice.toFixed(2)}</span>
             </div>
-            {originalPrice && originalPrice > activePrice && (
+            {isRetailer && mrpReference && mrpReference > activePrice && (
               <span className="original-mrp-strikethrough">
-                Rs. {originalPrice.toFixed(2)}
+                MRP: Rs. {mrpReference.toFixed(2)}
               </span>
+            )}
+            {!isRetailer && (
+              <span className="price-type-label">Retail Price</span>
             )}
           </div>
 
-          <button className="add-btn" onClick={handleAdd}>
+          <button className={`add-btn ${isRetailer ? 'add-btn-retailer' : ''}`} onClick={handleAdd}>
             <Plus size={16} /> Add
           </button>
         </div>

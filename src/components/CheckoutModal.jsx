@@ -2,16 +2,27 @@ import React, { useState } from 'react';
 import { X, MapPin, Truck, Store, CreditCard, ShieldCheck, ArrowRight, AlertTriangle } from 'lucide-react';
 import { DELIVERY_ZONES } from '../deliveryZones';
 
-export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlaced }) {
+export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlaced, retailerUser }) {
   const [selectedZone, setSelectedZone] = useState(DELIVERY_ZONES[0]);
   const [checkoutType, setCheckoutType] = useState('delivery'); // 'delivery' or 'pickup'
   const [formData, setFormData] = useState({
-    name: '',
+    name: retailerUser ? retailerUser.name : '',
     phone: '',
-    address: '',
+    address: retailerUser ? (retailerUser.area || '') : '',
     notes: '',
     paymentMethod: 'cod'
   });
+
+  // Keep form data synced if retailer logs in
+  React.useEffect(() => {
+    if (retailerUser) {
+      setFormData(prev => ({
+        ...prev,
+        name: retailerUser.name,
+        address: prev.address || retailerUser.area || ''
+      }));
+    }
+  }, [retailerUser]);
 
   if (!isOpen) return null;
 
@@ -33,7 +44,13 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
         price: item.price,
         requiresPrescription: item.requiresPrescription
       })),
-      customer: formData,
+      customer: {
+        ...formData,
+        isRetailer: Boolean(retailerUser),
+        retailerName: retailerUser ? retailerUser.name : null,
+        licenseNo: retailerUser ? retailerUser.licenseNo : null
+      },
+      orderType: retailerUser ? 'b2b_retailer' : 'b2c_consumer',
       checkoutType,
       zone: selectedZone,
       subtotal,

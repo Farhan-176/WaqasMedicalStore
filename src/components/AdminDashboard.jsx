@@ -422,7 +422,14 @@ export default function AdminDashboard({
                 <div key={order.id} className="order-fulfillment-card">
                   <div className="of-card-header">
                     <div>
-                      <h4>{order.id}</h4>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <h4>{order.id}</h4>
+                        {(order.orderType === 'b2b_retailer' || order.customer?.isRetailer) ? (
+                          <span className="order-b2b-tag">🏢 B2B Retailer</span>
+                        ) : (
+                          <span className="order-b2c-tag">🛍️ Consumer</span>
+                        )}
+                      </div>
                       <small>{order.createdAt}</small>
                     </div>
                     <span className={`status-pill status-${order.status.toLowerCase().replace(/[^a-z]/g, '')}`}>

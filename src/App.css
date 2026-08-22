@@ -4930,5 +4930,539 @@
   }
 }
 
+/* ========================================================
+   B2B RETAILER PORTAL & DUAL-TIER PRICING STYLES
+   ======================================================== */
+
+/* Navbar Track & Retailer Buttons */
+.navbar-track-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  color: #0284c7;
+  padding: 8px 14px;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.navbar-track-btn:hover {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+  transform: translateY(-1px);
+}
+
+.navbar-retailer-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #059669;
+  padding: 8px 14px;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.navbar-retailer-btn:hover {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+  transform: translateY(-1px);
+}
+
+.navbar-retailer-active-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ecfdf5;
+  border: 1.5px solid #10b981;
+  padding: 5px 12px;
+  border-radius: var(--radius-full, 9999px);
+}
+
+.retailer-name-compact {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.retailer-name-compact strong {
+  font-size: 0.78rem;
+  color: #065f46;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.retailer-name-compact small {
+  font-size: 0.65rem;
+  color: #059669;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.btn-retailer-logout-mini {
+  background: rgba(239, 68, 68, 0.1);
+  border: none;
+  color: #ef4444;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-retailer-logout-mini:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* Retailer Active Wholesale Top Notification Bar */
+.retailer-active-banner {
+  background: linear-gradient(90deg, #064e3b 0%, #047857 100%);
+  color: #ffffff;
+  padding: 10px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
+  border-bottom: 2px solid #10b981;
+}
+
+.btn-exit-retailer {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: var(--transition);
+}
+
+.btn-exit-retailer:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+}
+
+/* Wholesale Tags & Pricing Badges */
+.badge-retailer-wholesale {
+  background: rgba(236, 253, 245, 0.95);
+  color: #047857;
+  border: 1px solid #a7f3d0;
+  font-weight: 800;
+}
+
+.badge-retail-price {
+  background: rgba(248, 250, 252, 0.95);
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  font-weight: 600;
+}
+
+.card-top-category-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.b2b-pill-tag {
+  background: #ecfdf5;
+  color: #059669;
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #a7f3d0;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.wholesale-pricing-active-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: var(--radius-full, 9999px);
+  border: 1px solid #10b981;
+}
+
+.price-type-label {
+  display: block;
+  font-size: 0.65rem;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.add-btn-retailer {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25) !important;
+}
+
+.add-btn-retailer:hover {
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4) !important;
+}
+
+/* Order B2B / B2C Admin Badges */
+.order-b2b-tag {
+  font-size: 0.68rem;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 800;
+}
+
+.order-b2c-tag {
+  font-size: 0.68rem;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 800;
+}
+
+/* Track Order Lookup Modal */
+.track-order-lookup-modal {
+  max-width: 540px;
+}
+
+.track-search-form {
+  margin-bottom: 16px;
+}
+
+.track-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-md, 12px);
+  padding: 4px 6px 4px 12px;
+  transition: var(--transition);
+}
+
+.track-input-wrap:focus-within {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.track-input-wrap input {
+  flex: 1;
+  border: none !important;
+  background: transparent !important;
+  padding: 8px 4px;
+  font-size: 0.9rem;
+  color: #0f172a;
+  outline: none;
+}
+
+.btn-search-track {
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-search-track:hover {
+  background: #0369a1;
+}
+
+.track-not-found {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 14px 16px;
+  border-radius: var(--radius-md, 10px);
+  color: #991b1b;
+  font-size: 0.85rem;
+}
+
+.track-not-found strong {
+  display: block;
+  font-size: 0.92rem;
+  margin-bottom: 2px;
+}
+
+.track-empty-state {
+  text-align: center;
+  padding: 30px 20px;
+  color: #64748b;
+  font-size: 0.88rem;
+}
+
+.track-result-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.track-order-summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 12px 16px;
+  border-radius: var(--radius-md, 10px);
+}
+
+.order-tag-code {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #0284c7;
+  background: rgba(2, 132, 199, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.track-order-summary-header h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.order-time-label {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.tracking-timeline-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 4px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+}
+
+.timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 11px;
+  width: 2px;
+  height: calc(100% - 4px);
+  background: #e2e8f0;
+}
+
+.timeline-item.completed:not(:last-child)::before {
+  background: #10b981;
+}
+
+.timeline-bullet {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.timeline-item.completed .timeline-bullet {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.timeline-item.active .timeline-bullet {
+  background: #e0f2fe;
+  color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+}
+
+.timeline-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.timeline-desc {
+  font-size: 0.74rem;
+  color: #64748b;
+}
+
+.track-details-accordion {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md, 10px);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.82rem;
+}
+
+.track-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #334155;
+}
+
+.track-items-mini {
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 8px;
+  margin-top: 4px;
+}
+
+.track-item-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #475569;
+  padding: 2px 0;
+}
+
+.track-total-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #0f172a;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 6px;
+  margin-top: 6px;
+}
+
+/* Retailer Login Modal */
+.retailer-badge-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 14px 16px;
+  border-radius: var(--radius-md, 10px);
+}
+
+.retailer-badge-notice strong {
+  display: block;
+  color: #065f46;
+  font-size: 0.92rem;
+  margin-bottom: 2px;
+}
+
+.retailer-badge-notice p {
+  color: #047857;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.demo-hint-retailer {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  color: #475569;
+}
+
+.demo-hint-retailer code {
+  background: #e2e8f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.btn-retailer-submit {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-md, 10px);
+  font-weight: 800;
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+}
+
+.btn-retailer-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35);
+}
+
+.retailer-whatsapp-help {
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.retailer-whatsapp-help p {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.btn-whatsapp-register {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #22c55e;
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.btn-whatsapp-register:hover {
+  background: #16a34a;
+}
+
+
 
 
