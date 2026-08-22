@@ -5463,6 +5463,151 @@
   background: #16a34a;
 }
 
+/* ========================================================
+   ADMIN RETAILER ACCOUNTS MANAGEMENT STYLES
+   ======================================================== */
+.admin-retailer-create-box {
+  background: #ffffff;
+  border: 1.5px solid #a7f3d0;
+  border-radius: var(--radius-md, 12px);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.08);
+}
+
+.arc-header {
+  margin-bottom: 14px;
+}
+
+.arc-header h4 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #065f46;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 2px 0;
+}
+
+.arc-header span {
+  font-size: 0.78rem;
+  color: #059669;
+}
+
+.arc-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.form-group-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group-compact label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.form-group-compact input {
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  background: #f8fafc;
+  transition: var(--transition);
+}
+
+.form-group-compact input:focus {
+  border-color: #059669;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+.btn-add-retailer {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: #ffffff;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.84rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  height: 38px;
+}
+
+.btn-add-retailer:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.retailer-row-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #0f172a;
+  font-size: 0.88rem;
+}
+
+.license-tag {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.badge-trade-pill {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  padding: 2px 8px;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.pwd-mask {
+  font-family: monospace;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  color: #0284c7;
+}
+
+.btn-delete-retailer {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-delete-retailer:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+
 
 
 

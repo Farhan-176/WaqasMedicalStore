@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { 
   FileText, CheckCircle, XCircle, Phone, MessageSquare, Printer, 
-  Eye, ShieldCheck, Package, Clock, LogOut, Search, Filter, Table, TrendingUp
+  Eye, ShieldCheck, Package, Clock, LogOut, Search, Filter, Table, TrendingUp, Store, Plus, Trash2, Key
 } from 'lucide-react';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from '../adminMockData';
+import { INITIAL_RETAILERS } from '../retailersData';
 import { MOCK_PRODUCTS } from '../mockData';
 import { INITIAL_AUDIT_LOGS } from '../adminAnalyticsData';
 import StoreOperationsSection from './StoreOperationsSection';
@@ -18,12 +19,24 @@ export default function AdminDashboard({
   onUpdateOrders,
   prescriptions: propPrescriptions,
   onUpdatePrescriptions,
+  retailers: propRetailers,
+  onUpdateRetailers,
   onLogout 
 }) {
-  const [activeTab, setActiveTab] = useState('prescriptions'); // 'prescriptions', 'orders', 'store-ops', 'analytics'
+  const [activeTab, setActiveTab] = useState('prescriptions'); // 'prescriptions', 'orders', 'store-ops', 'analytics', 'retailers'
   const [prescriptions, setPrescriptions] = useState(propPrescriptions || INITIAL_PRESCRIPTIONS);
   const [orders, setOrders] = useState(propOrders || INITIAL_FULFILLMENT_ORDERS);
+  const [retailersList, setRetailersList] = useState(propRetailers || INITIAL_RETAILERS);
   const [catalog, setCatalog] = useState(products || MOCK_PRODUCTS);
+
+  // New Retailer Form State
+  const [newRetailer, setNewRetailer] = useState({
+    name: '',
+    username: '',
+    password: '',
+    area: '',
+    licenseNo: ''
+  });
 
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -32,6 +45,24 @@ export default function AdminDashboard({
       setCatalog(products);
     }
   }, [products]);
+
+  useEffect(() => {
+    if (propOrders) {
+      setOrders(propOrders);
+    }
+  }, [propOrders]);
+
+  useEffect(() => {
+    if (propPrescriptions) {
+      setPrescriptions(propPrescriptions);
+    }
+  }, [propPrescriptions]);
+
+  useEffect(() => {
+    if (propRetailers) {
+      setRetailersList(propRetailers);
+    }
+  }, [propRetailers]);
 
   useEffect(() => {
     if (propOrders) {
@@ -289,6 +320,61 @@ export default function AdminDashboard({
     `);
   };
 
+  // Retailer Account Actions
+  const handleCreateRetailer = (e) => {
+    e.preventDefault();
+    if (!newRetailer.name || !newRetailer.username || !newRetailer.password) return;
+
+    const created = {
+      id: `ret-${Date.now().toString().slice(-4)}`,
+      name: newRetailer.name.trim(),
+      username: newRetailer.username.trim().toLowerCase(),
+      password: newRetailer.password.trim(),
+      area: newRetailer.area.trim() || 'Local Sector',
+      licenseNo: newRetailer.licenseNo.trim() || 'N/A',
+      discountTier: 'Wholesale Trade Price (12-15% OFF)',
+      createdAt: new Date().toISOString().split('T')[0]
+    };
+
+    setRetailersList(prev => {
+      const updated = [created, ...prev];
+      if (onUpdateRetailers) onUpdateRetailers(updated);
+      return updated;
+    });
+
+    handleAddAuditLog({
+      id: `LOG-${Date.now().toString().slice(-4)}`,
+      timestamp: 'Just now',
+      staff: user.name,
+      actionType: 'RETAILER_CREATED',
+      category: 'Accounts',
+      details: `Created B2B retailer account "${created.name}" (Code: ${created.username})`,
+      severity: 'success'
+    });
+
+    setNewRetailer({ name: '', username: '', password: '', area: '', licenseNo: '' });
+  };
+
+  const handleDeleteRetailer = (id, name) => {
+    if (window.confirm(`Are you sure you want to remove retailer "${name}"?`)) {
+      setRetailersList(prev => {
+        const updated = prev.filter(r => r.id !== id);
+        if (onUpdateRetailers) onUpdateRetailers(updated);
+        return updated;
+      });
+
+      handleAddAuditLog({
+        id: `LOG-${Date.now().toString().slice(-4)}`,
+        timestamp: 'Just now',
+        staff: user.name,
+        actionType: 'RETAILER_REMOVED',
+        category: 'Accounts',
+        details: `Removed retailer account "${name}"`,
+        severity: 'warning'
+      });
+    }
+  };
+
   return (
     <div className="admin-portal-container">
       {/* Admin Top Navigation Bar */}
@@ -330,6 +416,15 @@ export default function AdminDashboard({
           >
             <Table size={15} />
             <span>Store Operations</span>
+          </button>
+
+          <button 
+            className={`admin-tab-btn ${activeTab === 'retailers' ? 'active' : ''}`}
+            onClick={() => setActiveTab('retailers')}
+          >
+            <Store size={15} />
+            <span>Retailer Accounts</span>
+            <span className="count-badge green">{retailersList.length}</span>
           </button>
 
           <button 
@@ -519,6 +614,131 @@ export default function AdminDashboard({
             auditLogs={auditLogs}
             onAddAuditLog={handleAddAuditLog}
           />
+        )}
+
+        {/* TAB 5: B2B Retailer Accounts Management */}
+        {activeTab === 'retailers' && (
+          <section className="admin-section">
+            <div className="section-header">
+              <h2>Verified B2B Retailer Accounts</h2>
+              <p>Create and manage pharmacy/clinic credentials. Registered retailers log in via the main <strong>Staff Login</strong> button to unlock wholesale trade prices.</p>
+            </div>
+
+            {/* Create New Retailer Form */}
+            <div className="admin-retailer-create-box">
+              <div className="arc-header">
+                <h4><Plus size={16} /> Register New Partner Retailer</h4>
+                <span>Assign a Store Code / Username and Password</span>
+              </div>
+              <form className="arc-form-grid" onSubmit={handleCreateRetailer}>
+                <div className="form-group-compact">
+                  <label>Store / Clinic Name *</label>
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder="e.g. Shifa Pharmacy & Clinic"
+                    value={newRetailer.name}
+                    onChange={(e) => setNewRetailer(prev => ({ ...prev, name: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group-compact">
+                  <label>Store Code / Username *</label>
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder="e.g. shifa_pharmacy"
+                    value={newRetailer.username}
+                    onChange={(e) => setNewRetailer(prev => ({ ...prev, username: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group-compact">
+                  <label>Login Password *</label>
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder="e.g. pass123"
+                    value={newRetailer.password}
+                    onChange={(e) => setNewRetailer(prev => ({ ...prev, password: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group-compact">
+                  <label>Sector / Area</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. Sector G-9/1, Islamabad"
+                    value={newRetailer.area}
+                    onChange={(e) => setNewRetailer(prev => ({ ...prev, area: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group-compact">
+                  <label>Drug License # (Optional)</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. 04-DL-9823"
+                    value={newRetailer.licenseNo}
+                    onChange={(e) => setNewRetailer(prev => ({ ...prev, licenseNo: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group-compact arc-submit-wrap">
+                  <label>&nbsp;</label>
+                  <button type="submit" className="btn-add-retailer">
+                    <Plus size={15} /> Save & Grant Access
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Active Retailers Table */}
+            <div className="admin-table-wrapper">
+              <table className="admin-data-table">
+                <thead>
+                  <tr>
+                    <th>Store / Clinic Name</th>
+                    <th>Store Code (Username)</th>
+                    <th>Password</th>
+                    <th>Area / Location</th>
+                    <th>License #</th>
+                    <th>Discount Tier</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {retailersList.map(ret => (
+                    <tr key={ret.id}>
+                      <td>
+                        <strong className="retailer-row-name"><Store size={14} color="#0d9488" /> {ret.name}</strong>
+                      </td>
+                      <td>
+                        <code>{ret.username}</code>
+                      </td>
+                      <td>
+                        <span className="pwd-mask">{ret.password}</span>
+                      </td>
+                      <td>{ret.area}</td>
+                      <td><small className="license-tag">{ret.licenseNo || 'Verified'}</small></td>
+                      <td>
+                        <span className="badge-trade-pill">Wholesale Trade (12-15%)</span>
+                      </td>
+                      <td>
+                        <button 
+                          className="btn-delete-retailer" 
+                          onClick={() => handleDeleteRetailer(ret.id, ret.name)}
+                          title="Revoke retailer wholesale access"
+                        >
+                          <Trash2 size={14} /> Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
         )}
       </div>
 

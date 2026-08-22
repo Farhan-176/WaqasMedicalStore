@@ -8,8 +8,8 @@ import CheckoutModal from './components/CheckoutModal';
 import OrderTrackingModal from './components/OrderTrackingModal';
 import TrackOrderModal from './components/TrackOrderModal';
 import AdminLoginModal from './components/AdminLoginModal';
-import RetailerLoginModal from './components/RetailerLoginModal';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from './adminMockData';
+import { INITIAL_RETAILERS } from './retailersData';
 import { MOCK_CATEGORIES, MOCK_PRODUCTS } from './mockData';
 import { ShieldCheck, Truck, RefreshCw, Package, CheckCircle2, AlertCircle, Store, LogOut, Sparkles } from 'lucide-react';
 import './App.css';
@@ -21,6 +21,7 @@ export default function App() {
   const [products, setProducts] = useState(MOCK_PRODUCTS);
   const [orders, setOrders] = useState(INITIAL_FULFILLMENT_ORDERS);
   const [prescriptions, setPrescriptions] = useState(INITIAL_PRESCRIPTIONS);
+  const [retailers, setRetailers] = useState(INITIAL_RETAILERS);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedLetter, setSelectedLetter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
@@ -31,14 +32,13 @@ export default function App() {
 
   // Retailer Auth State (B2B wholesale pricing)
   const [retailerUser, setRetailerUser] = useState(null);
-  const [isRetailerLoginOpen, setIsRetailerLoginOpen] = useState(false);
 
   // Order Tracking State
   const [activeOrder, setActiveOrder] = useState(null);
   const [isTrackingOpen, setIsTrackingOpen] = useState(false);
   const [isTrackOrderOpen, setIsTrackOrderOpen] = useState(false);
 
-  // Admin Auth State
+  // Admin / Unified Auth State
   const [adminUser, setAdminUser] = useState(null);
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
 
@@ -116,16 +116,22 @@ export default function App() {
     }
   };
 
-  const handleRetailerLoginSuccess = (user) => {
-    setRetailerUser(user);
-    setCart([]); // Reset cart so items recalculate with wholesale rates
-    showToast(`Welcome ${user.name}! Wholesale Trade Rates are now ACTIVE 🏢`, 'success');
-  };
-
   const handleRetailerLogout = () => {
     setRetailerUser(null);
     setCart([]);
     showToast('Switched back to Consumer Retail pricing.', 'info');
+  };
+
+  const handleUnifiedLoginSuccess = (user, role) => {
+    setIsAdminLoginOpen(false);
+    if (role === 'admin') {
+      setAdminUser(user);
+      showToast(`Welcome back, ${user.name}! Staff Portal active. 🛡️`, 'success');
+    } else {
+      setRetailerUser(user);
+      setCart([]); // Reset cart so it recalculates with wholesale trade rates
+      showToast(`Welcome ${user.name}! Wholesale Trade Rates are now ACTIVE on main screen. 🏢`, 'success');
+    }
   };
 
   // If Admin is logged in, show full Admin Dashboard View wrapped in Suspense for code splitting
@@ -145,6 +151,8 @@ export default function App() {
           onUpdateOrders={setOrders}
           prescriptions={prescriptions}
           onUpdatePrescriptions={setPrescriptions}
+          retailers={retailers}
+          onUpdateRetailers={setRetailers}
           onLogout={() => setAdminUser(null)} 
         />
       </Suspense>
@@ -179,10 +187,8 @@ export default function App() {
       <Header 
         cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
         onOpenCart={() => setIsCartOpen(true)}
-        onOpenPrescription={() => setIsPrescriptionOpen(true)}
         onOpenAdminLogin={() => setIsAdminLoginOpen(true)}
         retailerUser={retailerUser}
-        onOpenRetailerLogin={() => setIsRetailerLoginOpen(true)}
         onRetailerLogout={handleRetailerLogout}
         onOpenTrackOrder={() => setIsTrackOrderOpen(true)}
         searchQuery={searchQuery}
@@ -342,22 +348,12 @@ export default function App() {
         onAdvanceStatus={handleAdvanceStatus}
       />
 
-      {/* B2B Retailer Login Modal */}
-      <RetailerLoginModal 
-        isOpen={isRetailerLoginOpen}
-        onClose={() => setIsRetailerLoginOpen(false)}
-        onLoginSuccess={handleRetailerLoginSuccess}
-      />
-
-      {/* Staff / Admin Login Modal */}
+      {/* Unified Staff & Retailer Login Modal */}
       <AdminLoginModal 
         isOpen={isAdminLoginOpen}
         onClose={() => setIsAdminLoginOpen(false)}
-        onLoginSuccess={(loggedInUser) => {
-          setAdminUser(loggedInUser);
-          setIsAdminLoginOpen(false);
-          showToast(`Logged in as ${loggedInUser.name}`, 'success');
-        }}
+        retailers={retailers}
+        onLoginSuccess={handleUnifiedLoginSuccess}
       />
 
       {/* Floating Animated Toast Banner */}

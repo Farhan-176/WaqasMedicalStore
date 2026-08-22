@@ -1,13 +1,11 @@
 import React from 'react';
-import { ShoppingBag, Upload, Search, Phone, ShieldCheck, Clock, MapPin, Store, Package, LogOut } from 'lucide-react';
+import { ShoppingBag, Search, Phone, ShieldCheck, Store, Package, LogOut } from 'lucide-react';
 
 export default function Header({ 
   cartCount, 
   onOpenCart, 
-  onOpenPrescription, 
   onOpenAdminLogin,
   retailerUser,
-  onOpenRetailerLogin,
   onRetailerLogout,
   onOpenTrackOrder,
   searchQuery, 
@@ -53,36 +51,31 @@ export default function Header({
             <span>Track Order</span>
           </button>
 
-          {/* Direct WhatsApp Ordering / Support */}
+          {/* Direct WhatsApp Support */}
           <a href="https://wa.me/923000000000" target="_blank" rel="noreferrer" className="navbar-whatsapp-link">
             <Phone size={15} />
             <span>WhatsApp</span>
           </a>
 
-          {/* B2B Retailer Portal Login / Active Indicator */}
+          {/* If Logged in as Retailer: Show Active Store Badge */}
           {retailerUser ? (
             <div className="navbar-retailer-active-badge">
               <Store size={15} color="#0d9488" />
               <div className="retailer-name-compact">
                 <strong>{retailerUser.name}</strong>
-                <small>B2B Wholesale</small>
+                <small>Wholesale Active</small>
               </div>
-              <button className="btn-retailer-logout-mini" onClick={onRetailerLogout} title="Switch to Consumer retail pricing">
+              <button className="btn-retailer-logout-mini" onClick={onRetailerLogout} title="Switch back to standard consumer prices">
                 <LogOut size={13} />
               </button>
             </div>
           ) : (
-            <button className="navbar-retailer-btn" onClick={onOpenRetailerLogin} title="Login for Wholesale Trade Rates">
-              <Store size={15} />
-              <span>Retailer Login</span>
+            /* Unified Staff / Retailer Login Button */
+            <button className="navbar-staff-btn" onClick={onOpenAdminLogin} title="Staff & Retailer Login">
+              <ShieldCheck size={15} />
+              <span>Staff Login</span>
             </button>
           )}
-
-          {/* Staff Login for Dr. Waqas */}
-          <button className="navbar-staff-btn" onClick={onOpenAdminLogin} title="Staff & Pharmacist Dashboard">
-            <ShieldCheck size={15} />
-            <span>Staff Login</span>
-          </button>
 
           {/* Cart Counter Button */}
           <button className="btn-cart" onClick={onOpenCart}>
