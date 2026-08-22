@@ -7,8 +7,9 @@ import PrescriptionModal from './components/PrescriptionModal';
 import CheckoutModal from './components/CheckoutModal';
 import OrderTrackingModal from './components/OrderTrackingModal';
 import AdminLoginModal from './components/AdminLoginModal';
+import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from './adminMockData';
 import { MOCK_CATEGORIES, MOCK_PRODUCTS } from './mockData';
-import { ShieldCheck, Truck, RefreshCw, Package, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ShieldCheck, Truck, RefreshCw, Package, CheckCircle2, AlertCircle, X } from 'lucide-react';
 import './App.css';
 
 const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
@@ -17,6 +18,8 @@ const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
   const [products, setProducts] = useState(MOCK_PRODUCTS);
+  const [orders, setOrders] = useState(INITIAL_FULFILLMENT_ORDERS);
+  const [prescriptions, setPrescriptions] = useState(INITIAL_PRESCRIPTIONS);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedLetter, setSelectedLetter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
@@ -94,6 +97,7 @@ export default function App() {
 
   const handleOrderPlaced = (newOrder) => {
     setActiveOrder(newOrder);
+    setOrders(prev => [newOrder, ...prev]);
     setCart([]);
     setIsCheckoutOpen(false);
     setIsTrackingOpen(true);
@@ -103,6 +107,7 @@ export default function App() {
   const handleAdvanceStatus = (nextStatus) => {
     if (activeOrder) {
       setActiveOrder(prev => ({ ...prev, status: nextStatus }));
+      setOrders(prev => prev.map(ord => ord.id === activeOrder.id ? { ...ord, status: nextStatus } : ord));
       showToast(`Order status updated to "${nextStatus}"`, 'info');
     }
   };
@@ -120,6 +125,10 @@ export default function App() {
           user={adminUser} 
           products={products}
           onUpdateProducts={setProducts}
+          orders={orders}
+          onUpdateOrders={setOrders}
+          prescriptions={prescriptions}
+          onUpdatePrescriptions={setPrescriptions}
           onLogout={() => setAdminUser(null)} 
         />
       </Suspense>
@@ -167,9 +176,18 @@ export default function App() {
             <Package size={16} />
             <span>Active Order: <strong>{activeOrder.id}</strong> — Status: <strong className="status-highlight">{activeOrder.status}</strong></span>
           </div>
-          <button className="btn-track-active" onClick={() => setIsTrackingOpen(true)}>
-            Track Progress
-          </button>
+          <div className="banner-right-actions">
+            <button className="btn-track-active" onClick={() => setIsTrackingOpen(true)}>
+              Track Progress
+            </button>
+            <button 
+              className="btn-dismiss-banner" 
+              onClick={() => setActiveOrder(null)}
+              title="Dismiss tracking banner"
+            >
+              <X size={15} />
+            </button>
+          </div>
         </div>
       )}
 

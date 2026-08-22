@@ -1257,6 +1257,12 @@
   border-radius: 4px;
 }
 
+.banner-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .btn-track-active {
   background: var(--primary);
   color: #ffffff;
@@ -1264,6 +1270,32 @@
   border-radius: var(--radius-full);
   font-size: 0.78rem;
   font-weight: 700;
+  transition: var(--transition);
+}
+
+.btn-track-active:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
+}
+
+.btn-dismiss-banner {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #cbd5e1;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-dismiss-banner:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
 }
 
 /* Phase 2 Checkout Modal Styles */
