@@ -29,6 +29,10 @@ export default function AdminDashboard({
   const [retailersList, setRetailersList] = useState(propRetailers || INITIAL_RETAILERS);
   const [catalog, setCatalog] = useState(products || MOCK_PRODUCTS);
 
+  // Orders Filter & Search State
+  const [orderQueueFilter, setOrderQueueFilter] = useState('all'); // 'all', 'active', 'delivered', 'b2b', 'b2c'
+  const [orderSearchQuery, setOrderSearchQuery] = useState('');
+
   // New Retailer Form State
   const [newRetailer, setNewRetailer] = useState({
     name: '',
@@ -504,87 +508,263 @@ export default function AdminDashboard({
           </section>
         )}
 
-        {/* TAB 2: Order Fulfillment Queue */}
-        {activeTab === 'orders' && (
-          <section className="admin-section">
-            <div className="section-header">
-              <h2>Order Fulfillment Queue</h2>
-              <p>Manage incoming storefront orders, update delivery status stages, and print invoices.</p>
-            </div>
+        {/* TAB 2: Order Fulfillment Queue & Past Orders History */}
+        {activeTab === 'orders' && (() => {
+          const totalRevenue = orders.reduce((sum, o) => sum + Number(o.grandTotal || 0), 0);
+          const activeCount = orders.filter(o => o.status !== 'Delivered').length;
+          const deliveredCount = orders.filter(o => o.status === 'Delivered').length;
+          const b2bCount = orders.filter(o => o.orderType === 'b2b_retailer' || o.customer?.isRetailer).length;
 
-            <div className="orders-grid">
-              {orders.map(order => (
-                <div key={order.id} className="order-fulfillment-card">
-                  <div className="of-card-header">
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <h4>{order.id}</h4>
-                        {(order.orderType === 'b2b_retailer' || order.customer?.isRetailer) ? (
-                          <span className="order-b2b-tag">🏢 B2B Retailer</span>
-                        ) : (
-                          <span className="order-b2c-tag">🛍️ Consumer</span>
-                        )}
-                      </div>
-                      <small>{order.createdAt}</small>
-                    </div>
-                    <span className={`status-pill status-${order.status.toLowerCase().replace(/[^a-z]/g, '')}`}>
-                      {order.status}
-                    </span>
-                  </div>
+          // Filter logic
+          const filteredOrders = orders.filter(order => {
+            // Tab filter
+            if (orderQueueFilter === 'active' && order.status === 'Delivered') return false;
+            if (orderQueueFilter === 'delivered' && order.status !== 'Delivered') return false;
+            if (orderQueueFilter === 'b2b' && !(order.orderType === 'b2b_retailer' || order.customer?.isRetailer)) return false;
+            if (orderQueueFilter === 'b2c' && (order.orderType === 'b2b_retailer' || order.customer?.isRetailer)) return false;
 
-                  <div className="of-card-body-compact">
-                    <div className="of-customer-info">
-                      <p><strong>Customer:</strong> {order.customerName || order.customer?.name || 'Customer'}</p>
-                      <p><strong>Phone:</strong> {order.phone || order.customer?.phone || 'N/A'}</p>
-                      <p><strong>Address:</strong> {order.address || order.customer?.address || 'Local Delivery'}</p>
-                    </div>
+            // Search query
+            if (orderSearchQuery.trim()) {
+              const q = orderSearchQuery.toLowerCase();
+              const matchId = (order.id || '').toLowerCase().includes(q);
+              const matchName = (order.customerName || order.customer?.name || '').toLowerCase().includes(q);
+              const matchPhone = (order.phone || order.customer?.phone || '').includes(q);
+              return matchId || matchName || matchPhone;
+            }
+            return true;
+          });
 
-                    <div className="of-items-list">
-                      <h5>Ordered Items ({(order.items || []).length}):</h5>
-                      {(order.items || []).map((it, idx) => (
-                        <div key={idx} className="of-item-row">
-                          <span className="of-item-name">{it.name} (x{it.quantity})</span>
-                          <span className="of-item-price">Rs. {(it.price * it.quantity).toFixed(2)}</span>
-                        </div>
-                      ))}
-                      <div className="of-total-row">
-                        <span>Grand Total:</span>
-                        <strong className="price-tag">Rs. {Number(order.grandTotal || 0).toFixed(2)}</strong>
-                      </div>
-                    </div>
+          return (
+            <section className="admin-section">
+              <div className="section-header">
+                <h2>Order Fulfillment Queue & Past Orders</h2>
+                <p>Manage incoming storefront shipments, update delivery stages, and inspect historical B2B & Consumer invoices.</p>
+              </div>
 
-                    <div className="of-status-updater">
-                      <label>Update Stage:</label>
-                      <select 
-                        value={order.status} 
-                        onChange={(e) => handleUpdateOrderStatus(order.id, e.target.value)}
-                      >
-                        <option value="Received">Received</option>
-                        <option value="Pharmacist Verified / Packing">Pharmacist Verified / Packing</option>
-                        <option value="Out for Delivery">Out for Delivery</option>
-                        <option value="Delivered">Delivered</option>
-                      </select>
-                    </div>
-
-                    <div className="of-card-footer">
-                      <button className="btn-print-slip" onClick={() => handlePrintSlip(order)}>
-                        <Printer size={13} /> Print Slip
-                      </button>
-                      <a 
-                        href={`https://wa.me/${(order.phone || order.customer?.phone || '').replace(/[^0-9]/g, '')}`} 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        className="btn-wa-direct"
-                      >
-                        <MessageSquare size={13} /> Contact
-                      </a>
-                    </div>
-                  </div>
+              {/* Order Stats Summary Bar */}
+              <div className="admin-order-stats-grid">
+                <div className="a-stat-card">
+                  <span className="a-stat-label">Total Orders</span>
+                  <strong className="a-stat-val">{orders.length}</strong>
+                  <small className="a-stat-sub">Lifetime orders logged</small>
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
+                <div className="a-stat-card active-card">
+                  <span className="a-stat-label">⚡ In-Progress Queue</span>
+                  <strong className="a-stat-val" style={{ color: '#0284c7' }}>{activeCount}</strong>
+                  <small className="a-stat-sub">Needs packaging / delivery</small>
+                </div>
+                <div className="a-stat-card delivered-card">
+                  <span className="a-stat-label">✅ Past Delivered</span>
+                  <strong className="a-stat-val" style={{ color: '#059669' }}>{deliveredCount}</strong>
+                  <small className="a-stat-sub">Successfully fulfilled</small>
+                </div>
+                <div className="a-stat-card revenue-card">
+                  <span className="a-stat-label">💰 Total Order Value</span>
+                  <strong className="a-stat-val" style={{ color: '#0f766e' }}>Rs. {totalRevenue.toFixed(2)}</strong>
+                  <small className="a-stat-sub">{b2bCount} B2B Wholesale orders</small>
+                </div>
+              </div>
+
+              {/* Filter Controls & Search Bar */}
+              <div className="admin-order-controls-bar">
+                <div className="a-order-tabs">
+                  <button 
+                    className={`a-filter-pill ${orderQueueFilter === 'all' ? 'active' : ''}`}
+                    onClick={() => setOrderQueueFilter('all')}
+                  >
+                    All Orders ({orders.length})
+                  </button>
+                  <button 
+                    className={`a-filter-pill ${orderQueueFilter === 'active' ? 'active' : ''}`}
+                    onClick={() => setOrderQueueFilter('active')}
+                  >
+                    ⚡ Active Queue ({activeCount})
+                  </button>
+                  <button 
+                    className={`a-filter-pill ${orderQueueFilter === 'delivered' ? 'active' : ''}`}
+                    onClick={() => setOrderQueueFilter('delivered')}
+                  >
+                    📜 Past Delivered History ({deliveredCount})
+                  </button>
+                  <button 
+                    className={`a-filter-pill ${orderQueueFilter === 'b2b' ? 'active' : ''}`}
+                    onClick={() => setOrderQueueFilter('b2b')}
+                  >
+                    🏢 B2B Retailers ({b2bCount})
+                  </button>
+                  <button 
+                    className={`a-filter-pill ${orderQueueFilter === 'b2c' ? 'active' : ''}`}
+                    onClick={() => setOrderQueueFilter('b2c')}
+                  >
+                    🛍️ Consumers ({orders.length - b2bCount})
+                  </button>
+                </div>
+
+                <div className="a-order-search-box">
+                  <Search size={15} color="#64748b" />
+                  <input 
+                    type="text" 
+                    placeholder="Search by Order ID, customer name, or phone..."
+                    value={orderSearchQuery}
+                    onChange={(e) => setOrderSearchQuery(e.target.value)}
+                  />
+                  {orderSearchQuery && (
+                    <button className="clear-btn" onClick={() => setOrderSearchQuery('')}>×</button>
+                  )}
+                </div>
+              </div>
+
+              {/* VIEW 1: Past Delivered History Table (When 'delivered' filter is active) */}
+              {orderQueueFilter === 'delivered' ? (
+                <div className="admin-table-wrapper">
+                  <table className="admin-data-table">
+                    <thead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Date & Time</th>
+                        <th>Order Type</th>
+                        <th>Customer / Store</th>
+                        <th>Phone</th>
+                        <th>Delivery Destination</th>
+                        <th>Items Count</th>
+                        <th>Grand Total</th>
+                        <th>Status</th>
+                        <th>Invoice / Slip</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredOrders.length === 0 ? (
+                        <tr>
+                          <td colSpan="10" style={{ textAlign: 'center', padding: '30px' }}>
+                            No delivered past orders found matching your search.
+                          </td>
+                        </tr>
+                      ) : (
+                        filteredOrders.map(order => (
+                          <tr key={order.id}>
+                            <td><code>{order.id}</code></td>
+                            <td><small>{order.createdAt}</small></td>
+                            <td>
+                              {(order.orderType === 'b2b_retailer' || order.customer?.isRetailer) ? (
+                                <span className="order-b2b-tag">🏢 B2B Retailer</span>
+                              ) : (
+                                <span className="order-b2c-tag">🛍️ Consumer</span>
+                              )}
+                            </td>
+                            <td><strong>{order.customerName || order.customer?.name || 'Customer'}</strong></td>
+                            <td>
+                              <a 
+                                href={`https://wa.me/${(order.phone || order.customer?.phone || '').replace(/[^0-9]/g, '')}`} 
+                                target="_blank" 
+                                rel="noreferrer" 
+                                className="wa-contact-link"
+                              >
+                                <MessageSquare size={12} /> {order.phone || order.customer?.phone || 'N/A'}
+                              </a>
+                            </td>
+                            <td><small>{order.address || order.customer?.address || 'Local Delivery'}</small></td>
+                            <td style={{ textAlign: 'center' }}>{(order.items || []).reduce((sum, it) => sum + it.quantity, 0)} Units</td>
+                            <td><strong style={{ color: '#0f766e' }}>Rs. {Number(order.grandTotal || 0).toFixed(2)}</strong></td>
+                            <td>
+                              <span className="status-pill status-delivered">
+                                Delivered
+                              </span>
+                            </td>
+                            <td>
+                              <button className="btn-print-slip" onClick={() => handlePrintSlip(order)}>
+                                <Printer size={13} /> Invoice Slip
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                /* VIEW 2: Order Fulfillment Interactive Grid Cards */
+                <div className="orders-grid">
+                  {filteredOrders.length === 0 ? (
+                    <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '40px', color: '#64748b' }}>
+                      <Package size={40} color="#94a3b8" />
+                      <p>No orders found matching this filter criteria.</p>
+                    </div>
+                  ) : (
+                    filteredOrders.map(order => (
+                      <div key={order.id} className="order-fulfillment-card">
+                        <div className="of-card-header">
+                          <div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <h4>{order.id}</h4>
+                              {(order.orderType === 'b2b_retailer' || order.customer?.isRetailer) ? (
+                                <span className="order-b2b-tag">🏢 B2B Retailer</span>
+                              ) : (
+                                <span className="order-b2c-tag">🛍️ Consumer</span>
+                              )}
+                            </div>
+                            <small>{order.createdAt}</small>
+                          </div>
+                          <span className={`status-pill status-${order.status.toLowerCase().replace(/[^a-z]/g, '')}`}>
+                            {order.status}
+                          </span>
+                        </div>
+
+                        <div className="of-card-body-compact">
+                          <div className="of-customer-info">
+                            <p><strong>Customer:</strong> {order.customerName || order.customer?.name || 'Customer'}</p>
+                            <p><strong>Phone:</strong> {order.phone || order.customer?.phone || 'N/A'}</p>
+                            <p><strong>Address:</strong> {order.address || order.customer?.address || 'Local Delivery'}</p>
+                          </div>
+
+                          <div className="of-items-list">
+                            <h5>Ordered Items ({(order.items || []).length}):</h5>
+                            {(order.items || []).map((it, idx) => (
+                              <div key={idx} className="of-item-row">
+                                <span className="of-item-name">{it.name} (x{it.quantity})</span>
+                                <span className="of-item-price">Rs. {(it.price * it.quantity).toFixed(2)}</span>
+                              </div>
+                            ))}
+                            <div className="of-total-row">
+                              <span>Grand Total:</span>
+                              <strong className="price-tag">Rs. {Number(order.grandTotal || 0).toFixed(2)}</strong>
+                            </div>
+                          </div>
+
+                          <div className="of-status-updater">
+                            <label>Update Stage:</label>
+                            <select 
+                              value={order.status} 
+                              onChange={(e) => handleUpdateOrderStatus(order.id, e.target.value)}
+                            >
+                              <option value="Received">Received</option>
+                              <option value="Pharmacist Verified / Packing">Pharmacist Verified / Packing</option>
+                              <option value="Out for Delivery">Out for Delivery</option>
+                              <option value="Delivered">Delivered</option>
+                            </select>
+                          </div>
+
+                          <div className="of-card-footer">
+                            <button className="btn-print-slip" onClick={() => handlePrintSlip(order)}>
+                              <Printer size={13} /> Print Slip
+                            </button>
+                            <a 
+                              href={`https://wa.me/${(order.phone || order.customer?.phone || '').replace(/[^0-9]/g, '')}`} 
+                              target="_blank" 
+                              rel="noreferrer" 
+                              className="btn-wa-direct"
+                            >
+                              <MessageSquare size={13} /> Contact
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
+            </section>
+          );
+        })()}
 
         {/* TAB 3: Back-of-House Store Operations */}
         {activeTab === 'store-ops' && (

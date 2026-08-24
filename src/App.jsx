@@ -20,9 +20,27 @@ const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
   const [products, setProducts] = useState(MOCK_PRODUCTS);
-  const [orders, setOrders] = useState(INITIAL_FULFILLMENT_ORDERS);
+
+  // Persistent Orders State (Preserved across browser refreshes)
+  const [orders, setOrders] = useState(() => {
+    const saved = localStorage.getItem('wms_orders');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) {}
+    }
+    return INITIAL_FULFILLMENT_ORDERS;
+  });
+
   const [prescriptions, setPrescriptions] = useState(INITIAL_PRESCRIPTIONS);
-  const [retailers, setRetailers] = useState(INITIAL_RETAILERS);
+
+  // Persistent Retailer Accounts State (Preserved across browser refreshes)
+  const [retailers, setRetailers] = useState(() => {
+    const saved = localStorage.getItem('wms_retailers');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) {}
+    }
+    return INITIAL_RETAILERS;
+  });
+
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedLetter, setSelectedLetter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
@@ -31,8 +49,14 @@ export default function App() {
   const [isPrescriptionOpen, setIsPrescriptionOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-  // Retailer Auth State (B2B wholesale pricing)
-  const [retailerUser, setRetailerUser] = useState(null);
+  // Retailer Auth State with session persistence
+  const [retailerUser, setRetailerUser] = useState(() => {
+    const saved = localStorage.getItem('wms_retailer_user');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) {}
+    }
+    return null;
+  });
   const [isRetailerHistoryOpen, setIsRetailerHistoryOpen] = useState(false);
 
   // Order Tracking State
@@ -40,9 +64,40 @@ export default function App() {
   const [isTrackingOpen, setIsTrackingOpen] = useState(false);
   const [isTrackOrderOpen, setIsTrackOrderOpen] = useState(false);
 
-  // Admin / Unified Auth State
-  const [adminUser, setAdminUser] = useState(null);
+  // Admin / Unified Auth State with session persistence
+  const [adminUser, setAdminUser] = useState(() => {
+    const saved = localStorage.getItem('wms_admin_user');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) {}
+    }
+    return null;
+  });
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
+
+  // Sync state changes to localStorage
+  React.useEffect(() => {
+    localStorage.setItem('wms_retailers', JSON.stringify(retailers));
+  }, [retailers]);
+
+  React.useEffect(() => {
+    localStorage.setItem('wms_orders', JSON.stringify(orders));
+  }, [orders]);
+
+  React.useEffect(() => {
+    if (retailerUser) {
+      localStorage.setItem('wms_retailer_user', JSON.stringify(retailerUser));
+    } else {
+      localStorage.removeItem('wms_retailer_user');
+    }
+  }, [retailerUser]);
+
+  React.useEffect(() => {
+    if (adminUser) {
+      localStorage.setItem('wms_admin_user', JSON.stringify(adminUser));
+    } else {
+      localStorage.removeItem('wms_admin_user');
+    }
+  }, [adminUser]);
 
   // Auto hide intro splash screen after 2.5 seconds or allow tap to dismiss
   React.useEffect(() => {

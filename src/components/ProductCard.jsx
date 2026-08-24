@@ -64,8 +64,8 @@ export default function ProductCard({ product, onAddToCart, isRetailer = false }
           </span>
         )}
 
-        {/* Prescription Required Badge */}
-        {product.requiresPrescription && (
+        {/* Prescription Required Badge (Only shown to normal consumers, wholesalers have verified B2B licenses) */}
+        {!isRetailer && product.requiresPrescription && (
           <span className="badge badge-rx">
             <AlertCircle size={12} /> Rx Required
           </span>
