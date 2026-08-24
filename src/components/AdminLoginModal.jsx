@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Lock, ShieldCheck, Key, Store, AlertCircle } from 'lucide-react';
+import { Lock, ShieldCheck, Key, Store, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { INITIAL_RETAILERS } from '../retailersData';
 
 export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess, retailers = INITIAL_RETAILERS }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   if (!isOpen) return null;
@@ -106,13 +107,23 @@ export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess, retai
 
           <div className="form-group">
             <label>Password</label>
-            <input 
-              type="password" 
-              required 
-              placeholder="••••••••" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="password-input-wrapper">
+              <input 
+                type={showPassword ? 'text' : 'password'} 
+                required 
+                placeholder="••••••••" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button 
+                type="button" 
+                className="btn-toggle-password" 
+                onClick={() => setShowPassword(!showPassword)}
+                title={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
 
           <div className="demo-hint" style={{ lineHeight: 1.5 }}>

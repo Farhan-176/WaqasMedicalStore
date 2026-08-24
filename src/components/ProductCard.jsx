@@ -92,7 +92,6 @@ export default function ProductCard({ product, onAddToCart, isRetailer = false }
         </div>
 
         <h3 className="product-title">{product.name}</h3>
-        <p className="generic-name">Formula: <span>{product.genericName}</span></p>
 
         {/* Packaging Selection Radio Options (Per Pack / Per Strip) */}
         {mode === 'both' && (
