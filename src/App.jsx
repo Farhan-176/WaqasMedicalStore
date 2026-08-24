@@ -99,6 +99,58 @@ export default function App() {
     }
   }, [adminUser]);
 
+  // Fetch live cloud data from MongoDB Atlas on mount
+  React.useEffect(() => {
+    const fetchCloudData = async () => {
+      try {
+        const retRes = await fetch('/api/retailers');
+        if (retRes.ok) {
+          const cloudRetailers = await retRes.json();
+          if (Array.isArray(cloudRetailers) && cloudRetailers.length > 0) {
+            setRetailers(cloudRetailers.map(r => ({
+              id: r._id || r.id,
+              _id: r._id,
+              name: r.name,
+              username: r.username,
+              password: r.password,
+              area: r.area,
+              licenseNo: r.licenseNo,
+              discountTier: r.discountTier,
+              createdAt: r.createdAt ? new Date(r.createdAt).toISOString().split('T')[0] : 'Recent'
+            })));
+          }
+        }
+      } catch (e) {}
+
+      try {
+        const ordRes = await fetch('/api/orders');
+        if (ordRes.ok) {
+          const cloudOrders = await ordRes.json();
+          if (Array.isArray(cloudOrders) && cloudOrders.length > 0) {
+            setOrders(cloudOrders.map(o => ({
+              id: o.orderId || o.id || o._id,
+              _id: o._id,
+              customerName: o.customerName || o.customer?.name || 'Customer',
+              phone: o.phone || o.customer?.phone || '',
+              address: o.address || o.customer?.address || 'Local Delivery',
+              orderType: o.orderType || (o.customer?.isRetailer ? 'b2b_retailer' : 'b2c_consumer'),
+              retailerUsername: o.retailerUsername || '',
+              items: o.items || [],
+              subtotal: o.subtotal || 0,
+              deliveryFee: o.deliveryFee || 0,
+              grandTotal: o.grandTotal || 0,
+              requiresRx: Boolean(o.requiresRx),
+              status: o.status || 'Received',
+              createdAt: o.createdAt ? new Date(o.createdAt).toLocaleString() : 'Recent'
+            })));
+          }
+        }
+      } catch (e) {}
+    };
+
+    fetchCloudData();
+  }, []);
+
   // Auto hide intro splash screen after 2.5 seconds or allow tap to dismiss
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -156,13 +208,24 @@ export default function App() {
     setCart(prev => prev.filter(item => item.id !== id));
   };
 
-  const handleOrderPlaced = (newOrder) => {
+  const handleOrderPlaced = async (newOrder) => {
     setActiveOrder(newOrder);
     setOrders(prev => [newOrder, ...prev]);
     setCart([]);
     setIsCheckoutOpen(false);
     setIsTrackingOpen(true);
     showToast(`Order #${newOrder.id} placed successfully! 🎉`, 'success');
+
+    // Real-time Cloud Save to MongoDB Atlas
+    try {
+      await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newOrder)
+      });
+    } catch (e) {
+      console.warn('Saved in offline storage mode');
+    }
   };
 
   const handleAdvanceStatus = (nextStatus) => {

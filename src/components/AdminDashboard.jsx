@@ -144,6 +144,32 @@ export default function AdminDashboard({
             });
           }
         }
+
+        // 3. Fetch live retailers from MongoDB Atlas
+        const retRes = await fetch(`${API_BASE_URL}/api/retailers`, { headers });
+        if (retRes.ok) {
+          const dbRetailers = await retRes.json();
+          if (Array.isArray(dbRetailers) && dbRetailers.length > 0) {
+            const formattedRet = dbRetailers.map(r => ({
+              id: r._id || r.id,
+              _id: r._id,
+              name: r.name,
+              username: r.username,
+              password: r.password,
+              area: r.area,
+              licenseNo: r.licenseNo,
+              discountTier: r.discountTier || 'Wholesale Trade Price (12-15% OFF)',
+              createdAt: r.createdAt ? new Date(r.createdAt).toISOString().split('T')[0] : 'Recent'
+            }));
+            setRetailersList(prev => {
+              const existingUsernames = new Set(prev.map(p => p.username));
+              const newItems = formattedRet.filter(f => !existingUsernames.has(f.username));
+              const merged = [...newItems, ...prev];
+              if (onUpdateRetailers) onUpdateRetailers(merged);
+              return merged;
+            });
+          }
+        }
       } catch (err) {
         console.warn('⚠️ Server offline or connection issue. Using local admin data fallback:', err.message);
       }
@@ -218,17 +244,17 @@ export default function AdminDashboard({
           body: JSON.stringify({ status: 'Rejected' })
         });
       } catch (e) {
-        console.warn('Fallback local sign-off:', e.message);
+        console.warn('Fallback local rejection:', e.message);
       }
     }
 
     setPrescriptions(prev => {
       const updatedList = prev.map(rx => {
         if (rx.id === rxId) {
-          return { 
-            ...rx, 
-            status: 'Rejected', 
-            verifiedBy: `${user.name} (${new Date().toLocaleTimeString()})` 
+          return {
+            ...rx,
+            status: 'Rejected',
+            verifiedBy: `${user.name} (${new Date().toLocaleTimeString()})`
           };
         }
         return rx;
@@ -252,9 +278,10 @@ export default function AdminDashboard({
   // Order Status Queue Actions
   const handleUpdateOrderStatus = async (orderId, newStatus) => {
     const targetOrder = orders.find(o => o.id === orderId);
-    if (targetOrder && targetOrder._id) {
+    if (targetOrder) {
+      const targetId = targetOrder._id || orderId;
       try {
-        await fetch(`${API_BASE_URL}/api/orders/${targetOrder._id}/status`, {
+        await fetch(`${API_BASE_URL}/api/orders/${targetId}/status`, {
           method: 'PATCH',
           headers: { 
             'Content-Type': 'application/json',
@@ -325,11 +352,11 @@ export default function AdminDashboard({
   };
 
   // Retailer Account Actions
-  const handleCreateRetailer = (e) => {
+  const handleCreateRetailer = async (e) => {
     e.preventDefault();
     if (!newRetailer.name || !newRetailer.username || !newRetailer.password) return;
 
-    const created = {
+    let created = {
       id: `ret-${Date.now().toString().slice(-4)}`,
       name: newRetailer.name.trim(),
       username: newRetailer.username.trim().toLowerCase(),
@@ -339,6 +366,28 @@ export default function AdminDashboard({
       discountTier: 'Wholesale Trade Price (12-15% OFF)',
       createdAt: new Date().toISOString().split('T')[0]
     };
+
+    // Save directly to MongoDB Atlas Cloud Database
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/retailers`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user?.token}`
+        },
+        body: JSON.stringify(created)
+      });
+      if (res.ok) {
+        const savedDb = await res.json();
+        created = {
+          ...created,
+          _id: savedDb._id,
+          id: savedDb._id || created.id
+        };
+      }
+    } catch (err) {
+      console.warn('Saved in local cache');
+    }
 
     setRetailersList(prev => {
       const updated = [created, ...prev];
@@ -359,10 +408,18 @@ export default function AdminDashboard({
     setNewRetailer({ name: '', username: '', password: '', area: '', licenseNo: '' });
   };
 
-  const handleDeleteRetailer = (id, name) => {
+  const handleDeleteRetailer = async (id, name, retailerItem) => {
     if (window.confirm(`Are you sure you want to remove retailer "${name}"?`)) {
+      const deleteId = retailerItem?._id || id;
+      try {
+        await fetch(`${API_BASE_URL}/api/retailers/${deleteId}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${user?.token}` }
+        });
+      } catch (err) {}
+
       setRetailersList(prev => {
-        const updated = prev.filter(r => r.id !== id);
+        const updated = prev.filter(r => r.id !== id && r._id !== deleteId);
         if (onUpdateRetailers) onUpdateRetailers(updated);
         return updated;
       });
@@ -907,7 +964,7 @@ export default function AdminDashboard({
                       <td>
                         <button 
                           className="btn-delete-retailer" 
-                          onClick={() => handleDeleteRetailer(ret.id, ret.name)}
+                          onClick={() => handleDeleteRetailer(ret.id, ret.name, ret)}
                           title="Revoke retailer wholesale access"
                         >
                           <Trash2 size={14} /> Remove
