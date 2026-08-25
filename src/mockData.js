@@ -9,7 +9,227 @@ export const MOCK_CATEGORIES = [
 
 export const MOCK_PRODUCTS = [
   {
-    "id": "offer_m_1",
+    "code": "0001",
+    "name": "PANADOL 500MG TABLET",
+    "genericName": "Paracetamol 500mg (Fever & Pain Relief)",
+    "category": "medicines",
+    "price": 450,
+    "originalPrice": 500,
+    "discountPercent": 10,
+    "packagingMode": "both",
+    "stripsPerPack": 20,
+    "hasStripOption": true,
+    "stripPrice": 22.5,
+    "unit": "Pack / Strip",
+    "stock": 120,
+    "offerDiscount": "10.00%",
+    "bonusText": null,
+    "requiresPrescription": false,
+    "coldStorage": false,
+    "showOnMainScreen": true,
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80",
+    "id": "staple_1"
+  },
+  {
+    "code": "0002",
+    "name": "PANADOL EXTRA TABLET",
+    "genericName": "Paracetamol 500mg + Caffeine 65mg",
+    "category": "medicines",
+    "price": 540,
+    "originalPrice": 600,
+    "discountPercent": 10,
+    "packagingMode": "both",
+    "stripsPerPack": 10,
+    "hasStripOption": true,
+    "stripPrice": 54,
+    "unit": "Pack / Strip",
+    "stock": 95,
+    "offerDiscount": "10.00%",
+    "bonusText": null,
+    "requiresPrescription": false,
+    "coldStorage": false,
+    "showOnMainScreen": true,
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80",
+    "id": "staple_2"
+  },
+  {
+    "code": "0003",
+    "name": "PANADOL CF (COLD & FLU) TAB",
+    "genericName": "Paracetamol + Pseudoephedrine + Chlorpheniramine",
+    "category": "medicines",
+    "price": 360,
+    "originalPrice": 400,
+    "discountPercent": 10,
+    "packagingMode": "both",
+    "stripsPerPack": 10,
+    "hasStripOption": true,
+    "stripPrice": 36,
+    "unit": "Pack / Strip",
+    "stock": 80,
+    "offerDiscount": "10.00%",
+    "bonusText": null,
+    "requiresPrescription": false,
+    "coldStorage": false,
+    "showOnMainScreen": true,
+    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80",
+    "id": "staple_3"
+  },
+  {
+    "code": "0004",
+    "name": "PANADOL BABY & INFANT DROPS",
+    "genericName": "Paracetamol 100mg/ml Infant Suspension",
+    "category": "baby-care",
+    "price": 185,
+    "originalPrice": 210,
+    "discountPercent": 12,
+    "packagingMode": "pack",
+    "stripsPerPack": 1,
+    "hasStripOption": false,
+    "stripPrice": null,
+    "unit": "Bottle",
+    "stock": 65,
+    "offerDiscount": "12.00%",
+    "bonusText": null,
+    "requiresPrescription": false,
+    "coldStorage": false,
+    "showOnMainScreen": true,
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80",
+    "id": "staple_4"
+  },
+  {
+    "code": "0005",
+    "name": "BRUFEN 400MG TABLET",
+    "genericName": "Ibuprofen 400mg (Anti-Inflammatory)",
+    "category": "medicines",
+    "price": 320,
+    "originalPrice": 360,
+    "discountPercent": 11,
+    "packagingMode": "both",
+    "stripsPerPack": 10,
+    "hasStripOption": true,
+    "stripPrice": 32,
+    "unit": "Pack / Strip",
+    "stock": 110,
+    "offerDiscount": "11.00%",
+    "bonusText": null,
+    "requiresPrescription": false,
+    "coldStorage": false,
+    "showOnMainScreen": true,
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80",
+    "id": "staple_5"
+  },
+  {
+    "code": "0006",
+    "name": "DISPRIN 300MG SOLUBLE TABLET",
+    "genericName": "Aspirin 300mg Soluble Tablets",
+    "category": "medicines",
+    "price": 240,
+    "originalPrice": 270,
+    "discountPercent": 11,
+    "packagingMode": "both",
+    "stripsPerPack": 10,
+    "hasStripOption": true,
+    "stripPrice": 24,
+    "unit": "Pack / Strip",
+    "stock": 140,
+    "offerDiscount": "11.00%",
+    "bonusText": null,
+    "requiresPrescription": false,
+    "coldStorage": false,
+    "showOnMainScreen": true,
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80",
+    "id": "staple_6"
+  },
+  {
+    "code": "0007",
+    "name": "AUGMENTIN 625MG TABLET",
+    "genericName": "Amoxicillin + Clavulanic Acid 625mg",
+    "category": "medicines",
+    "price": 580,
+    "originalPrice": 650,
+    "discountPercent": 11,
+    "packagingMode": "both",
+    "stripsPerPack": 2,
+    "hasStripOption": true,
+    "stripPrice": 290,
+    "unit": "Pack / Strip",
+    "stock": 75,
+    "offerDiscount": "11.00%",
+    "bonusText": null,
+    "requiresPrescription": true,
+    "coldStorage": false,
+    "showOnMainScreen": true,
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80",
+    "id": "staple_7"
+  },
+  {
+    "code": "0008",
+    "name": "SENSODYNE COMPLETE PROTECTION TOOTHPASTE 100G",
+    "genericName": "Potassium Nitrate + Sodium Fluoride Daily Oral Care",
+    "category": "hygiene",
+    "price": 463.27,
+    "originalPrice": 545.02,
+    "discountPercent": 15,
+    "packagingMode": "pack",
+    "stripsPerPack": 1,
+    "hasStripOption": false,
+    "stripPrice": null,
+    "unit": "Unit",
+    "stock": 90,
+    "offerDiscount": "15.00%",
+    "bonusText": null,
+    "requiresPrescription": false,
+    "coldStorage": false,
+    "showOnMainScreen": true,
+    "image": "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=500&q=80",
+    "id": "staple_8"
+  },
+  {
+    "code": "0009",
+    "name": "POLYFAX SKIN OINTMENT 20G",
+    "genericName": "Polymyxin B Sulphate + Bacitracin Zinc",
+    "category": "otc-first-aid",
+    "price": 195,
+    "originalPrice": 225,
+    "discountPercent": 13,
+    "packagingMode": "pack",
+    "stripsPerPack": 1,
+    "hasStripOption": false,
+    "stripPrice": null,
+    "unit": "Unit",
+    "stock": 85,
+    "offerDiscount": "13.00%",
+    "bonusText": null,
+    "requiresPrescription": false,
+    "coldStorage": false,
+    "showOnMainScreen": true,
+    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80",
+    "id": "staple_9"
+  },
+  {
+    "code": "0010",
+    "name": "GAVISCON LIQUID SUSPENSION 120ML",
+    "genericName": "Sodium Alginate + Sodium Bicarbonate",
+    "category": "medicines",
+    "price": 290,
+    "originalPrice": 330,
+    "discountPercent": 12,
+    "packagingMode": "pack",
+    "stripsPerPack": 1,
+    "hasStripOption": false,
+    "stripPrice": null,
+    "unit": "Bottle",
+    "stock": 70,
+    "offerDiscount": "12.00%",
+    "bonusText": null,
+    "requiresPrescription": false,
+    "coldStorage": false,
+    "showOnMainScreen": true,
+    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80",
+    "id": "staple_10"
+  },
+  {
+    "id": "offer_m_11",
     "code": "0252",
     "name": "ACORT CREAM NEW",
     "genericName": "ACORT CREAM NEW",
@@ -28,10 +248,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80"
   },
   {
-    "id": "offer_m_2",
+    "id": "offer_m_12",
     "code": "0547",
     "name": "ADMIT 50/500 TAB",
     "genericName": "ADMIT 50/500 TAB",
@@ -50,10 +270,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_3",
+    "id": "offer_m_13",
     "code": "03C2",
     "name": "BARINEP EYE DROP",
     "genericName": "BARINEP EYE DROP",
@@ -72,10 +292,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_4",
+    "id": "offer_m_14",
     "code": "0225",
     "name": "BOFALGAN ING",
     "genericName": "BOFALGAN ING",
@@ -94,10 +314,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_5",
+    "id": "offer_m_15",
     "code": "0259",
     "name": "BONCAL PLUS SMALL 15TAB",
     "genericName": "BONCAL PLUS SMALL 15TAB",
@@ -116,10 +336,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_6",
+    "id": "offer_m_16",
     "code": "0479",
     "name": "CALAMOX 625 NEW LARG",
     "genericName": "CALAMOX 625 NEW LARG",
@@ -138,10 +358,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_7",
+    "id": "offer_m_17",
     "code": "035",
     "name": "COLLAPEP SECHA",
     "genericName": "COLLAPEP SECHA",
@@ -160,10 +380,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_8",
+    "id": "offer_m_18",
     "code": "0167",
     "name": "DAPA 10MG",
     "genericName": "DAPA 10MG",
@@ -182,10 +402,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_9",
+    "id": "offer_m_19",
     "code": "00E8",
     "name": "DE-WART LOTTION",
     "genericName": "DE-WART LOTTION",
@@ -204,10 +424,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_10",
+    "id": "offer_m_20",
     "code": "029",
     "name": "DEXTOP 30MG",
     "genericName": "DEXTOP 30MG",
@@ -226,10 +446,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_11",
+    "id": "offer_m_21",
     "code": "0918",
     "name": "DOL P TAB NEW NEW",
     "genericName": "DOL P TAB NEW NEW",
@@ -251,7 +471,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_12",
+    "id": "offer_m_22",
     "code": "A074",
     "name": "ECP NEW",
     "genericName": "ECP NEW",
@@ -270,10 +490,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_13",
+    "id": "offer_m_23",
     "code": "0453",
     "name": "GEBON PLUSS TABLET",
     "genericName": "GEBON PLUSS TABLET",
@@ -292,10 +512,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_14",
+    "id": "offer_m_24",
     "code": "0031",
     "name": "GENEP 2.5 MG",
     "genericName": "GENEP 2.5 MG",
@@ -314,10 +534,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_15",
+    "id": "offer_m_25",
     "code": "0165",
     "name": "GETRYL 1MG TAB NEW NEW",
     "genericName": "GETRYL 1MG TAB NEW NEW",
@@ -336,10 +556,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_16",
+    "id": "offer_m_26",
     "code": "0542",
     "name": "GETRYL 3MG TAB NEW NEW",
     "genericName": "GETRYL 3MG TAB NEW NEW",
@@ -358,10 +578,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_17",
+    "id": "offer_m_27",
     "code": "0332",
     "name": "IDOCON 150MG",
     "genericName": "IDOCON 150MG",
@@ -380,10 +600,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_18",
+    "id": "offer_m_28",
     "code": "0060",
     "name": "K 1000",
     "genericName": "K 1000",
@@ -402,10 +622,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_19",
+    "id": "offer_m_29",
     "code": "0563",
     "name": "LUTEVIT ADVANCE TAB",
     "genericName": "LUTEVIT ADVANCE TAB",
@@ -424,10 +644,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_20",
+    "id": "offer_m_30",
     "code": "0564",
     "name": "LUTEVIT ADVANECE SYP",
     "genericName": "LUTEVIT ADVANECE SYP",
@@ -446,10 +666,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_21",
+    "id": "offer_m_31",
     "code": "0566",
     "name": "MAXFLOW D TAB",
     "genericName": "MAXFLOW D TAB",
@@ -468,10 +688,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_22",
+    "id": "offer_m_32",
     "code": "C240",
     "name": "NEW LOCYST",
     "genericName": "NEW LOCYST",
@@ -490,10 +710,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_23",
+    "id": "offer_m_33",
     "code": "CE34",
     "name": "NEW MERONERM 500",
     "genericName": "NEW MERONERM 500",
@@ -512,10 +732,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_24",
+    "id": "offer_m_34",
     "code": "A127",
     "name": "NORVACE V 5/80 TAB",
     "genericName": "NORVACE V 5/80 TAB",
@@ -534,10 +754,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_25",
+    "id": "offer_m_35",
     "code": "0337",
     "name": "NOVOTEPH 20 NEW NEW",
     "genericName": "NOVOTEPH 20 NEW NEW",
@@ -556,10 +776,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_26",
+    "id": "offer_m_36",
     "code": "A126",
     "name": "OLD CLOMID TAB",
     "genericName": "OLD CLOMID TAB",
@@ -581,7 +801,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_27",
+    "id": "offer_m_37",
     "code": "9834",
     "name": "ONSET 8MG ING",
     "genericName": "ONSET 8MG ING",
@@ -600,10 +820,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_28",
+    "id": "offer_m_38",
     "code": "C129",
     "name": "OPT D 2LAC NEW RATE",
     "genericName": "OPT D 2LAC NEW RATE",
@@ -622,10 +842,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_29",
+    "id": "offer_m_39",
     "code": "C276",
     "name": "PAT 4 SPRAY",
     "genericName": "PAT 4 SPRAY",
@@ -647,7 +867,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_30",
+    "id": "offer_m_40",
     "code": "9783",
     "name": "PET 4 TAB",
     "genericName": "PET 4 TAB",
@@ -666,10 +886,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_31",
+    "id": "offer_m_41",
     "code": "0474",
     "name": "PHLOGIN 50CAP NEW",
     "genericName": "PHLOGIN 50CAP NEW",
@@ -688,10 +908,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_32",
+    "id": "offer_m_42",
     "code": "QS54",
     "name": "QBAL INJ NEW",
     "genericName": "QBAL INJ NEW",
@@ -710,10 +930,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80"
   },
   {
-    "id": "offer_m_33",
+    "id": "offer_m_43",
     "code": "9740",
     "name": "QFOLIC TAB",
     "genericName": "QFOLIC TAB",
@@ -732,10 +952,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_34",
+    "id": "offer_m_44",
     "code": "0352",
     "name": "ROVISTA 5 30TAB",
     "genericName": "ROVISTA 5 30TAB",
@@ -757,14 +977,14 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_35",
+    "id": "offer_m_45",
     "code": "C246",
     "name": "SANTE INJ 40MG",
     "genericName": "SANTE INJ 40MG",
     "category": "medicines",
     "price": 120,
-    "originalPrice": null,
-    "discountPercent": 0,
+    "originalPrice": 138,
+    "discountPercent": 15,
     "packagingMode": "pack",
     "stripsPerPack": 1,
     "hasStripOption": false,
@@ -776,10 +996,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_36",
+    "id": "offer_m_46",
     "code": "21A8",
     "name": "SERTAZOL NEW",
     "genericName": "SERTAZOL NEW",
@@ -798,10 +1018,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_37",
+    "id": "offer_m_47",
     "code": "0222",
     "name": "SITAMET XR 50/500",
     "genericName": "SITAMET XR 50/500",
@@ -820,10 +1040,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_38",
+    "id": "offer_m_48",
     "code": "0162",
     "name": "SOFVASC 10MG TAB NEW NEW",
     "genericName": "SOFVASC 10MG TAB NEW NEW",
@@ -842,10 +1062,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_39",
+    "id": "offer_m_49",
     "code": "0560",
     "name": "TIO VEEZ 18MG LARGE",
     "genericName": "TIO VEEZ 18MG LARGE",
@@ -864,10 +1084,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_40",
+    "id": "offer_m_50",
     "code": "9812",
     "name": "TREVIAMET XR 50/500",
     "genericName": "TREVIAMET XR 50/500",
@@ -886,10 +1106,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_41",
+    "id": "offer_m_51",
     "code": "CE45",
     "name": "VORCAZ 200",
     "genericName": "VORCAZ 200",
@@ -908,10 +1128,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_42",
+    "id": "offer_m_52",
     "code": "031",
     "name": "ZETRO 500MG TAB",
     "genericName": "ZETRO 500MG TAB",
@@ -930,10 +1150,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_43",
+    "id": "offer_m_53",
     "code": "CE44",
     "name": "ZYRTEC TAB NEW",
     "genericName": "ZYRTEC TAB NEW",
@@ -952,10 +1172,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_44",
+    "id": "offer_m_54",
     "code": "C135",
     "name": "ELINJEC 50MG",
     "genericName": "ELINJEC 50MG",
@@ -974,10 +1194,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_45",
+    "id": "offer_m_55",
     "code": "0236",
     "name": "ITRAZOX CAP",
     "genericName": "ITRAZOX CAP",
@@ -996,10 +1216,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_46",
+    "id": "offer_m_56",
     "code": "2614",
     "name": "DUPHASTON TAB. 10MG",
     "genericName": "DUPHASTON TAB. 10MG",
@@ -1018,10 +1238,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_47",
+    "id": "offer_m_57",
     "code": "2802",
     "name": "ENTAMIZOLE DS TABLET",
     "genericName": "ENTAMIZOLE DS TABLET",
@@ -1040,10 +1260,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_48",
+    "id": "offer_m_58",
     "code": "C245",
     "name": "NEW ABOCRAN SCH",
     "genericName": "NEW ABOCRAN SCH",
@@ -1062,10 +1282,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_49",
+    "id": "offer_m_59",
     "code": "8211",
     "name": "SOMOGEL GEL 20GM",
     "genericName": "SOMOGEL GEL 20GM",
@@ -1087,7 +1307,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
   },
   {
-    "id": "offer_m_50",
+    "id": "offer_m_60",
     "code": "8435",
     "name": "SURBEX Z TABLET SMALL",
     "genericName": "SURBEX Z TABLET SMALL",
@@ -1106,10 +1326,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_51",
+    "id": "offer_m_61",
     "code": "32",
     "name": "WILSOB 30MG",
     "genericName": "WILSOB 30MG",
@@ -1128,10 +1348,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_52",
+    "id": "offer_m_62",
     "code": "2836",
     "name": "EPIVAL 250MG TABLET",
     "genericName": "EPIVAL 250MG TABLET",
@@ -1150,17 +1370,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_53",
+    "id": "offer_m_63",
     "code": "36",
     "name": "G T N CREAM",
     "genericName": "G T N CREAM",
     "category": "hygiene",
     "price": 215,
-    "originalPrice": null,
-    "discountPercent": 0,
+    "originalPrice": 247.25,
+    "discountPercent": 15,
     "packagingMode": "pack",
     "stripsPerPack": 1,
     "hasStripOption": false,
@@ -1172,10 +1392,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80"
   },
   {
-    "id": "offer_m_54",
+    "id": "offer_m_64",
     "code": "4563",
     "name": "KLARICID 500MG TABLET ABB",
     "genericName": "KLARICID 500MG TABLET ABB",
@@ -1197,7 +1417,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_55",
+    "id": "offer_m_65",
     "code": "4567",
     "name": "KLARICID SYRUP ABBOTT",
     "genericName": "KLARICID SYRUP ABBOTT",
@@ -1216,10 +1436,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&q=80"
   },
   {
-    "id": "offer_m_56",
+    "id": "offer_m_66",
     "code": "4568",
     "name": "KLARICID XL ABBOTT",
     "genericName": "KLARICID XL ABBOTT",
@@ -1238,10 +1458,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_57",
+    "id": "offer_m_67",
     "code": "6924",
     "name": "PINIX 0.5MG ADAMJEE",
     "genericName": "PINIX 0.5MG ADAMJEE",
@@ -1260,10 +1480,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_58",
+    "id": "offer_m_68",
     "code": "7617",
     "name": "RISP 1MG TAB.ADAMJEE",
     "genericName": "RISP 1MG TAB.ADAMJEE",
@@ -1282,10 +1502,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_59",
+    "id": "offer_m_69",
     "code": "7618",
     "name": "RISP 2MG TAB.ADAMJEE",
     "genericName": "RISP 2MG TAB.ADAMJEE",
@@ -1304,10 +1524,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_60",
+    "id": "offer_m_70",
     "code": "7619",
     "name": "RISP 3MG TAB.ADAMJEE",
     "genericName": "RISP 3MG TAB.ADAMJEE",
@@ -1326,10 +1546,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_61",
+    "id": "offer_m_71",
     "code": "7620",
     "name": "RISP 4MG TAB.ADAMJEE",
     "genericName": "RISP 4MG TAB.ADAMJEE",
@@ -1348,10 +1568,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_62",
+    "id": "offer_m_72",
     "code": "9649",
     "name": "ZOLP 10MG TABLET",
     "genericName": "ZOLP 10MG TABLET",
@@ -1370,10 +1590,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_63",
+    "id": "offer_m_73",
     "code": "A120",
     "name": "TEARS NATURALE 11+",
     "genericName": "TEARS NATURALE 11+",
@@ -1395,7 +1615,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_64",
+    "id": "offer_m_74",
     "code": "421",
     "name": "ANAFORTAN PLUS NEW",
     "genericName": "ANAFORTAN PLUS NEW",
@@ -1414,10 +1634,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_65",
+    "id": "offer_m_75",
     "code": "9770",
     "name": "CALFINA PLUS TABLEAT",
     "genericName": "CALFINA PLUS TABLEAT",
@@ -1436,10 +1656,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_66",
+    "id": "offer_m_76",
     "code": "1425",
     "name": "CECLOR 250MG CAPSULE ALIG",
     "genericName": "CECLOR 250MG CAPSULE ALIG",
@@ -1458,10 +1678,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_67",
+    "id": "offer_m_77",
     "code": "1426",
     "name": "CECLOR 250MG SYRUP ALIGOH",
     "genericName": "CECLOR 250MG SYRUP ALIGOH",
@@ -1480,10 +1700,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&q=80"
   },
   {
-    "id": "offer_m_68",
+    "id": "offer_m_78",
     "code": "1428",
     "name": "CECLOR DROP",
     "genericName": "CECLOR DROP",
@@ -1502,10 +1722,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_69",
+    "id": "offer_m_79",
     "code": "1604",
     "name": "CHYMORAL FORTE ALI GOHAR",
     "genericName": "CHYMORAL FORTE ALI GOHAR",
@@ -1524,10 +1744,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_70",
+    "id": "offer_m_80",
     "code": "C113",
     "name": "DOXIUM CAP NEW",
     "genericName": "DOXIUM CAP NEW",
@@ -1546,10 +1766,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_71",
+    "id": "offer_m_81",
     "code": "5249",
     "name": "MELFAX 15MG TAB.ALIGOHAR",
     "genericName": "MELFAX 15MG TAB.ALIGOHAR",
@@ -1568,10 +1788,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_72",
+    "id": "offer_m_82",
     "code": "5250",
     "name": "MELFAX 7.5MG TAB.ALIGOHAR",
     "genericName": "MELFAX 7.5MG TAB.ALIGOHAR",
@@ -1590,10 +1810,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_73",
+    "id": "offer_m_83",
     "code": "6586",
     "name": "OSNATE-D TAB NEW",
     "genericName": "OSNATE-D TAB NEW",
@@ -1612,10 +1832,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_74",
+    "id": "offer_m_84",
     "code": "C136",
     "name": "PERI-DOTS (AGP)",
     "genericName": "PERI-DOTS (AGP)",
@@ -1634,10 +1854,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_75",
+    "id": "offer_m_85",
     "code": "7738",
     "name": "RUBIFER-F TABLET",
     "genericName": "RUBIFER-F TABLET",
@@ -1656,10 +1876,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_76",
+    "id": "offer_m_86",
     "code": "8096",
     "name": "SINAXAMOL PLAIN TAB.",
     "genericName": "SINAXAMOL PLAIN TAB.",
@@ -1678,10 +1898,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_77",
+    "id": "offer_m_87",
     "code": "8033",
     "name": "SEVENSEAS 60'S CAP",
     "genericName": "SEVENSEAS 60'S CAP",
@@ -1700,10 +1920,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_78",
+    "id": "offer_m_88",
     "code": "2332",
     "name": "DEXIMOX DROP",
     "genericName": "DEXIMOX DROP",
@@ -1722,10 +1942,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80"
   },
   {
-    "id": "offer_m_79",
+    "id": "offer_m_89",
     "code": "3034",
     "name": "EYEBRADEX EYE DROP",
     "genericName": "EYEBRADEX EYE DROP",
@@ -1744,10 +1964,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80"
   },
   {
-    "id": "offer_m_80",
+    "id": "offer_m_90",
     "code": "3036",
     "name": "EYEBRADEX EYE OINT",
     "genericName": "EYEBRADEX EYE OINT",
@@ -1766,10 +1986,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_81",
+    "id": "offer_m_91",
     "code": "A031",
     "name": "MOXIGAN DROP FRESH",
     "genericName": "MOXIGAN DROP FRESH",
@@ -1788,10 +2008,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_82",
+    "id": "offer_m_92",
     "code": "6116",
     "name": "OCUDINE DROP ALLERGAN",
     "genericName": "OCUDINE DROP ALLERGAN",
@@ -1813,7 +2033,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_83",
+    "id": "offer_m_93",
     "code": "7047",
     "name": "PRED FORTE DROP",
     "genericName": "PRED FORTE DROP",
@@ -1832,10 +2052,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_84",
+    "id": "offer_m_94",
     "code": "A028",
     "name": "SYNICOM EYE DROP",
     "genericName": "SYNICOM EYE DROP",
@@ -1854,10 +2074,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_85",
+    "id": "offer_m_95",
     "code": "3634",
     "name": "GEPENT 300MG TAB.AMARANT",
     "genericName": "GEPENT 300MG TAB.AMARANT",
@@ -1876,10 +2096,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_86",
+    "id": "offer_m_96",
     "code": "6947",
     "name": "PIRIDE 50 TAB AMARANAT",
     "genericName": "PIRIDE 50 TAB AMARANAT",
@@ -1901,7 +2121,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_87",
+    "id": "offer_m_97",
     "code": "7446",
     "name": "REGAB 50MG CAP.AMARANT",
     "genericName": "REGAB 50MG CAP.AMARANT",
@@ -1920,10 +2140,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_88",
+    "id": "offer_m_98",
     "code": "4194",
     "name": "IMATET INJECTION",
     "genericName": "IMATET INJECTION",
@@ -1942,10 +2162,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&q=80"
   },
   {
-    "id": "offer_m_89",
+    "id": "offer_m_99",
     "code": "4943",
     "name": "LORIN TAB 30'S",
     "genericName": "LORIN TAB 30'S",
@@ -1964,17 +2184,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_90",
+    "id": "offer_m_100",
     "code": "918",
     "name": "BETADERM LOTION ATCO",
     "genericName": "BETADERM LOTION ATCO",
     "category": "hygiene",
     "price": 129.57,
-    "originalPrice": 149.01,
-    "discountPercent": 15,
+    "originalPrice": null,
+    "discountPercent": 0,
     "packagingMode": "pack",
     "stripsPerPack": 1,
     "hasStripOption": false,
@@ -1986,10 +2206,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608248597359-0097c558c49d?w=500&q=80"
   },
   {
-    "id": "offer_m_91",
+    "id": "offer_m_101",
     "code": "931",
     "name": "BETAGENIC CREAM ATCO",
     "genericName": "BETAGENIC CREAM ATCO",
@@ -2008,10 +2228,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80"
   },
   {
-    "id": "offer_m_92",
+    "id": "offer_m_102",
     "code": "0101",
     "name": "BYNEVOL 5 ATCO",
     "genericName": "BYNEVOL 5 ATCO",
@@ -2033,14 +2253,14 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_93",
+    "id": "offer_m_103",
     "code": "4377",
     "name": "IVERMITE TABLET ATCO",
     "genericName": "IVERMITE TABLET ATCO",
     "category": "medicines",
     "price": 383.35,
-    "originalPrice": 440.85,
-    "discountPercent": 15,
+    "originalPrice": null,
+    "discountPercent": 0,
     "packagingMode": "both",
     "stripsPerPack": 10,
     "hasStripOption": true,
@@ -2052,10 +2272,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_94",
+    "id": "offer_m_104",
     "code": "5244",
     "name": "MELAS CRAEM",
     "genericName": "MELAS CRAEM",
@@ -2074,10 +2294,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_95",
+    "id": "offer_m_105",
     "code": "6011",
     "name": "NORSALINE-P DROP OLD",
     "genericName": "NORSALINE-P DROP OLD",
@@ -2099,7 +2319,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_96",
+    "id": "offer_m_106",
     "code": "6580",
     "name": "OSMOLAR ORS ATCO ORANGE",
     "genericName": "OSMOLAR ORS ATCO ORANGE",
@@ -2118,10 +2338,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_97",
+    "id": "offer_m_107",
     "code": "7867",
     "name": "SCABION LOTION ATCO",
     "genericName": "SCABION LOTION ATCO",
@@ -2143,7 +2363,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
   },
   {
-    "id": "offer_m_98",
+    "id": "offer_m_108",
     "code": "9453",
     "name": "XYLOR 10MG TABLET",
     "genericName": "XYLOR 10MG TABLET",
@@ -2162,10 +2382,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_99",
+    "id": "offer_m_109",
     "code": "489",
     "name": "APROVEL 150MG TABLET",
     "genericName": "APROVEL 150MG TABLET",
@@ -2184,10 +2404,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_100",
+    "id": "offer_m_110",
     "code": "1849",
     "name": "CO-APROVEL 300/12.5 TAB.",
     "genericName": "CO-APROVEL 300/12.5 TAB.",
@@ -2206,10 +2426,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_101",
+    "id": "offer_m_111",
     "code": "1986",
     "name": "CORDARONE 100MG TABLET",
     "genericName": "CORDARONE 100MG TABLET",
@@ -2228,10 +2448,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_102",
+    "id": "offer_m_112",
     "code": "3288",
     "name": "FLAGYL INJECTION",
     "genericName": "FLAGYL INJECTION",
@@ -2250,10 +2470,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&q=80"
   },
   {
-    "id": "offer_m_103",
+    "id": "offer_m_113",
     "code": "5572",
     "name": "MUSCORIL CAP.AVENTIS",
     "genericName": "MUSCORIL CAP.AVENTIS",
@@ -2272,10 +2492,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_104",
+    "id": "offer_m_114",
     "code": "5947",
     "name": "NO-SPA FORTE TABLET",
     "genericName": "NO-SPA FORTE TABLET",
@@ -2294,10 +2514,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_105",
+    "id": "offer_m_115",
     "code": "5948",
     "name": "NO-SPA INJECTION",
     "genericName": "NO-SPA INJECTION",
@@ -2316,10 +2536,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80"
   },
   {
-    "id": "offer_m_106",
+    "id": "offer_m_116",
     "code": "5949",
     "name": "NO-SPA TABLET",
     "genericName": "NO-SPA TABLET",
@@ -2338,10 +2558,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_107",
+    "id": "offer_m_117",
     "code": "8584",
     "name": "TELFAST 120MG TABLET",
     "genericName": "TELFAST 120MG TABLET",
@@ -2360,10 +2580,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_108",
+    "id": "offer_m_118",
     "code": "737",
     "name": "BERDI SECHA",
     "genericName": "BERDI SECHA",
@@ -2382,10 +2602,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_109",
+    "id": "offer_m_119",
     "code": "173",
     "name": "AEROKAST 10MG NEWPRINT",
     "genericName": "AEROKAST 10MG NEWPRINT",
@@ -2404,10 +2624,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_110",
+    "id": "offer_m_120",
     "code": "A016",
     "name": "BARIPEG-P DROP",
     "genericName": "BARIPEG-P DROP",
@@ -2426,10 +2646,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_111",
+    "id": "offer_m_121",
     "code": "0140",
     "name": "BARIZOL 600MG",
     "genericName": "BARIZOL 600MG",
@@ -2448,10 +2668,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_112",
+    "id": "offer_m_122",
     "code": "805",
     "name": "BARIZOLE 400 TAB.",
     "genericName": "BARIZOLE 400 TAB.",
@@ -2470,10 +2690,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_113",
+    "id": "offer_m_123",
     "code": "934",
     "name": "BETALOC ZOK TAB 100MG",
     "genericName": "BETALOC ZOK TAB 100MG",
@@ -2492,10 +2712,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_114",
+    "id": "offer_m_124",
     "code": "1133",
     "name": "BRITANYL TABLET",
     "genericName": "BRITANYL TABLET",
@@ -2514,10 +2734,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_115",
+    "id": "offer_m_125",
     "code": "2354",
     "name": "DIABOLD 2MG TABLET BARRET",
     "genericName": "DIABOLD 2MG TABLET BARRET",
@@ -2536,10 +2756,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_116",
+    "id": "offer_m_126",
     "code": "2358",
     "name": "DIABOLD PLUS 2MG+500MG TA",
     "genericName": "DIABOLD PLUS 2MG+500MG TA",
@@ -2561,7 +2781,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_117",
+    "id": "offer_m_127",
     "code": "2519",
     "name": "DOMEL TABLET",
     "genericName": "DOMEL TABLET",
@@ -2580,10 +2800,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_118",
+    "id": "offer_m_128",
     "code": "2640",
     "name": "DYNAQUIN 250MG TABLET BAR",
     "genericName": "DYNAQUIN 250MG TABLET BAR",
@@ -2602,10 +2822,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_119",
+    "id": "offer_m_129",
     "code": "4197",
     "name": "IMDUR 60MG TABLET BARRET",
     "genericName": "IMDUR 60MG TABLET BARRET",
@@ -2624,10 +2844,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_120",
+    "id": "offer_m_130",
     "code": "4260",
     "name": "INOCEF 500IV",
     "genericName": "INOCEF 500IV",
@@ -2646,10 +2866,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_121",
+    "id": "offer_m_131",
     "code": "4310",
     "name": "IRECON 150MG TABLET",
     "genericName": "IRECON 150MG TABLET",
@@ -2668,10 +2888,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_122",
+    "id": "offer_m_132",
     "code": "4313",
     "name": "IRECON-H 150MG TABLET",
     "genericName": "IRECON-H 150MG TABLET",
@@ -2690,10 +2910,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_123",
+    "id": "offer_m_133",
     "code": "020",
     "name": "IVEFER ING",
     "genericName": "IVEFER ING",
@@ -2715,7 +2935,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_124",
+    "id": "offer_m_134",
     "code": "6872",
     "name": "PERSCH 1MG TABLET",
     "genericName": "PERSCH 1MG TABLET",
@@ -2734,10 +2954,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_125",
+    "id": "offer_m_135",
     "code": "6875",
     "name": "PERSCH 4MG TABLET",
     "genericName": "PERSCH 4MG TABLET",
@@ -2759,7 +2979,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_126",
+    "id": "offer_m_136",
     "code": "C123",
     "name": "ROSUBAR 10 OLD",
     "genericName": "ROSUBAR 10 OLD",
@@ -2778,10 +2998,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_127",
+    "id": "offer_m_137",
     "code": "7769",
     "name": "S-GLIPTIN PLUS 50/500MG T",
     "genericName": "S-GLIPTIN PLUS 50/500MG T",
@@ -2800,10 +3020,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_128",
+    "id": "offer_m_138",
     "code": "8016",
     "name": "SERT 100MG TABLET",
     "genericName": "SERT 100MG TABLET",
@@ -2822,10 +3042,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_129",
+    "id": "offer_m_139",
     "code": "8017",
     "name": "SERT 50MG TABLET",
     "genericName": "SERT 50MG TABLET",
@@ -2844,10 +3064,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_130",
+    "id": "offer_m_140",
     "code": "8244",
     "name": "SPASRID TABLET BARRET",
     "genericName": "SPASRID TABLET BARRET",
@@ -2869,7 +3089,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_131",
+    "id": "offer_m_141",
     "code": "C274",
     "name": "SYNICOM DROP FRESH",
     "genericName": "SYNICOM DROP FRESH",
@@ -2891,7 +3111,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_132",
+    "id": "offer_m_142",
     "code": "8648",
     "name": "TERLAX 2MG TABLET",
     "genericName": "TERLAX 2MG TABLET",
@@ -2913,7 +3133,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_133",
+    "id": "offer_m_143",
     "code": "1318",
     "name": "CANESETEN EXTRA CREAM",
     "genericName": "CANESETEN EXTRA CREAM",
@@ -2932,10 +3152,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80"
   },
   {
-    "id": "offer_m_134",
+    "id": "offer_m_144",
     "code": "1319",
     "name": "CANESTEN 1 TABLET RS.179.",
     "genericName": "CANESTEN 1 TABLET RS.179.",
@@ -2954,10 +3174,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_135",
+    "id": "offer_m_145",
     "code": "1321",
     "name": "CANESTEN CREAM",
     "genericName": "CANESTEN CREAM",
@@ -2976,10 +3196,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_136",
+    "id": "offer_m_146",
     "code": "1322",
     "name": "CANESTEN VAGINAL CREAM",
     "genericName": "CANESTEN VAGINAL CREAM",
@@ -3001,7 +3221,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
   },
   {
-    "id": "offer_m_137",
+    "id": "offer_m_147",
     "code": "1696",
     "name": "CIPROXIN 500MG TABLETS BA",
     "genericName": "CIPROXIN 500MG TABLETS BA",
@@ -3020,10 +3240,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_138",
+    "id": "offer_m_148",
     "code": "387",
     "name": "AMOXIL 500MG NEW CAP",
     "genericName": "AMOXIL 500MG NEW CAP",
@@ -3045,7 +3265,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_139",
+    "id": "offer_m_149",
     "code": "396",
     "name": "AMPICLOX 500MG CAP.(100'S",
     "genericName": "AMPICLOX 500MG CAP.(100'S",
@@ -3067,7 +3287,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_140",
+    "id": "offer_m_150",
     "code": "668",
     "name": "AUGMENTIN 375MG 12'S TAB",
     "genericName": "AUGMENTIN 375MG 12'S TAB",
@@ -3086,10 +3306,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_141",
+    "id": "offer_m_151",
     "code": "672",
     "name": "AUGMENTIN BD 6'S TAB.",
     "genericName": "AUGMENTIN BD 6'S TAB.",
@@ -3108,10 +3328,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_142",
+    "id": "offer_m_152",
     "code": "3265",
     "name": "FIBROCOL SACHET NEW",
     "genericName": "FIBROCOL SACHET NEW",
@@ -3130,10 +3350,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_143",
+    "id": "offer_m_153",
     "code": "3914",
     "name": "HELEZOL 20MG CAPSULE",
     "genericName": "HELEZOL 20MG CAPSULE",
@@ -3152,10 +3372,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_144",
+    "id": "offer_m_154",
     "code": "3915",
     "name": "HELEZOL 40MG CAPSULE",
     "genericName": "HELEZOL 40MG CAPSULE",
@@ -3177,7 +3397,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_145",
+    "id": "offer_m_155",
     "code": "1227",
     "name": "CALAMOX 1.2MG INJECTION",
     "genericName": "CALAMOX 1.2MG INJECTION",
@@ -3196,10 +3416,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&q=80"
   },
   {
-    "id": "offer_m_146",
+    "id": "offer_m_156",
     "code": "1229",
     "name": "CALAMOX 1GM TABLET",
     "genericName": "CALAMOX 1GM TABLET",
@@ -3218,10 +3438,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_147",
+    "id": "offer_m_157",
     "code": "1232",
     "name": "CALAMOX 375MG TAB",
     "genericName": "CALAMOX 375MG TAB",
@@ -3240,10 +3460,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_148",
+    "id": "offer_m_158",
     "code": "1233",
     "name": "CALAMOX DS NEW",
     "genericName": "CALAMOX DS NEW",
@@ -3262,10 +3482,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_149",
+    "id": "offer_m_159",
     "code": "1228",
     "name": "CALAMOX SYRP 90ML.",
     "genericName": "CALAMOX SYRP 90ML.",
@@ -3284,10 +3504,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_150",
+    "id": "offer_m_160",
     "code": "1415",
     "name": "CEBAC 1G INJ BOSCH",
     "genericName": "CEBAC 1G INJ BOSCH",
@@ -3306,10 +3526,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80"
   },
   {
-    "id": "offer_m_151",
+    "id": "offer_m_161",
     "code": "0410",
     "name": "CEBAK 2GM INJ",
     "genericName": "CEBAK 2GM INJ",
@@ -3328,10 +3548,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80"
   },
   {
-    "id": "offer_m_152",
+    "id": "offer_m_162",
     "code": "1417",
     "name": "CEBOSH 200MG TABLET",
     "genericName": "CEBOSH 200MG TABLET",
@@ -3350,10 +3570,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_153",
+    "id": "offer_m_163",
     "code": "1418",
     "name": "CEBOSH 400MG CAPSULE",
     "genericName": "CEBOSH 400MG CAPSULE",
@@ -3372,10 +3592,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_154",
+    "id": "offer_m_164",
     "code": "1419",
     "name": "CEBOSH 400MG TABLET",
     "genericName": "CEBOSH 400MG TABLET",
@@ -3394,10 +3614,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_155",
+    "id": "offer_m_165",
     "code": "1420",
     "name": "CEBOSH SYP DS DS",
     "genericName": "CEBOSH SYP DS DS",
@@ -3416,10 +3636,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_156",
+    "id": "offer_m_166",
     "code": "1421",
     "name": "CEBOSH SYRUP 30ML SMALL",
     "genericName": "CEBOSH SYRUP 30ML SMALL",
@@ -3438,10 +3658,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_157",
+    "id": "offer_m_167",
     "code": "5053",
     "name": "MACLACIN 500MG TABLET",
     "genericName": "MACLACIN 500MG TABLET",
@@ -3460,10 +3680,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_158",
+    "id": "offer_m_168",
     "code": "6384",
     "name": "OMEZOL 20MG CAP.BOSCH",
     "genericName": "OMEZOL 20MG CAP.BOSCH",
@@ -3482,10 +3702,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_159",
+    "id": "offer_m_169",
     "code": "6385",
     "name": "OMEZOL 40MG CAP.BOSCH",
     "genericName": "OMEZOL 40MG CAP.BOSCH",
@@ -3504,10 +3724,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_160",
+    "id": "offer_m_170",
     "code": "6386",
     "name": "OMEZOL INJECTION BOSCH",
     "genericName": "OMEZOL INJECTION BOSCH",
@@ -3526,10 +3746,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80"
   },
   {
-    "id": "offer_m_161",
+    "id": "offer_m_171",
     "code": "6566",
     "name": "ORVA 10MG TAB BOSCH",
     "genericName": "ORVA 10MG TAB BOSCH",
@@ -3548,10 +3768,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_162",
+    "id": "offer_m_172",
     "code": "7076",
     "name": "PRELOX SYRUP BOSCH",
     "genericName": "PRELOX SYRUP BOSCH",
@@ -3570,10 +3790,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_163",
+    "id": "offer_m_173",
     "code": "7291",
     "name": "QBAL TABLET",
     "genericName": "QBAL TABLET",
@@ -3592,10 +3812,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_164",
+    "id": "offer_m_174",
     "code": "7323",
     "name": "QUINOFLOX 250MG BOSCH",
     "genericName": "QUINOFLOX 250MG BOSCH",
@@ -3614,10 +3834,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_165",
+    "id": "offer_m_175",
     "code": "0549",
     "name": "QUMIC 250 NEW NEW",
     "genericName": "QUMIC 250 NEW NEW",
@@ -3639,7 +3859,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_166",
+    "id": "offer_m_176",
     "code": "8207",
     "name": "SOMEZOL 20MG CAPSULE",
     "genericName": "SOMEZOL 20MG CAPSULE",
@@ -3658,10 +3878,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_167",
+    "id": "offer_m_177",
     "code": "8208",
     "name": "SOMEZOL 40MG CAPSULE",
     "genericName": "SOMEZOL 40MG CAPSULE",
@@ -3683,7 +3903,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_168",
+    "id": "offer_m_178",
     "code": "9561",
     "name": "ZENTRO 40MG TAB.BOSCH",
     "genericName": "ZENTRO 40MG TAB.BOSCH",
@@ -3702,10 +3922,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_169",
+    "id": "offer_m_179",
     "code": "0137",
     "name": "ZEZOT 250MG CAP",
     "genericName": "ZEZOT 250MG CAP",
@@ -3724,10 +3944,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_170",
+    "id": "offer_m_180",
     "code": "9591",
     "name": "ZEZOT SYP SMALL",
     "genericName": "ZEZOT SYP SMALL",
@@ -3749,7 +3969,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_171",
+    "id": "offer_m_181",
     "code": "3931",
     "name": "HEPA-MERZ 10ML INJ",
     "genericName": "HEPA-MERZ 10ML INJ",
@@ -3768,10 +3988,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_172",
+    "id": "offer_m_182",
     "code": "9426",
     "name": "XIFAXA 550MG TAB.",
     "genericName": "XIFAXA 550MG TAB.",
@@ -3790,10 +4010,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_173",
+    "id": "offer_m_183",
     "code": "3356",
     "name": "FLUCON 150MG CAPSULE",
     "genericName": "FLUCON 150MG CAPSULE",
@@ -3812,10 +4032,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_174",
+    "id": "offer_m_184",
     "code": "CE41",
     "name": "ZOLOXIN 250 CIPROCIN",
     "genericName": "ZOLOXIN 250 CIPROCIN",
@@ -3834,10 +4054,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_175",
+    "id": "offer_m_185",
     "code": "0045",
     "name": "GALVECTAPLUS 50/850",
     "genericName": "GALVECTAPLUS 50/850",
@@ -3856,10 +4076,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_176",
+    "id": "offer_m_186",
     "code": "A024",
     "name": "KETORITE TAB CCL",
     "genericName": "KETORITE TAB CCL",
@@ -3878,10 +4098,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_177",
+    "id": "offer_m_187",
     "code": "5127",
     "name": "MAXFLOW 0.4MG CAP.CCL",
     "genericName": "MAXFLOW 0.4MG CAP.CCL",
@@ -3900,10 +4120,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_178",
+    "id": "offer_m_188",
     "code": "WR22",
     "name": "NIBOVO 2.5",
     "genericName": "NIBOVO 2.5",
@@ -3922,17 +4142,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_179",
+    "id": "offer_m_189",
     "code": "7249",
     "name": "PULMONOL SYRUP",
     "genericName": "PULMONOL SYRUP",
     "category": "medicines",
     "price": 132,
-    "originalPrice": null,
-    "discountPercent": 0,
+    "originalPrice": 151.8,
+    "discountPercent": 15,
     "packagingMode": "pack",
     "stripsPerPack": 1,
     "hasStripOption": false,
@@ -3944,10 +4164,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&q=80"
   },
   {
-    "id": "offer_m_180",
+    "id": "offer_m_190",
     "code": "8112",
     "name": "SITA 100MG TAB.CCL",
     "genericName": "SITA 100MG TAB.CCL",
@@ -3966,10 +4186,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_181",
+    "id": "offer_m_191",
     "code": "8114",
     "name": "SITA MET 50/1000MG TAB.CC",
     "genericName": "SITA MET 50/1000MG TAB.CC",
@@ -3988,10 +4208,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_182",
+    "id": "offer_m_192",
     "code": "8115",
     "name": "SITA MET 50/500MG TAB.CCL",
     "genericName": "SITA MET 50/500MG TAB.CCL",
@@ -4010,10 +4230,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_183",
+    "id": "offer_m_193",
     "code": "0084",
     "name": "SITAMET 50 850MG",
     "genericName": "SITAMET 50 850MG",
@@ -4032,10 +4252,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_184",
+    "id": "offer_m_194",
     "code": "8777",
     "name": "TORADOL INJ 826.02",
     "genericName": "TORADOL INJ 826.02",
@@ -4054,10 +4274,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80"
   },
   {
-    "id": "offer_m_185",
+    "id": "offer_m_195",
     "code": "9034",
     "name": "VALAM 5/80MG TAB.CCL",
     "genericName": "VALAM 5/80MG TAB.CCL",
@@ -4076,10 +4296,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_186",
+    "id": "offer_m_196",
     "code": "4057",
     "name": "HYCORTISONE 100MG INJ",
     "genericName": "HYCORTISONE 100MG INJ",
@@ -4098,10 +4318,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_187",
+    "id": "offer_m_197",
     "code": "7783",
     "name": "SAKOON TABLET",
     "genericName": "SAKOON TABLET",
@@ -4120,10 +4340,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_188",
+    "id": "offer_m_198",
     "code": "4244",
     "name": "INFLAMATIX 100MG TAB.",
     "genericName": "INFLAMATIX 100MG TAB.",
@@ -4142,10 +4362,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_189",
+    "id": "offer_m_199",
     "code": "9283",
     "name": "VOREN 50MG TABLET",
     "genericName": "VOREN 50MG TABLET",
@@ -4164,10 +4384,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_190",
+    "id": "offer_m_200",
     "code": "9284",
     "name": "VOREN CAPSULE CONTINENTAL",
     "genericName": "VOREN CAPSULE CONTINENTAL",
@@ -4186,10 +4406,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_191",
+    "id": "offer_m_201",
     "code": "9286",
     "name": "VOREN INJ NEW",
     "genericName": "VOREN INJ NEW",
@@ -4208,10 +4428,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_192",
+    "id": "offer_m_202",
     "code": "9287",
     "name": "VOREN SR 100MG TAB",
     "genericName": "VOREN SR 100MG TAB",
@@ -4233,7 +4453,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_193",
+    "id": "offer_m_203",
     "code": "2428",
     "name": "DIGESTINE CAPSULE",
     "genericName": "DIGESTINE CAPSULE",
@@ -4252,10 +4472,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_194",
+    "id": "offer_m_204",
     "code": "9732",
     "name": "NEZKIL SUSPENSION",
     "genericName": "NEZKIL SUSPENSION",
@@ -4274,10 +4494,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&q=80"
   },
   {
-    "id": "offer_m_195",
+    "id": "offer_m_205",
     "code": "726",
     "name": "AZOLAM 0.5MG TAB.",
     "genericName": "AZOLAM 0.5MG TAB.",
@@ -4296,10 +4516,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_196",
+    "id": "offer_m_206",
     "code": "3761",
     "name": "GLUCOVANCE 2.5MG TAB.",
     "genericName": "GLUCOVANCE 2.5MG TAB.",
@@ -4318,10 +4538,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_197",
+    "id": "offer_m_207",
     "code": "3762",
     "name": "GLUCOVANCE 5MG TABLET",
     "genericName": "GLUCOVANCE 5MG TABLET",
@@ -4343,7 +4563,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_198",
+    "id": "offer_m_208",
     "code": "4785",
     "name": "LEVOMERCK 500MG TAB MERCK",
     "genericName": "LEVOMERCK 500MG TAB MERCK",
@@ -4362,10 +4582,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_199",
+    "id": "offer_m_209",
     "code": "4907",
     "name": "LODOPIN 10MG TABLET",
     "genericName": "LODOPIN 10MG TABLET",
@@ -4384,10 +4604,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_200",
+    "id": "offer_m_210",
     "code": "5759",
     "name": "NEOPROX 250MG TABLET",
     "genericName": "NEOPROX 250MG TABLET",
@@ -4409,7 +4629,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_201",
+    "id": "offer_m_211",
     "code": "5760",
     "name": "NEOPROX 500MG TABLET",
     "genericName": "NEOPROX 500MG TABLET",
@@ -4431,7 +4651,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_202",
+    "id": "offer_m_212",
     "code": "5818",
     "name": "NEUROMET TABLET NEWW",
     "genericName": "NEUROMET TABLET NEWW",
@@ -4450,10 +4670,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_203",
+    "id": "offer_m_213",
     "code": "6996",
     "name": "POLYBION Z CAPSULE",
     "genericName": "POLYBION Z CAPSULE",
@@ -4472,10 +4692,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_204",
+    "id": "offer_m_214",
     "code": "8647",
     "name": "TERIL 200MG TABLET",
     "genericName": "TERIL 200MG TABLET",
@@ -4494,10 +4714,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_205",
+    "id": "offer_m_215",
     "code": "2662",
     "name": "EMPA 25MG CAP",
     "genericName": "EMPA 25MG CAP",
@@ -4516,10 +4736,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_206",
+    "id": "offer_m_216",
     "code": "2661",
     "name": "EMPA M 12.500 TAB",
     "genericName": "EMPA M 12.500 TAB",
@@ -4538,10 +4758,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_207",
+    "id": "offer_m_217",
     "code": "2663",
     "name": "EMPAA 10MG TAB",
     "genericName": "EMPAA 10MG TAB",
@@ -4560,10 +4780,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_208",
+    "id": "offer_m_218",
     "code": "5206",
     "name": "MEFNAC DS TABLETS",
     "genericName": "MEFNAC DS TABLETS",
@@ -4582,10 +4802,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_209",
+    "id": "offer_m_219",
     "code": "8802",
     "name": "TRAMAPAR NEW PK",
     "genericName": "TRAMAPAR NEW PK",
@@ -4607,7 +4827,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_210",
+    "id": "offer_m_220",
     "code": "8873",
     "name": "TRISIL TAB.",
     "genericName": "TRISIL TAB.",
@@ -4629,7 +4849,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_211",
+    "id": "offer_m_221",
     "code": "2095",
     "name": "CUREZOLE CREAM",
     "genericName": "CUREZOLE CREAM",
@@ -4651,7 +4871,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
   },
   {
-    "id": "offer_m_212",
+    "id": "offer_m_222",
     "code": "2112",
     "name": "CYCLOGEST 200MG TABLET",
     "genericName": "CYCLOGEST 200MG TABLET",
@@ -4670,10 +4890,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_213",
+    "id": "offer_m_223",
     "code": "120",
     "name": "ACYLEX 200MG TABLET",
     "genericName": "ACYLEX 200MG TABLET",
@@ -4692,10 +4912,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_214",
+    "id": "offer_m_224",
     "code": "121",
     "name": "ACYLEX 400MG TABLET",
     "genericName": "ACYLEX 400MG TABLET",
@@ -4714,10 +4934,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_215",
+    "id": "offer_m_225",
     "code": "122",
     "name": "ACYLEX 800MG TABLET",
     "genericName": "ACYLEX 800MG TABLET",
@@ -4736,10 +4956,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_216",
+    "id": "offer_m_226",
     "code": "678",
     "name": "AURORA 10MG TAB.FEROZSONS",
     "genericName": "AURORA 10MG TAB.FEROZSONS",
@@ -4758,10 +4978,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_217",
+    "id": "offer_m_227",
     "code": "679",
     "name": "AURORA 20MG TAB.FEROZSONS",
     "genericName": "AURORA 20MG TAB.FEROZSONS",
@@ -4780,10 +5000,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_218",
+    "id": "offer_m_228",
     "code": "3337",
     "name": "FLOSURE CAP.FEROZSONS",
     "genericName": "FLOSURE CAP.FEROZSONS",
@@ -4802,10 +5022,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_219",
+    "id": "offer_m_229",
     "code": "5890",
     "name": "NICORIL 10MG TAB.FEROZSON",
     "genericName": "NICORIL 10MG TAB.FEROZSON",
@@ -4824,10 +5044,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_220",
+    "id": "offer_m_230",
     "code": "6373",
     "name": "OMEGA 20MG CAPSULE",
     "genericName": "OMEGA 20MG CAPSULE",
@@ -4846,10 +5066,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_221",
+    "id": "offer_m_231",
     "code": "6542",
     "name": "ORLIS 120MG CAP.FEROZSONS",
     "genericName": "ORLIS 120MG CAP.FEROZSONS",
@@ -4868,10 +5088,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_222",
+    "id": "offer_m_232",
     "code": "7311",
     "name": "QUENCH PLUSM 15GM SMALL",
     "genericName": "QUENCH PLUSM 15GM SMALL",
@@ -4890,10 +5110,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_223",
+    "id": "offer_m_233",
     "code": "21A4",
     "name": "DOBALTA 20MG",
     "genericName": "DOBALTA 20MG",
@@ -4912,10 +5132,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_224",
+    "id": "offer_m_234",
     "code": "A057",
     "name": "DOBALTA 30MG",
     "genericName": "DOBALTA 30MG",
@@ -4934,10 +5154,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_225",
+    "id": "offer_m_235",
     "code": "21Q6",
     "name": "METANER TAB",
     "genericName": "METANER TAB",
@@ -4959,7 +5179,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_226",
+    "id": "offer_m_236",
     "code": "8765",
     "name": "TOPAGEN 25MG TAB.GENETICS",
     "genericName": "TOPAGEN 25MG TAB.GENETICS",
@@ -4981,7 +5201,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_227",
+    "id": "offer_m_237",
     "code": "8766",
     "name": "TOPAGEN 50MG TAB.GENETICS",
     "genericName": "TOPAGEN 50MG TAB.GENETICS",
@@ -5000,10 +5220,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_228",
+    "id": "offer_m_238",
     "code": "9132",
     "name": "VEPRIDONE 1MG TABLET",
     "genericName": "VEPRIDONE 1MG TABLET",
@@ -5022,10 +5242,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_229",
+    "id": "offer_m_239",
     "code": "9135",
     "name": "VEPRIDONE 4MG TAB.",
     "genericName": "VEPRIDONE 4MG TAB.",
@@ -5047,7 +5267,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_230",
+    "id": "offer_m_240",
     "code": "9729",
     "name": "D4U TABLET",
     "genericName": "D4U TABLET",
@@ -5066,10 +5286,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_231",
+    "id": "offer_m_241",
     "code": "2268",
     "name": "DEPSIT 10MG TAB.GENIX",
     "genericName": "DEPSIT 10MG TAB.GENIX",
@@ -5091,7 +5311,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_232",
+    "id": "offer_m_242",
     "code": "2270",
     "name": "DEPSIT 5MG TAB.GENIX",
     "genericName": "DEPSIT 5MG TAB.GENIX",
@@ -5110,10 +5330,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_233",
+    "id": "offer_m_243",
     "code": "2457",
     "name": "DIMIS 75MG TAB.GENIX",
     "genericName": "DIMIS 75MG TAB.GENIX",
@@ -5135,7 +5355,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_234",
+    "id": "offer_m_244",
     "code": "3595",
     "name": "GEN-M 40/240MG TABLET",
     "genericName": "GEN-M 40/240MG TABLET",
@@ -5154,10 +5374,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_235",
+    "id": "offer_m_245",
     "code": "3597",
     "name": "GEN-M DS SYRUP",
     "genericName": "GEN-M DS SYRUP",
@@ -5176,10 +5396,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_236",
+    "id": "offer_m_246",
     "code": "0481",
     "name": "GVIA M 50/850 TAB",
     "genericName": "GVIA M 50/850 TAB",
@@ -5198,10 +5418,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_237",
+    "id": "offer_m_247",
     "code": "3827",
     "name": "GVIA-M 50/500MG NEW",
     "genericName": "GVIA-M 50/500MG NEW",
@@ -5220,10 +5440,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_238",
+    "id": "offer_m_248",
     "code": "00A4",
     "name": "ITRACAP CAP",
     "genericName": "ITRACAP CAP",
@@ -5242,10 +5462,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_239",
+    "id": "offer_m_249",
     "code": "0477",
     "name": "LETS 2.5 TAB",
     "genericName": "LETS 2.5 TAB",
@@ -5267,7 +5487,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_240",
+    "id": "offer_m_250",
     "code": "6068",
     "name": "NT-TOX 30ML SYP",
     "genericName": "NT-TOX 30ML SYP",
@@ -5289,7 +5509,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_241",
+    "id": "offer_m_251",
     "code": "7507",
     "name": "RESPICARE 10MG TAB.",
     "genericName": "RESPICARE 10MG TAB.",
@@ -5308,10 +5528,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_242",
+    "id": "offer_m_252",
     "code": "8589",
     "name": "TELMIS-A 5/80MG TAB.GENIX",
     "genericName": "TELMIS-A 5/80MG TAB.GENIX",
@@ -5330,10 +5550,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_243",
+    "id": "offer_m_253",
     "code": "9713",
     "name": "ZYSPAN 600MG TAB",
     "genericName": "ZYSPAN 600MG TAB",
@@ -5352,10 +5572,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_244",
+    "id": "offer_m_254",
     "code": "1392",
     "name": "CARTIGEN PLUS TAB",
     "genericName": "CARTIGEN PLUS TAB",
@@ -5374,10 +5594,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_245",
+    "id": "offer_m_255",
     "code": "1471",
     "name": "CEFIGET 30ML SYRUP GETZ",
     "genericName": "CEFIGET 30ML SYRUP GETZ",
@@ -5396,10 +5616,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&q=80"
   },
   {
-    "id": "offer_m_246",
+    "id": "offer_m_256",
     "code": "1472",
     "name": "CEFIGET 400MG CAPSULE GET",
     "genericName": "CEFIGET 400MG CAPSULE GET",
@@ -5418,10 +5638,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_247",
+    "id": "offer_m_257",
     "code": "0461",
     "name": "CEFIGET DS NEW RAT",
     "genericName": "CEFIGET DS NEW RAT",
@@ -5440,10 +5660,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_248",
+    "id": "offer_m_258",
     "code": "1536",
     "name": "CELBEXX 100MG CAPSULE",
     "genericName": "CELBEXX 100MG CAPSULE",
@@ -5462,10 +5682,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_249",
+    "id": "offer_m_259",
     "code": "1546",
     "name": "CENOVA CHEWABLE TAB",
     "genericName": "CENOVA CHEWABLE TAB",
@@ -5484,10 +5704,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_250",
+    "id": "offer_m_260",
     "code": "1744",
     "name": "CLARITEK 250MG SYRUP",
     "genericName": "CLARITEK 250MG SYRUP",
@@ -5506,10 +5726,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_251",
+    "id": "offer_m_261",
     "code": "1745",
     "name": "CLARITEK 250MG TAB.GETZ",
     "genericName": "CLARITEK 250MG TAB.GETZ",
@@ -5528,10 +5748,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_252",
+    "id": "offer_m_262",
     "code": "3240",
     "name": "FEXET 120MG TABLET GETZ",
     "genericName": "FEXET 120MG TABLET GETZ",
@@ -5550,10 +5770,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_253",
+    "id": "offer_m_263",
     "code": "3242",
     "name": "FEXET 60MG TABLET GETZ",
     "genericName": "FEXET 60MG TABLET GETZ",
@@ -5572,10 +5792,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_254",
+    "id": "offer_m_264",
     "code": "3534",
     "name": "GABICA 150MG TABLET",
     "genericName": "GABICA 150MG TABLET",
@@ -5594,10 +5814,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_255",
+    "id": "offer_m_265",
     "code": "3536",
     "name": "GABICA 50MG CAP.GETZ",
     "genericName": "GABICA 50MG CAP.GETZ",
@@ -5616,10 +5836,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_256",
+    "id": "offer_m_266",
     "code": "3661",
     "name": "GETRYL 3MG TAB OLD",
     "genericName": "GETRYL 3MG TAB OLD",
@@ -5638,10 +5858,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_257",
+    "id": "offer_m_267",
     "code": "3789",
     "name": "GONADIL-F CAPSULE",
     "genericName": "GONADIL-F CAPSULE",
@@ -5660,10 +5880,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_258",
+    "id": "offer_m_268",
     "code": "4739",
     "name": "LEFLOX 250MG TAB.",
     "genericName": "LEFLOX 250MG TAB.",
@@ -5682,10 +5902,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_259",
+    "id": "offer_m_269",
     "code": "4740",
     "name": "LEFLOX 500MG TAB.",
     "genericName": "LEFLOX 500MG TAB.",
@@ -5704,10 +5924,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_260",
+    "id": "offer_m_270",
     "code": "4848",
     "name": "LIPIGET 10GM TAB.GETZ",
     "genericName": "LIPIGET 10GM TAB.GETZ",
@@ -5726,10 +5946,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_261",
+    "id": "offer_m_271",
     "code": "5172",
     "name": "MEBEVER 200MG CAPSULE",
     "genericName": "MEBEVER 200MG CAPSULE",
@@ -5748,10 +5968,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_262",
+    "id": "offer_m_272",
     "code": "5533",
     "name": "MOXIGET TAB.GETZ",
     "genericName": "MOXIGET TAB.GETZ",
@@ -5770,10 +5990,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_263",
+    "id": "offer_m_273",
     "code": "5870",
     "name": "NEXUM 20MG NEW",
     "genericName": "NEXUM 20MG NEW",
@@ -5792,10 +6012,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_264",
+    "id": "offer_m_274",
     "code": "5871",
     "name": "NEXUM 40MG CAP",
     "genericName": "NEXUM 40MG CAP",
@@ -5814,10 +6034,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_265",
+    "id": "offer_m_275",
     "code": "6540",
     "name": "ORLIFIT 120MG CAP.GETZ",
     "genericName": "ORLIFIT 120MG CAP.GETZ",
@@ -5836,10 +6056,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_266",
+    "id": "offer_m_276",
     "code": "7613",
     "name": "RISEK INJ NEW",
     "genericName": "RISEK INJ NEW",
@@ -5858,10 +6078,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80"
   },
   {
-    "id": "offer_m_267",
+    "id": "offer_m_277",
     "code": "7720",
     "name": "ROVISTA 10MG 30TAB",
     "genericName": "ROVISTA 10MG 30TAB",
@@ -5880,10 +6100,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_268",
+    "id": "offer_m_278",
     "code": "7786",
     "name": "SALBO INHALER GETS",
     "genericName": "SALBO INHALER GETS",
@@ -5902,10 +6122,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_269",
+    "id": "offer_m_279",
     "code": "8185",
     "name": "SOLIFEN 5MG TAB.GETZ",
     "genericName": "SOLIFEN 5MG TAB.GETZ",
@@ -5924,10 +6144,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_270",
+    "id": "offer_m_280",
     "code": "8527",
     "name": "TAMSOLIN NEW",
     "genericName": "TAMSOLIN NEW",
@@ -5946,10 +6166,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_271",
+    "id": "offer_m_281",
     "code": "024",
     "name": "TAMSOLIN PLUS 0.4=0.5MG",
     "genericName": "TAMSOLIN PLUS 0.4=0.5MG",
@@ -5968,10 +6188,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_272",
+    "id": "offer_m_282",
     "code": "8553",
     "name": "TASMI 20MG TAB.GETZ",
     "genericName": "TASMI 20MG TAB.GETZ",
@@ -5990,17 +6210,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_273",
+    "id": "offer_m_283",
     "code": "9735",
     "name": "TENOFO B TABLAT",
     "genericName": "TENOFO B TABLAT",
     "category": "medicines",
     "price": 2200,
-    "originalPrice": 2530,
-    "discountPercent": 15,
+    "originalPrice": null,
+    "discountPercent": 0,
     "packagingMode": "both",
     "stripsPerPack": 10,
     "hasStripOption": true,
@@ -6012,10 +6232,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_274",
+    "id": "offer_m_284",
     "code": "0293",
     "name": "TREVIAMET 50/500",
     "genericName": "TREVIAMET 50/500",
@@ -6034,10 +6254,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_275",
+    "id": "offer_m_285",
     "code": "0462",
     "name": "TREVIAMET XR 50MG 1000MG",
     "genericName": "TREVIAMET XR 50MG 1000MG",
@@ -6056,10 +6276,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_276",
+    "id": "offer_m_286",
     "code": "9396",
     "name": "XALTIDE INHALER",
     "genericName": "XALTIDE INHALER",
@@ -6078,10 +6298,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_277",
+    "id": "offer_m_287",
     "code": "0127",
     "name": "ZETRO 25OMG CAP",
     "genericName": "ZETRO 25OMG CAP",
@@ -6103,7 +6323,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_278",
+    "id": "offer_m_288",
     "code": "9587",
     "name": "ZETRO SYRUP GETZ",
     "genericName": "ZETRO SYRUP GETZ",
@@ -6122,10 +6342,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&q=80"
   },
   {
-    "id": "offer_m_279",
+    "id": "offer_m_289",
     "code": "C124",
     "name": "AUGMENTIN 625 6X2",
     "genericName": "AUGMENTIN 625 6X2",
@@ -6147,7 +6367,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_280",
+    "id": "offer_m_290",
     "code": "1276",
     "name": "CALPOL TAB.",
     "genericName": "CALPOL TAB.",
@@ -6166,10 +6386,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_281",
+    "id": "offer_m_291",
     "code": "6999",
     "name": "POLYFAX EYE OINTMENT",
     "genericName": "POLYFAX EYE OINTMENT",
@@ -6188,10 +6408,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80"
   },
   {
-    "id": "offer_m_282",
+    "id": "offer_m_292",
     "code": "7001",
     "name": "POLYFAX SKIN OINTMENT",
     "genericName": "POLYFAX SKIN OINTMENT",
@@ -6213,7 +6433,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
   },
   {
-    "id": "offer_m_283",
+    "id": "offer_m_293",
     "code": "1285",
     "name": "CALTRAMAG-D TAB.",
     "genericName": "CALTRAMAG-D TAB.",
@@ -6232,10 +6452,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_284",
+    "id": "offer_m_294",
     "code": "8803",
     "name": "TRAMAL INJ",
     "genericName": "TRAMAL INJ",
@@ -6254,10 +6474,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_285",
+    "id": "offer_m_295",
     "code": "6587",
     "name": "NEW OSNATE D SYP",
     "genericName": "NEW OSNATE D SYP",
@@ -6276,10 +6496,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&q=80"
   },
   {
-    "id": "offer_m_286",
+    "id": "offer_m_296",
     "code": "4389",
     "name": "JAZETA 10+10MG TAB",
     "genericName": "JAZETA 10+10MG TAB",
@@ -6298,10 +6518,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_287",
+    "id": "offer_m_297",
     "code": "C14",
     "name": "GENNIFER 20 CORE HEALTH",
     "genericName": "GENNIFER 20 CORE HEALTH",
@@ -6320,10 +6540,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_288",
+    "id": "offer_m_298",
     "code": "4845",
     "name": "LIPIGET 10MG TAB NEW",
     "genericName": "LIPIGET 10MG TAB NEW",
@@ -6342,10 +6562,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_289",
+    "id": "offer_m_299",
     "code": "5964",
     "name": "NOGERD 50MG TABLET",
     "genericName": "NOGERD 50MG TABLET",
@@ -6364,10 +6584,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_290",
+    "id": "offer_m_300",
     "code": "5965",
     "name": "NOGERD SR CAPSULE",
     "genericName": "NOGERD SR CAPSULE",
@@ -6386,10 +6606,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_291",
+    "id": "offer_m_301",
     "code": "6828",
     "name": "PENTOXOL M TAB NEW",
     "genericName": "PENTOXOL M TAB NEW",
@@ -6408,10 +6628,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_292",
+    "id": "offer_m_302",
     "code": "2194",
     "name": "DAYLINE 500 IM INJECTION",
     "genericName": "DAYLINE 500 IM INJECTION",
@@ -6430,10 +6650,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_293",
+    "id": "offer_m_303",
     "code": "201",
     "name": "AIRTAL 100MG TABLET",
     "genericName": "AIRTAL 100MG TABLET",
@@ -6452,10 +6672,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_294",
+    "id": "offer_m_304",
     "code": "9744",
     "name": "AIRTAL ER 100TAB",
     "genericName": "AIRTAL ER 100TAB",
@@ -6474,10 +6694,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_295",
+    "id": "offer_m_305",
     "code": "1614",
     "name": "CIDIN TAB.HIGHNOON",
     "genericName": "CIDIN TAB.HIGHNOON",
@@ -6496,10 +6716,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_296",
+    "id": "offer_m_306",
     "code": "1937",
     "name": "COMBIVAIR 200MG CAPSULE",
     "genericName": "COMBIVAIR 200MG CAPSULE",
@@ -6518,10 +6738,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_297",
+    "id": "offer_m_307",
     "code": "C102",
     "name": "COMBIVAIR 400 MG NEW",
     "genericName": "COMBIVAIR 400 MG NEW",
@@ -6540,10 +6760,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_298",
+    "id": "offer_m_308",
     "code": "4248",
     "name": "INHIBITOL CAP.",
     "genericName": "INHIBITOL CAP.",
@@ -6565,7 +6785,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_299",
+    "id": "offer_m_309",
     "code": "4933",
     "name": "LOPRIN 75MG TABLET",
     "genericName": "LOPRIN 75MG TABLET",
@@ -6584,10 +6804,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_300",
+    "id": "offer_m_310",
     "code": "7184",
     "name": "PROSTAM 0.4MG CAP",
     "genericName": "PROSTAM 0.4MG CAP",
@@ -6606,10 +6826,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_301",
+    "id": "offer_m_311",
     "code": "9781",
     "name": "RANOLA 500MG TABLAT",
     "genericName": "RANOLA 500MG TABLAT",
@@ -6628,17 +6848,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_302",
+    "id": "offer_m_312",
     "code": "7535",
     "name": "REVOLIZER DEVICE",
     "genericName": "REVOLIZER DEVICE",
     "category": "medicines",
     "price": 580,
-    "originalPrice": null,
-    "discountPercent": 0,
+    "originalPrice": 667,
+    "discountPercent": 15,
     "packagingMode": "pack",
     "stripsPerPack": 1,
     "hasStripOption": false,
@@ -6650,10 +6870,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_303",
+    "id": "offer_m_313",
     "code": "8518",
     "name": "TAGIPMET 50/1000MG TAB.",
     "genericName": "TAGIPMET 50/1000MG TAB.",
@@ -6672,10 +6892,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_304",
+    "id": "offer_m_314",
     "code": "8519",
     "name": "TAGIPMET 50/500MG TABLET",
     "genericName": "TAGIPMET 50/500MG TABLET",
@@ -6694,10 +6914,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_305",
+    "id": "offer_m_315",
     "code": "8958",
     "name": "ULSANIC SYRUP 120ML IGM",
     "genericName": "ULSANIC SYRUP 120ML IGM",
@@ -6716,10 +6936,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&q=80"
   },
   {
-    "id": "offer_m_306",
+    "id": "offer_m_316",
     "code": "1476",
     "name": "CEFIM 30ML SYRUP SMALL HI",
     "genericName": "CEFIM 30ML SYRUP SMALL HI",
@@ -6738,10 +6958,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&q=80"
   },
   {
-    "id": "offer_m_307",
+    "id": "offer_m_317",
     "code": "1477",
     "name": "CEFIM 400MG CAPSULE HILTO",
     "genericName": "CEFIM 400MG CAPSULE HILTO",
@@ -6760,10 +6980,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_308",
+    "id": "offer_m_318",
     "code": "1575",
     "name": "CEROPHENE TAB 50MG",
     "genericName": "CEROPHENE TAB 50MG",
@@ -6785,7 +7005,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_309",
+    "id": "offer_m_319",
     "code": "1902",
     "name": "COFERB SACH",
     "genericName": "COFERB SACH",
@@ -6804,10 +7024,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_310",
+    "id": "offer_m_320",
     "code": "9829",
     "name": "DOLGINA 30MG",
     "genericName": "DOLGINA 30MG",
@@ -6826,10 +7046,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_311",
+    "id": "offer_m_321",
     "code": "2775",
     "name": "ENFLOR SACHET",
     "genericName": "ENFLOR SACHET",
@@ -6848,10 +7068,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_312",
+    "id": "offer_m_322",
     "code": "3377",
     "name": "FLUX CAPSULE HILTON",
     "genericName": "FLUX CAPSULE HILTON",
@@ -6870,10 +7090,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_313",
+    "id": "offer_m_323",
     "code": "4028",
     "name": "HITOP 25MG TABLET",
     "genericName": "HITOP 25MG TABLET",
@@ -6892,10 +7112,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_314",
+    "id": "offer_m_324",
     "code": "4743",
     "name": "LEFORA 10MG TAB.HILTON",
     "genericName": "LEFORA 10MG TAB.HILTON",
@@ -6917,7 +7137,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_315",
+    "id": "offer_m_325",
     "code": "4744",
     "name": "LEFORA 20MG TAB.HILTON",
     "genericName": "LEFORA 20MG TAB.HILTON",
@@ -6936,10 +7156,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_316",
+    "id": "offer_m_326",
     "code": "5611",
     "name": "MYTEKA 4MG TAB.HILTON",
     "genericName": "MYTEKA 4MG TAB.HILTON",
@@ -6958,10 +7178,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_317",
+    "id": "offer_m_327",
     "code": "5613",
     "name": "MYTEKA SACHET HILTON",
     "genericName": "MYTEKA SACHET HILTON",
@@ -6980,10 +7200,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_318",
+    "id": "offer_m_328",
     "code": "6133",
     "name": "OFLOBID 200MG TABLET SMAL",
     "genericName": "OFLOBID 200MG TABLET SMAL",
@@ -7002,10 +7222,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_319",
+    "id": "offer_m_329",
     "code": "7666",
     "name": "ROLIP 10MG TAB.HILTON",
     "genericName": "ROLIP 10MG TAB.HILTON",
@@ -7024,10 +7244,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_320",
+    "id": "offer_m_330",
     "code": "8118",
     "name": "SITAGLU 50MG TAB.HILTON",
     "genericName": "SITAGLU 50MG TAB.HILTON",
@@ -7049,7 +7269,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_321",
+    "id": "offer_m_331",
     "code": "8120",
     "name": "SITAGLUMET 50/500MG TAB.",
     "genericName": "SITAGLUMET 50/500MG TAB.",
@@ -7068,10 +7288,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_322",
+    "id": "offer_m_332",
     "code": "0291",
     "name": "SITAMET XR 100/1000",
     "genericName": "SITAMET XR 100/1000",
@@ -7090,10 +7310,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_323",
+    "id": "offer_m_333",
     "code": "0521",
     "name": "XENGLU MET 12.5/1000",
     "genericName": "XENGLU MET 12.5/1000",
@@ -7112,10 +7332,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_324",
+    "id": "offer_m_334",
     "code": "11QW",
     "name": "XILICA 50",
     "genericName": "XILICA 50",
@@ -7137,7 +7357,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_325",
+    "id": "offer_m_335",
     "code": "9431",
     "name": "XOBIX 15MG TABLET HILTON",
     "genericName": "XOBIX 15MG TABLET HILTON",
@@ -7156,10 +7376,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_326",
+    "id": "offer_m_336",
     "code": "9432",
     "name": "XOBIX 7.5MG TABLET HILTON",
     "genericName": "XOBIX 7.5MG TABLET HILTON",
@@ -7181,7 +7401,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_327",
+    "id": "offer_m_337",
     "code": "9525",
     "name": "ZEEGAP 50MG CAP.HILTON",
     "genericName": "ZEEGAP 50MG CAP.HILTON",
@@ -7200,10 +7420,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_328",
+    "id": "offer_m_338",
     "code": "3059",
     "name": "EZILAX TABLET NEW",
     "genericName": "EZILAX TABLET NEW",
@@ -7222,10 +7442,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_329",
+    "id": "offer_m_339",
     "code": "3959",
     "name": "HI-LECTA CAPSLUE",
     "genericName": "HI-LECTA CAPSLUE",
@@ -7247,7 +7467,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_330",
+    "id": "offer_m_340",
     "code": "6759",
     "name": "PASMOLAX DROP",
     "genericName": "PASMOLAX DROP",
@@ -7266,10 +7486,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_331",
+    "id": "offer_m_341",
     "code": "6760",
     "name": "PASMOLAX SYRUP",
     "genericName": "PASMOLAX SYRUP",
@@ -7288,10 +7508,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_332",
+    "id": "offer_m_342",
     "code": "C157",
     "name": "ARTEFROST 30ML SYP",
     "genericName": "ARTEFROST 30ML SYP",
@@ -7313,14 +7533,14 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_333",
+    "id": "offer_m_343",
     "code": "039",
     "name": "DEXXOO 30MG CAP",
     "genericName": "DEXXOO 30MG CAP",
     "category": "medicines",
     "price": 892.5,
-    "originalPrice": 1026.38,
-    "discountPercent": 15,
+    "originalPrice": null,
+    "discountPercent": 0,
     "packagingMode": "both",
     "stripsPerPack": 10,
     "hasStripOption": true,
@@ -7332,10 +7552,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_334",
+    "id": "offer_m_344",
     "code": "040",
     "name": "DEXXOO 60MG CAP",
     "genericName": "DEXXOO 60MG CAP",
@@ -7354,10 +7574,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_335",
+    "id": "offer_m_345",
     "code": "3489",
     "name": "FUNGE 125MG TAB.",
     "genericName": "FUNGE 125MG TAB.",
@@ -7376,10 +7596,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_336",
+    "id": "offer_m_346",
     "code": "3777",
     "name": "GLYSET 1MG TABLET HORIZON",
     "genericName": "GLYSET 1MG TABLET HORIZON",
@@ -7398,10 +7618,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_337",
+    "id": "offer_m_347",
     "code": "3778",
     "name": "GLYSET 2MG TABLET HORIZON",
     "genericName": "GLYSET 2MG TABLET HORIZON",
@@ -7420,10 +7640,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_338",
+    "id": "offer_m_348",
     "code": "3779",
     "name": "GLYSET 3MG TABLET HORIZON",
     "genericName": "GLYSET 3MG TABLET HORIZON",
@@ -7445,7 +7665,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_339",
+    "id": "offer_m_349",
     "code": "3780",
     "name": "GLYSET 4MG TABLET HORIZON",
     "genericName": "GLYSET 4MG TABLET HORIZON",
@@ -7467,7 +7687,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_340",
+    "id": "offer_m_350",
     "code": "C160",
     "name": "LEMIT 250MG TAB",
     "genericName": "LEMIT 250MG TAB",
@@ -7489,7 +7709,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_341",
+    "id": "offer_m_351",
     "code": "5197",
     "name": "MEDIGESIC FORTE TAB",
     "genericName": "MEDIGESIC FORTE TAB",
@@ -7508,10 +7728,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_342",
+    "id": "offer_m_352",
     "code": "5198",
     "name": "MEDIGESIC TABLET",
     "genericName": "MEDIGESIC TABLET",
@@ -7530,10 +7750,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_343",
+    "id": "offer_m_353",
     "code": "22C3",
     "name": "MYLAKAST 10MG TAB",
     "genericName": "MYLAKAST 10MG TAB",
@@ -7555,7 +7775,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_344",
+    "id": "offer_m_354",
     "code": "0250",
     "name": "STAARS 10MG HORIZON PHR",
     "genericName": "STAARS 10MG HORIZON PHR",
@@ -7574,10 +7794,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_345",
+    "id": "offer_m_355",
     "code": "0251",
     "name": "STAARS 20MG HORIZON PHARM",
     "genericName": "STAARS 20MG HORIZON PHARM",
@@ -7596,10 +7816,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_346",
+    "id": "offer_m_356",
     "code": "9693",
     "name": "ZULTRACET TABLET",
     "genericName": "ZULTRACET TABLET",
@@ -7618,10 +7838,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_347",
+    "id": "offer_m_357",
     "code": "4814",
     "name": "LIGNOCAINE COMP OINTMENT",
     "genericName": "LIGNOCAINE COMP OINTMENT",
@@ -7640,10 +7860,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80"
   },
   {
-    "id": "offer_m_348",
+    "id": "offer_m_358",
     "code": "9823",
     "name": "ALCUFLEX 550 TAB",
     "genericName": "ALCUFLEX 550 TAB",
@@ -7662,10 +7882,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_349",
+    "id": "offer_m_359",
     "code": "4215",
     "name": "INDERAL 10MG TABLET",
     "genericName": "INDERAL 10MG TABLET",
@@ -7684,10 +7904,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_350",
+    "id": "offer_m_360",
     "code": "5966",
     "name": "NOLVADEX TAB",
     "genericName": "NOLVADEX TAB",
@@ -7709,7 +7929,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_351",
+    "id": "offer_m_361",
     "code": "7225",
     "name": "PROXEN 250MG TABLET",
     "genericName": "PROXEN 250MG TABLET",
@@ -7728,10 +7948,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_352",
+    "id": "offer_m_362",
     "code": "7226",
     "name": "PROXEN 500MG TABLET",
     "genericName": "PROXEN 500MG TABLET",
@@ -7750,10 +7970,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_353",
+    "id": "offer_m_363",
     "code": "C20",
     "name": "TENORMIN 100 OLD",
     "genericName": "TENORMIN 100 OLD",
@@ -7772,10 +7992,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_354",
+    "id": "offer_m_364",
     "code": "8617",
     "name": "TENORMIN 25MG ICI",
     "genericName": "TENORMIN 25MG ICI",
@@ -7794,10 +8014,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_355",
+    "id": "offer_m_365",
     "code": "8618",
     "name": "TENORMIN 50MG ICI",
     "genericName": "TENORMIN 50MG ICI",
@@ -7816,10 +8036,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_356",
+    "id": "offer_m_366",
     "code": "9576",
     "name": "ZESTORETIC-20 TABLET",
     "genericName": "ZESTORETIC-20 TABLET",
@@ -7838,10 +8058,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_357",
+    "id": "offer_m_367",
     "code": "9296",
     "name": "WARFARIN TABLET",
     "genericName": "WARFARIN TABLET",
@@ -7863,7 +8083,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_358",
+    "id": "offer_m_368",
     "code": "1141",
     "name": "BROMALEX 3MG TABLET",
     "genericName": "BROMALEX 3MG TABLET",
@@ -7882,10 +8102,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_359",
+    "id": "offer_m_369",
     "code": "2634",
     "name": "DYCLO 50 TABLET",
     "genericName": "DYCLO 50 TABLET",
@@ -7904,17 +8124,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_360",
+    "id": "offer_m_370",
     "code": "2636",
     "name": "DYCLO INJECTION",
     "genericName": "DYCLO INJECTION",
     "category": "medicines",
     "price": 410,
-    "originalPrice": 471.5,
-    "discountPercent": 15,
+    "originalPrice": null,
+    "discountPercent": 0,
     "packagingMode": "pack",
     "stripsPerPack": 1,
     "hasStripOption": false,
@@ -7926,10 +8146,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80"
   },
   {
-    "id": "offer_m_361",
+    "id": "offer_m_371",
     "code": "6148",
     "name": "OFLOX 200MG TAB.INDUS",
     "genericName": "OFLOX 200MG TAB.INDUS",
@@ -7948,10 +8168,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_362",
+    "id": "offer_m_372",
     "code": "0267",
     "name": "ONSERON SYRP 25ML",
     "genericName": "ONSERON SYRP 25ML",
@@ -7970,10 +8190,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_363",
+    "id": "offer_m_373",
     "code": "9295",
     "name": "WILSOB 60 MG",
     "genericName": "WILSOB 60 MG",
@@ -7992,10 +8212,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_364",
+    "id": "offer_m_374",
     "code": "394",
     "name": "AMPER 10/4MG TAB",
     "genericName": "AMPER 10/4MG TAB",
@@ -8014,10 +8234,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_365",
+    "id": "offer_m_375",
     "code": "525",
     "name": "ARINAC FORTE TABLET",
     "genericName": "ARINAC FORTE TABLET",
@@ -8036,10 +8256,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_366",
+    "id": "offer_m_376",
     "code": "8570",
     "name": "TEARKOOL DROP",
     "genericName": "TEARKOOL DROP",
@@ -8061,7 +8281,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_367",
+    "id": "offer_m_377",
     "code": "9053",
     "name": "VALCARD 5/80 TAB EFROZE",
     "genericName": "VALCARD 5/80 TAB EFROZE",
@@ -8080,10 +8300,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_368",
+    "id": "offer_m_378",
     "code": "4840",
     "name": "LINZIM DS SYP",
     "genericName": "LINZIM DS SYP",
@@ -8105,7 +8325,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_369",
+    "id": "offer_m_379",
     "code": "1890",
     "name": "COBOLMIN INJECTION",
     "genericName": "COBOLMIN INJECTION",
@@ -8124,10 +8344,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&q=80"
   },
   {
-    "id": "offer_m_370",
+    "id": "offer_m_380",
     "code": "1891",
     "name": "COBOLMIN TAB 500MG",
     "genericName": "COBOLMIN TAB 500MG",
@@ -8146,10 +8366,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_371",
+    "id": "offer_m_381",
     "code": "5415",
     "name": "MNTK 10MG TABLET",
     "genericName": "MNTK 10MG TABLET",
@@ -8168,10 +8388,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_372",
+    "id": "offer_m_382",
     "code": "0472",
     "name": "VENTICORT 200MG CAP",
     "genericName": "VENTICORT 200MG CAP",
@@ -8190,10 +8410,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_373",
+    "id": "offer_m_383",
     "code": "0473",
     "name": "VENTICORT 400MG",
     "genericName": "VENTICORT 400MG",
@@ -8212,10 +8432,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_374",
+    "id": "offer_m_384",
     "code": "5452",
     "name": "MONIS 20 MG TAB",
     "genericName": "MONIS 20 MG TAB",
@@ -8234,10 +8454,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_375",
+    "id": "offer_m_385",
     "code": "5454",
     "name": "MONIS XR 60MG",
     "genericName": "MONIS XR 60MG",
@@ -8259,7 +8479,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_376",
+    "id": "offer_m_386",
     "code": "7398",
     "name": "RANZOL XR TAB MAPLE",
     "genericName": "RANZOL XR TAB MAPLE",
@@ -8278,10 +8498,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_377",
+    "id": "offer_m_387",
     "code": "C141",
     "name": "ACNE MED CREAM",
     "genericName": "ACNE MED CREAM",
@@ -8300,10 +8520,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80"
   },
   {
-    "id": "offer_m_378",
+    "id": "offer_m_388",
     "code": "503",
     "name": "AQUAZOLE CREAM",
     "genericName": "AQUAZOLE CREAM",
@@ -8325,7 +8545,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
   },
   {
-    "id": "offer_m_379",
+    "id": "offer_m_389",
     "code": "1064",
     "name": "BON-ONE TABLET",
     "genericName": "BON-ONE TABLET",
@@ -8344,10 +8564,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_380",
+    "id": "offer_m_390",
     "code": "9716",
     "name": "CAL ONE D OLD",
     "genericName": "CAL ONE D OLD",
@@ -8366,10 +8586,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_381",
+    "id": "offer_m_391",
     "code": "2553",
     "name": "DOWFEN GEL MARTIN",
     "genericName": "DOWFEN GEL MARTIN",
@@ -8388,10 +8608,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_382",
+    "id": "offer_m_392",
     "code": "0083",
     "name": "DOWMOXI 400MG TAB",
     "genericName": "DOWMOXI 400MG TAB",
@@ -8410,10 +8630,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_383",
+    "id": "offer_m_393",
     "code": "3502",
     "name": "FUSIDERM CREAM 15GMLARGE",
     "genericName": "FUSIDERM CREAM 15GMLARGE",
@@ -8432,10 +8652,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608248597359-0097c558c49d?w=500&q=80"
   },
   {
-    "id": "offer_m_384",
+    "id": "offer_m_394",
     "code": "4805",
     "name": "LEXOTANIL 3MG TAB",
     "genericName": "LEXOTANIL 3MG TAB",
@@ -8454,10 +8674,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_385",
+    "id": "offer_m_395",
     "code": "5574",
     "name": "MUSIDIN 2MG TABLET",
     "genericName": "MUSIDIN 2MG TABLET",
@@ -8476,10 +8696,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_386",
+    "id": "offer_m_396",
     "code": "8481",
     "name": "SYNFLEX TAB.550MG",
     "genericName": "SYNFLEX TAB.550MG",
@@ -8498,10 +8718,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_387",
+    "id": "offer_m_397",
     "code": "8635",
     "name": "TERBIN DS TAB.SEATLE",
     "genericName": "TERBIN DS TAB.SEATLE",
@@ -8520,10 +8740,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_388",
+    "id": "offer_m_398",
     "code": "1246",
     "name": "CALCITE 120ML SYP",
     "genericName": "CALCITE 120ML SYP",
@@ -8542,10 +8762,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&q=80"
   },
   {
-    "id": "offer_m_389",
+    "id": "offer_m_399",
     "code": "5013",
     "name": "LUTEVIT PLUS TABLET",
     "genericName": "LUTEVIT PLUS TABLET",
@@ -8564,10 +8784,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_390",
+    "id": "offer_m_400",
     "code": "5014",
     "name": "LUTEVIT SYRUP",
     "genericName": "LUTEVIT SYRUP",
@@ -8586,10 +8806,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&q=80"
   },
   {
-    "id": "offer_m_391",
+    "id": "offer_m_401",
     "code": "2144",
     "name": "D-MAX CHEW TAB",
     "genericName": "D-MAX CHEW TAB",
@@ -8608,17 +8828,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_392",
+    "id": "offer_m_402",
     "code": "2145",
     "name": "D-MAX DROP",
     "genericName": "D-MAX DROP",
     "category": "medicines",
     "price": 382.5,
-    "originalPrice": null,
-    "discountPercent": 0,
+    "originalPrice": 439.87,
+    "discountPercent": 15,
     "packagingMode": "pack",
     "stripsPerPack": 1,
     "hasStripOption": false,
@@ -8630,17 +8850,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_393",
+    "id": "offer_m_403",
     "code": "2423",
     "name": "DIGAS DROPS",
     "genericName": "DIGAS DROPS",
     "category": "medicines",
     "price": 185,
-    "originalPrice": 212.75,
-    "discountPercent": 15,
+    "originalPrice": null,
+    "discountPercent": 0,
     "packagingMode": "pack",
     "stripsPerPack": 1,
     "hasStripOption": false,
@@ -8655,7 +8875,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_394",
+    "id": "offer_m_404",
     "code": "81",
     "name": "GLYZIAMET 50/500MG TAB",
     "genericName": "GLYZIAMET 50/500MG TAB",
@@ -8674,10 +8894,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_395",
+    "id": "offer_m_405",
     "code": "2312",
     "name": "DETRIFLOW TAB.",
     "genericName": "DETRIFLOW TAB.",
@@ -8696,10 +8916,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_396",
+    "id": "offer_m_406",
     "code": "1071",
     "name": "BONCAL PLUS LARGE 30TAB",
     "genericName": "BONCAL PLUS LARGE 30TAB",
@@ -8718,10 +8938,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_397",
+    "id": "offer_m_407",
     "code": "1286",
     "name": "CALTRATE 600 D",
     "genericName": "CALTRATE 600 D",
@@ -8740,10 +8960,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_398",
+    "id": "offer_m_408",
     "code": "4320",
     "name": "IROAID CAP",
     "genericName": "IROAID CAP",
@@ -8762,10 +8982,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_399",
+    "id": "offer_m_409",
     "code": "4807",
     "name": "LEZRA 2.5MG TAB",
     "genericName": "LEZRA 2.5MG TAB",
@@ -8784,10 +9004,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_400",
+    "id": "offer_m_410",
     "code": "547",
     "name": "MONTIGET 10 NEW",
     "genericName": "MONTIGET 10 NEW",
@@ -8806,10 +9026,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_401",
+    "id": "offer_m_411",
     "code": "58",
     "name": "ACEFYL COUGH SYRUP",
     "genericName": "ACEFYL COUGH SYRUP",
@@ -8828,10 +9048,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&q=80"
   },
   {
-    "id": "offer_m_402",
+    "id": "offer_m_412",
     "code": "9746",
     "name": "CO DEPRICAP 3MG /25MG CAP",
     "genericName": "CO DEPRICAP 3MG /25MG CAP",
@@ -8853,7 +9073,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_403",
+    "id": "offer_m_413",
     "code": "1854",
     "name": "CO-DEPRICAP 6/25MG",
     "genericName": "CO-DEPRICAP 6/25MG",
@@ -8875,7 +9095,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_404",
+    "id": "offer_m_414",
     "code": "2264",
     "name": "DEPRICAP CAP.LARGE",
     "genericName": "DEPRICAP CAP.LARGE",
@@ -8894,10 +9114,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_405",
+    "id": "offer_m_415",
     "code": "5177",
     "name": "MECOBAL TABLET",
     "genericName": "MECOBAL TABLET",
@@ -8916,10 +9136,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_406",
+    "id": "offer_m_416",
     "code": "4227",
     "name": "INDROP D CAP 5000 LARG",
     "genericName": "INDROP D CAP 5000 LARG",
@@ -8938,10 +9158,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_407",
+    "id": "offer_m_417",
     "code": "4228",
     "name": "INDROP-D CAP",
     "genericName": "INDROP-D CAP",
@@ -8960,10 +9180,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80"
   },
   {
-    "id": "offer_m_408",
+    "id": "offer_m_418",
     "code": "4229",
     "name": "INDROP-D LEZER INJ",
     "genericName": "INDROP-D LEZER INJ",
@@ -8985,7 +9205,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_409",
+    "id": "offer_m_419",
     "code": "393",
     "name": "AMPER 5/4MG TAB",
     "genericName": "AMPER 5/4MG TAB",
@@ -9004,10 +9224,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_410",
+    "id": "offer_m_420",
     "code": "3700",
     "name": "GLINEXT 60MG TAB.",
     "genericName": "GLINEXT 60MG TAB.",
@@ -9029,7 +9249,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_411",
+    "id": "offer_m_421",
     "code": "03B3",
     "name": "SITANEXT 50/500 NEXT PHAR",
     "genericName": "SITANEXT 50/500 NEXT PHAR",
@@ -9048,10 +9268,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_412",
+    "id": "offer_m_422",
     "code": "9717",
     "name": "CAC PLUS TAB",
     "genericName": "CAC PLUS TAB",
@@ -9070,10 +9290,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_413",
+    "id": "offer_m_423",
     "code": "3170",
     "name": "FEMARA TAB.2.5MG NOVARTIS",
     "genericName": "FEMARA TAB.2.5MG NOVARTIS",
@@ -9092,10 +9312,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_414",
+    "id": "offer_m_424",
     "code": "3551",
     "name": "GALVUS 50MG TAB.NOVARTIS",
     "genericName": "GALVUS 50MG TAB.NOVARTIS",
@@ -9114,10 +9334,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_415",
+    "id": "offer_m_425",
     "code": "7814",
     "name": "SITAGLUMET 50/850",
     "genericName": "SITAGLUMET 50/850",
@@ -9136,17 +9356,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_416",
+    "id": "offer_m_426",
     "code": "9272",
     "name": "VOLTRAL 50MG TABLET NOVAR",
     "genericName": "VOLTRAL 50MG TABLET NOVAR",
     "category": "medicines",
     "price": 242.48,
-    "originalPrice": null,
-    "discountPercent": 0,
+    "originalPrice": 278.85,
+    "discountPercent": 15,
     "packagingMode": "both",
     "stripsPerPack": 10,
     "hasStripOption": true,
@@ -9158,10 +9378,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_417",
+    "id": "offer_m_427",
     "code": "9503",
     "name": "ZATOFEN TABLET",
     "genericName": "ZATOFEN TABLET",
@@ -9180,10 +9400,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_418",
+    "id": "offer_m_428",
     "code": "6049",
     "name": "NOVIPRAZ 10MG TAB.",
     "genericName": "NOVIPRAZ 10MG TAB.",
@@ -9202,10 +9422,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_419",
+    "id": "offer_m_429",
     "code": "6050",
     "name": "NOVIPRAZ 20MG TAB.",
     "genericName": "NOVIPRAZ 20MG TAB.",
@@ -9224,10 +9444,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_420",
+    "id": "offer_m_430",
     "code": "7192",
     "name": "PROSTRYL TAB.NOVINS",
     "genericName": "PROSTRYL TAB.NOVINS",
@@ -9246,10 +9466,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_421",
+    "id": "offer_m_431",
     "code": "7840",
     "name": "SARCOL 50MG TAB.NOVINS",
     "genericName": "SARCOL 50MG TAB.NOVINS",
@@ -9268,10 +9488,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_422",
+    "id": "offer_m_432",
     "code": "7841",
     "name": "SARCOL-H TAB.NOVINS",
     "genericName": "SARCOL-H TAB.NOVINS",
@@ -9290,10 +9510,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_423",
+    "id": "offer_m_433",
     "code": "9012",
     "name": "URODDONAL SACHET",
     "genericName": "URODDONAL SACHET",
@@ -9312,10 +9532,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_424",
+    "id": "offer_m_434",
     "code": "4428",
     "name": "K-KORT INJECTION",
     "genericName": "K-KORT INJECTION",
@@ -9334,10 +9554,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&q=80"
   },
   {
-    "id": "offer_m_425",
+    "id": "offer_m_435",
     "code": "4619",
     "name": "LINVESTA 5MG",
     "genericName": "LINVESTA 5MG",
@@ -9356,10 +9576,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_426",
+    "id": "offer_m_436",
     "code": "4",
     "name": "DUZALTA 20MG CAP",
     "genericName": "DUZALTA 20MG CAP",
@@ -9378,10 +9598,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_427",
+    "id": "offer_m_437",
     "code": "1914",
     "name": "COLENTICON GEL PACIFIC",
     "genericName": "COLENTICON GEL PACIFIC",
@@ -9400,10 +9620,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_428",
+    "id": "offer_m_438",
     "code": "2054",
     "name": "CRAFILM TABLET PACIFIC",
     "genericName": "CRAFILM TABLET PACIFIC",
@@ -9422,10 +9642,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_429",
+    "id": "offer_m_439",
     "code": "3627",
     "name": "GENURIN FORTE TABLET",
     "genericName": "GENURIN FORTE TABLET",
@@ -9447,7 +9667,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_430",
+    "id": "offer_m_440",
     "code": "4788",
     "name": "LEVOPRAID 50MG TAB.",
     "genericName": "LEVOPRAID 50MG TAB.",
@@ -9466,10 +9686,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_431",
+    "id": "offer_m_441",
     "code": "6704",
     "name": "PANADOL EXTRA TABLET",
     "genericName": "PANADOL EXTRA TABLET",
@@ -9488,10 +9708,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_432",
+    "id": "offer_m_442",
     "code": "6706",
     "name": "PANADOL TABLET BEECHAM",
     "genericName": "PANADOL TABLET BEECHAM",
@@ -9510,10 +9730,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_433",
+    "id": "offer_m_443",
     "code": "7020",
     "name": "PONSTAN FORT TABLET",
     "genericName": "PONSTAN FORT TABLET",
@@ -9532,10 +9752,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_434",
+    "id": "offer_m_444",
     "code": "7022",
     "name": "PONSTAN TABLET",
     "genericName": "PONSTAN TABLET",
@@ -9554,10 +9774,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_435",
+    "id": "offer_m_445",
     "code": "5020",
     "name": "LYRICA 75MG CAPSULE",
     "genericName": "LYRICA 75MG CAPSULE",
@@ -9576,10 +9796,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_436",
+    "id": "offer_m_446",
     "code": "6014",
     "name": "NORVASC 5MG TAB PFIZER",
     "genericName": "NORVASC 5MG TAB PFIZER",
@@ -9598,10 +9818,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_437",
+    "id": "offer_m_447",
     "code": "8477",
     "name": "SYNALAR N OINT.30GM",
     "genericName": "SYNALAR N OINT.30GM",
@@ -9623,7 +9843,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_438",
+    "id": "offer_m_448",
     "code": "2187",
     "name": "DARVIN TAB",
     "genericName": "DARVIN TAB",
@@ -9645,7 +9865,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_439",
+    "id": "offer_m_449",
     "code": "656",
     "name": "ATORVA 10MG TAB.PHARMATEC",
     "genericName": "ATORVA 10MG TAB.PHARMATEC",
@@ -9664,10 +9884,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_440",
+    "id": "offer_m_450",
     "code": "3128",
     "name": "FASTUM GEL PHARMATEC",
     "genericName": "FASTUM GEL PHARMATEC",
@@ -9686,10 +9906,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608248597359-0097c558c49d?w=500&q=80"
   },
   {
-    "id": "offer_m_441",
+    "id": "offer_m_451",
     "code": "4532",
     "name": "KETOALPHA TABLET",
     "genericName": "KETOALPHA TABLET",
@@ -9708,10 +9928,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_442",
+    "id": "offer_m_452",
     "code": "8009",
     "name": "SEROFT 50MG TABLET",
     "genericName": "SEROFT 50MG TABLET",
@@ -9730,10 +9950,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_443",
+    "id": "offer_m_453",
     "code": "126",
     "name": "AD FOLIC OD 600MG TAB",
     "genericName": "AD FOLIC OD 600MG TAB",
@@ -9752,10 +9972,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_444",
+    "id": "offer_m_454",
     "code": "507",
     "name": "ARBI 150MG TAB",
     "genericName": "ARBI 150MG TAB",
@@ -9774,10 +9994,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_445",
+    "id": "offer_m_455",
     "code": "508",
     "name": "ARBI 300 MG TAB",
     "genericName": "ARBI 300 MG TAB",
@@ -9796,10 +10016,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_446",
+    "id": "offer_m_456",
     "code": "A066",
     "name": "ERLINA 25/5",
     "genericName": "ERLINA 25/5",
@@ -9818,10 +10038,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_447",
+    "id": "offer_m_457",
     "code": "2938",
     "name": "ESTAR 5MG TABLET",
     "genericName": "ESTAR 5MG TABLET",
@@ -9840,10 +10060,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_448",
+    "id": "offer_m_458",
     "code": "C49",
     "name": "INOSITA 50/1000 NEW",
     "genericName": "INOSITA 50/1000 NEW",
@@ -9862,10 +10082,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_449",
+    "id": "offer_m_459",
     "code": "4269",
     "name": "INOSITA PLUS 50/500 TAB.",
     "genericName": "INOSITA PLUS 50/500 TAB.",
@@ -9884,10 +10104,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_450",
+    "id": "offer_m_460",
     "code": "9725",
     "name": "KALSOB TAB",
     "genericName": "KALSOB TAB",
@@ -9906,10 +10126,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_451",
+    "id": "offer_m_461",
     "code": "4979",
     "name": "LOWPLAT PLUS 150MG TABLET",
     "genericName": "LOWPLAT PLUS 150MG TABLET",
@@ -9928,17 +10148,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_452",
+    "id": "offer_m_462",
     "code": "5928",
     "name": "NISE TAB.PHARMEVO",
     "genericName": "NISE TAB.PHARMEVO",
     "category": "medicines",
     "price": 260.1,
-    "originalPrice": null,
-    "discountPercent": 0,
+    "originalPrice": 299.12,
+    "discountPercent": 15,
     "packagingMode": "both",
     "stripsPerPack": 10,
     "hasStripOption": true,
@@ -9950,10 +10170,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_453",
+    "id": "offer_m_463",
     "code": "6439",
     "name": "ONITA SACHET PHARMEVO",
     "genericName": "ONITA SACHET PHARMEVO",
@@ -9972,10 +10192,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_454",
+    "id": "offer_m_464",
     "code": "6558",
     "name": "ORSLIM 120MG CAP PHARMEVO",
     "genericName": "ORSLIM 120MG CAP PHARMEVO",
@@ -9994,10 +10214,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_455",
+    "id": "offer_m_465",
     "code": "8598",
     "name": "TELSARTA-A 5/40MG TAB",
     "genericName": "TELSARTA-A 5/40MG TAB",
@@ -10016,10 +10236,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_456",
+    "id": "offer_m_466",
     "code": "8599",
     "name": "TELSARTA-A 5/80 TAB",
     "genericName": "TELSARTA-A 5/80 TAB",
@@ -10038,10 +10258,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_457",
+    "id": "offer_m_467",
     "code": "8601",
     "name": "TELSARTA-D 80/12.5 TAB.PH",
     "genericName": "TELSARTA-D 80/12.5 TAB.PH",
@@ -10060,10 +10280,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_458",
+    "id": "offer_m_468",
     "code": "Q557",
     "name": "XILICA 25",
     "genericName": "XILICA 25",
@@ -10085,7 +10305,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_459",
+    "id": "offer_m_469",
     "code": "0114",
     "name": "XILICA 75MG",
     "genericName": "XILICA 75MG",
@@ -10104,10 +10324,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_460",
+    "id": "offer_m_470",
     "code": "1434",
     "name": "CEDROX 250MG SYRUP PLATIN",
     "genericName": "CEDROX 250MG SYRUP PLATIN",
@@ -10126,10 +10346,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_461",
+    "id": "offer_m_471",
     "code": "1435",
     "name": "CEDROX 500MG CAPSULE PLAT",
     "genericName": "CEDROX 500MG CAPSULE PLAT",
@@ -10148,10 +10368,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_462",
+    "id": "offer_m_472",
     "code": "2181",
     "name": "DAPAKAN 500MG TAB",
     "genericName": "DAPAKAN 500MG TAB",
@@ -10170,10 +10390,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_463",
+    "id": "offer_m_473",
     "code": "6600",
     "name": "OSSOBON-D SYRUP",
     "genericName": "OSSOBON-D SYRUP",
@@ -10192,10 +10412,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_464",
+    "id": "offer_m_474",
     "code": "6601",
     "name": "OSSOBON-D TABLET",
     "genericName": "OSSOBON-D TABLET",
@@ -10214,10 +10434,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_465",
+    "id": "offer_m_475",
     "code": "6974",
     "name": "PLAZO SYRUP",
     "genericName": "PLAZO SYRUP",
@@ -10236,10 +10456,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&q=80"
   },
   {
-    "id": "offer_m_466",
+    "id": "offer_m_476",
     "code": "4929",
     "name": "LOPHOS TABLET",
     "genericName": "LOPHOS TABLET",
@@ -10258,10 +10478,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_467",
+    "id": "offer_m_477",
     "code": "9116",
     "name": "VENOFER INJ.",
     "genericName": "VENOFER INJ.",
@@ -10280,17 +10500,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80"
   },
   {
-    "id": "offer_m_468",
+    "id": "offer_m_478",
     "code": "2489",
     "name": "DISPRIN TAB.100'S SMALL",
     "genericName": "DISPRIN TAB.100'S SMALL",
     "category": "medicines",
     "price": 265.31,
-    "originalPrice": 305.11,
-    "discountPercent": 15,
+    "originalPrice": null,
+    "discountPercent": 0,
     "packagingMode": "both",
     "stripsPerPack": 10,
     "hasStripOption": true,
@@ -10302,10 +10522,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_469",
+    "id": "offer_m_479",
     "code": "911",
     "name": "BETA F CREAM",
     "genericName": "BETA F CREAM",
@@ -10324,17 +10544,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_470",
+    "id": "offer_m_480",
     "code": "9764",
     "name": "CELLCEPT 500MG TABLAT",
     "genericName": "CELLCEPT 500MG TABLAT",
     "category": "medicines",
     "price": 6925.12,
-    "originalPrice": null,
-    "discountPercent": 0,
+    "originalPrice": 7963.89,
+    "discountPercent": 15,
     "packagingMode": "both",
     "stripsPerPack": 10,
     "hasStripOption": true,
@@ -10349,7 +10569,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_471",
+    "id": "offer_m_481",
     "code": "29",
     "name": "ERLI PLUS 12.500",
     "genericName": "ERLI PLUS 12.500",
@@ -10368,10 +10588,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_472",
+    "id": "offer_m_482",
     "code": "A106",
     "name": "DYSTRONE 10MG TAB",
     "genericName": "DYSTRONE 10MG TAB",
@@ -10390,10 +10610,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_473",
+    "id": "offer_m_483",
     "code": "2942",
     "name": "ESTRANOR TAB.SAFFRON",
     "genericName": "ESTRANOR TAB.SAFFRON",
@@ -10412,10 +10632,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_474",
+    "id": "offer_m_484",
     "code": "7216",
     "name": "PROVATE CREAM",
     "genericName": "PROVATE CREAM",
@@ -10437,7 +10657,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
   },
   {
-    "id": "offer_m_475",
+    "id": "offer_m_485",
     "code": "7219",
     "name": "PROVATE-G CREAM",
     "genericName": "PROVATE-G CREAM",
@@ -10456,10 +10676,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_476",
+    "id": "offer_m_486",
     "code": "8639",
     "name": "TERBISIL 250MG TAB.SFFRON",
     "genericName": "TERBISIL 250MG TAB.SFFRON",
@@ -10481,7 +10701,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_477",
+    "id": "offer_m_487",
     "code": "465",
     "name": "ANTIAL TAB 10MG",
     "genericName": "ANTIAL TAB 10MG",
@@ -10500,10 +10720,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_478",
+    "id": "offer_m_488",
     "code": "1380",
     "name": "CARICEF 200MG TAB.",
     "genericName": "CARICEF 200MG TAB.",
@@ -10522,10 +10742,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_479",
+    "id": "offer_m_489",
     "code": "1382",
     "name": "CARICEF 400MG CAPSULE",
     "genericName": "CARICEF 400MG CAPSULE",
@@ -10544,10 +10764,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_480",
+    "id": "offer_m_490",
     "code": "2151",
     "name": "D-TRES INJ 5AMP SAMI",
     "genericName": "D-TRES INJ 5AMP SAMI",
@@ -10566,10 +10786,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&q=80"
   },
   {
-    "id": "offer_m_481",
+    "id": "offer_m_491",
     "code": "0253",
     "name": "ECASIL 400MG TAB",
     "genericName": "ECASIL 400MG TAB",
@@ -10591,7 +10811,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_482",
+    "id": "offer_m_492",
     "code": "C90",
     "name": "ECASIL SYP",
     "genericName": "ECASIL SYP",
@@ -10613,7 +10833,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_483",
+    "id": "offer_m_493",
     "code": "3800",
     "name": "GRASIL 250MG INJECTION",
     "genericName": "GRASIL 250MG INJECTION",
@@ -10632,10 +10852,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80"
   },
   {
-    "id": "offer_m_484",
+    "id": "offer_m_494",
     "code": "3802",
     "name": "GRASIL 500MG INJECTION",
     "genericName": "GRASIL 500MG INJECTION",
@@ -10654,10 +10874,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_485",
+    "id": "offer_m_495",
     "code": "4298",
     "name": "INTIG-D TAB SAMI",
     "genericName": "INTIG-D TAB SAMI",
@@ -10676,10 +10896,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_486",
+    "id": "offer_m_496",
     "code": "5480",
     "name": "MONTIKA SACHET SAMI",
     "genericName": "MONTIKA SACHET SAMI",
@@ -10698,10 +10918,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_487",
+    "id": "offer_m_497",
     "code": "A006",
     "name": "NEW ORNO 8MG TAB",
     "genericName": "NEW ORNO 8MG TAB",
@@ -10720,10 +10940,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_488",
+    "id": "offer_m_498",
     "code": "6648",
     "name": "OXIDIL 250MG IV INJ",
     "genericName": "OXIDIL 250MG IV INJ",
@@ -10742,10 +10962,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&q=80"
   },
   {
-    "id": "offer_m_489",
+    "id": "offer_m_499",
     "code": "0133",
     "name": "OXIDIL 500 IV NEW",
     "genericName": "OXIDIL 500 IV NEW",
@@ -10764,10 +10984,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_490",
+    "id": "offer_m_500",
     "code": "0095",
     "name": "PROVAS N TAB",
     "genericName": "PROVAS N TAB",
@@ -10786,10 +11006,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_491",
+    "id": "offer_m_501",
     "code": "7637",
     "name": "RITHMO 500MG TAB.SAMI",
     "genericName": "RITHMO 500MG TAB.SAMI",
@@ -10808,10 +11028,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_492",
+    "id": "offer_m_502",
     "code": "9714",
     "name": "TONOFLEX P FORT",
     "genericName": "TONOFLEX P FORT",
@@ -10830,10 +11050,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_493",
+    "id": "offer_m_503",
     "code": "729",
     "name": "AZOMAX 500MG TAB.SANDOZ",
     "genericName": "AZOMAX 500MG TAB.SANDOZ",
@@ -10855,7 +11075,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_494",
+    "id": "offer_m_504",
     "code": "5957",
     "name": "NOCID 20MG TABLET",
     "genericName": "NOCID 20MG TABLET",
@@ -10877,7 +11097,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_495",
+    "id": "offer_m_505",
     "code": "5958",
     "name": "NOCID 40MG TABLETS",
     "genericName": "NOCID 40MG TABLETS",
@@ -10896,10 +11116,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_496",
+    "id": "offer_m_506",
     "code": "22",
     "name": "Q FOLIC HR NEW",
     "genericName": "Q FOLIC HR NEW",
@@ -10918,10 +11138,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_497",
+    "id": "offer_m_507",
     "code": "867",
     "name": "BENCLIN GEL SANTE",
     "genericName": "BENCLIN GEL SANTE",
@@ -10940,10 +11160,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80"
   },
   {
-    "id": "offer_m_498",
+    "id": "offer_m_508",
     "code": "3860",
     "name": "HAIR MAX LOTION 5%",
     "genericName": "HAIR MAX LOTION 5%",
@@ -10962,10 +11182,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80"
   },
   {
-    "id": "offer_m_499",
+    "id": "offer_m_509",
     "code": "3863",
     "name": "HAIRFIN TAB.SANTE",
     "genericName": "HAIRFIN TAB.SANTE",
@@ -10984,10 +11204,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_500",
+    "id": "offer_m_510",
     "code": "7870",
     "name": "SCABIX SOAP NEW",
     "genericName": "SCABIX SOAP NEW",
@@ -11006,10 +11226,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_501",
+    "id": "offer_m_511",
     "code": "8547",
     "name": "TARISIN NASAL SPRAY",
     "genericName": "TARISIN NASAL SPRAY",
@@ -11028,10 +11248,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_502",
+    "id": "offer_m_512",
     "code": "5671",
     "name": "NASOMET NASAL SPRAY",
     "genericName": "NASOMET NASAL SPRAY",
@@ -11050,10 +11270,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80"
   },
   {
-    "id": "offer_m_503",
+    "id": "offer_m_513",
     "code": "7556",
     "name": "RHINOSONE-P NASAL SPRAY",
     "genericName": "RHINOSONE-P NASAL SPRAY",
@@ -11072,10 +11292,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_504",
+    "id": "offer_m_514",
     "code": "160",
     "name": "ADVANTAN CREAM 10GM LARGE",
     "genericName": "ADVANTAN CREAM 10GM LARGE",
@@ -11094,10 +11314,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_505",
+    "id": "offer_m_515",
     "code": "1776",
     "name": "CLAX 1000",
     "genericName": "CLAX 1000",
@@ -11116,10 +11336,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_506",
+    "id": "offer_m_516",
     "code": "8812",
     "name": "TRAVOCORT CREAM",
     "genericName": "TRAVOCORT CREAM",
@@ -11138,10 +11358,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_507",
+    "id": "offer_m_517",
     "code": "C270",
     "name": "BILFAXIN 20MG TAB",
     "genericName": "BILFAXIN 20MG TAB",
@@ -11160,10 +11380,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_508",
+    "id": "offer_m_518",
     "code": "3808",
     "name": "GRAVINATE INJECTION",
     "genericName": "GRAVINATE INJECTION",
@@ -11182,10 +11402,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_509",
+    "id": "offer_m_519",
     "code": "4403",
     "name": "JENTIN MET 50/1000",
     "genericName": "JENTIN MET 50/1000",
@@ -11204,10 +11424,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_510",
+    "id": "offer_m_520",
     "code": "4404",
     "name": "JENTIN MET 50/500",
     "genericName": "JENTIN MET 50/500",
@@ -11226,10 +11446,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_511",
+    "id": "offer_m_521",
     "code": "C275",
     "name": "LOVANZO-D OLD",
     "genericName": "LOVANZO-D OLD",
@@ -11248,10 +11468,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_512",
+    "id": "offer_m_522",
     "code": "A109",
     "name": "NEW EXTOR 5/160 MG SEARLE",
     "genericName": "NEW EXTOR 5/160 MG SEARLE",
@@ -11270,17 +11490,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_513",
+    "id": "offer_m_523",
     "code": "C251",
     "name": "OSTENEM TAB (SEARLE)",
     "genericName": "OSTENEM TAB (SEARLE)",
     "category": "medicines",
     "price": 2550,
-    "originalPrice": 2932.5,
-    "discountPercent": 15,
+    "originalPrice": null,
+    "discountPercent": 0,
     "packagingMode": "both",
     "stripsPerPack": 10,
     "hasStripOption": true,
@@ -11292,10 +11512,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   },
   {
-    "id": "offer_m_514",
+    "id": "offer_m_524",
     "code": "6788",
     "name": "PEDICARE ORANGE LIQ",
     "genericName": "PEDICARE ORANGE LIQ",
@@ -11314,17 +11534,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_515",
+    "id": "offer_m_525",
     "code": "6791",
     "name": "PEDITRAL O.R.S ORANGE",
     "genericName": "PEDITRAL O.R.S ORANGE",
     "category": "medicines",
     "price": 640,
-    "originalPrice": null,
-    "discountPercent": 0,
+    "originalPrice": 736,
+    "discountPercent": 15,
     "packagingMode": "pack",
     "stripsPerPack": 1,
     "hasStripOption": false,
@@ -11336,10 +11556,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_516",
+    "id": "offer_m_526",
     "code": "7477",
     "name": "RELISPA FORT TAB",
     "genericName": "RELISPA FORT TAB",
@@ -11358,10 +11578,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_517",
+    "id": "offer_m_527",
     "code": "C100",
     "name": "TRAMAL D",
     "genericName": "TRAMAL D",
@@ -11380,10 +11600,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_518",
+    "id": "offer_m_528",
     "code": "9253",
     "name": "VITRUM TABLET SEARLE",
     "genericName": "VITRUM TABLET SEARLE",
@@ -11402,10 +11622,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80"
   },
   {
-    "id": "offer_m_519",
+    "id": "offer_m_529",
     "code": "152",
     "name": "ADRONIL 150MG TAB.SEARLE",
     "genericName": "ADRONIL 150MG TAB.SEARLE",
@@ -11427,7 +11647,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_520",
+    "id": "offer_m_530",
     "code": "3062",
     "name": "EZIUM 20MG CAP",
     "genericName": "EZIUM 20MG CAP",
@@ -11446,10 +11666,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_521",
+    "id": "offer_m_531",
     "code": "3063",
     "name": "EZIUM 40MG CAPSULE",
     "genericName": "EZIUM 40MG CAPSULE",
@@ -11468,10 +11688,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_522",
+    "id": "offer_m_532",
     "code": "4796",
     "name": "LEVOXIN 250MG TAB.SEARLE",
     "genericName": "LEVOXIN 250MG TAB.SEARLE",
@@ -11493,7 +11713,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_523",
+    "id": "offer_m_533",
     "code": "5002",
     "name": "LUMARK 250MG TAB.SEARLE",
     "genericName": "LUMARK 250MG TAB.SEARLE",
@@ -11512,10 +11732,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80"
   },
   {
-    "id": "offer_m_524",
+    "id": "offer_m_534",
     "code": "5003",
     "name": "LUMARK 500MG TAB.SEARLE",
     "genericName": "LUMARK 500MG TAB.SEARLE",
@@ -11537,7 +11757,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_525",
+    "id": "offer_m_535",
     "code": "6073",
     "name": "NUBEROL TABLET",
     "genericName": "NUBEROL TABLET",
@@ -11556,10 +11776,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_526",
+    "id": "offer_m_536",
     "code": "C253",
     "name": "RENERVE TAB",
     "genericName": "RENERVE TAB",
@@ -11578,10 +11798,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_527",
+    "id": "offer_m_537",
     "code": "7933",
     "name": "SELANZ SR CAPSULE",
     "genericName": "SELANZ SR CAPSULE",
@@ -11600,10 +11820,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_528",
+    "id": "offer_m_538",
     "code": "9069",
     "name": "VAPTOR 10MG TAB",
     "genericName": "VAPTOR 10MG TAB",
@@ -11622,10 +11842,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_529",
+    "id": "offer_m_539",
     "code": "9071",
     "name": "VAPTOR 20MG TABLET SEARLE",
     "genericName": "VAPTOR 20MG TABLET SEARLE",
@@ -11647,7 +11867,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_530",
+    "id": "offer_m_540",
     "code": "9070",
     "name": "VAPTOR 5MG TAB",
     "genericName": "VAPTOR 5MG TAB",
@@ -11666,10 +11886,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_531",
+    "id": "offer_m_541",
     "code": "9117",
     "name": "VENTEC 10MG",
     "genericName": "VENTEC 10MG",
@@ -11691,7 +11911,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_532",
+    "id": "offer_m_542",
     "code": "5662",
     "name": "NATRILIX-SR TABLET",
     "genericName": "NATRILIX-SR TABLET",
@@ -11710,10 +11930,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_533",
+    "id": "offer_m_543",
     "code": "1156",
     "name": "BROTIN 2.5MG TABLET",
     "genericName": "BROTIN 2.5MG TABLET",
@@ -11732,10 +11952,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_534",
+    "id": "offer_m_544",
     "code": "3483",
     "name": "FUDIC CREAM LARG SHAIGAN",
     "genericName": "FUDIC CREAM LARG SHAIGAN",
@@ -11754,10 +11974,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608248597359-0097c558c49d?w=500&q=80"
   },
   {
-    "id": "offer_m_535",
+    "id": "offer_m_545",
     "code": "4671",
     "name": "LALAP 50 NEW",
     "genericName": "LALAP 50 NEW",
@@ -11779,7 +11999,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_536",
+    "id": "offer_m_546",
     "code": "00E5",
     "name": "TEPRIDE TAB",
     "genericName": "TEPRIDE TAB",
@@ -11801,7 +12021,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_537",
+    "id": "offer_m_547",
     "code": "9539",
     "name": "ZEESPA TABLET",
     "genericName": "ZEESPA TABLET",
@@ -11823,7 +12043,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_538",
+    "id": "offer_m_548",
     "code": "63",
     "name": "ACENAC 100MG TABLET",
     "genericName": "ACENAC 100MG TABLET",
@@ -11842,10 +12062,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_539",
+    "id": "offer_m_549",
     "code": "66",
     "name": "ACENAC-SR CAP.SJG",
     "genericName": "ACENAC-SR CAP.SJG",
@@ -11864,10 +12084,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_540",
+    "id": "offer_m_550",
     "code": "140",
     "name": "ADENURIC 40MG TAB.",
     "genericName": "ADENURIC 40MG TAB.",
@@ -11886,10 +12106,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_541",
+    "id": "offer_m_551",
     "code": "1073",
     "name": "BONE LIFT 0.5MG TAB.",
     "genericName": "BONE LIFT 0.5MG TAB.",
@@ -11908,10 +12128,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_542",
+    "id": "offer_m_552",
     "code": "2575",
     "name": "DRATE PLUS D TABLET",
     "genericName": "DRATE PLUS D TABLET",
@@ -11930,10 +12150,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_543",
+    "id": "offer_m_553",
     "code": "4690",
     "name": "LANZIT CAPSULE",
     "genericName": "LANZIT CAPSULE",
@@ -11952,10 +12172,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_544",
+    "id": "offer_m_554",
     "code": "3155",
     "name": "FEFOLVIT CAPSULE",
     "genericName": "FEFOLVIT CAPSULE",
@@ -11974,10 +12194,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_545",
+    "id": "offer_m_555",
     "code": "764",
     "name": "BACLIN 10MG TAB NEW",
     "genericName": "BACLIN 10MG TAB NEW",
@@ -11996,10 +12216,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_546",
+    "id": "offer_m_556",
     "code": "2625",
     "name": "DURICEF 500MG CAPSULES",
     "genericName": "DURICEF 500MG CAPSULES",
@@ -12018,10 +12238,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_547",
+    "id": "offer_m_557",
     "code": "9104",
     "name": "VELOSEF 250MG CAP.SQUIBB",
     "genericName": "VELOSEF 250MG CAP.SQUIBB",
@@ -12040,10 +12260,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_548",
+    "id": "offer_m_558",
     "code": "9107",
     "name": "VELOSEF 500MG CAP.SQUIBB",
     "genericName": "VELOSEF 500MG CAP.SQUIBB",
@@ -12062,10 +12282,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_549",
+    "id": "offer_m_559",
     "code": "1912",
     "name": "COLDREX TABLET",
     "genericName": "COLDREX TABLET",
@@ -12084,10 +12304,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_550",
+    "id": "offer_m_560",
     "code": "5852",
     "name": "NEUXAM 0.5MG TAB.STAND",
     "genericName": "NEUXAM 0.5MG TAB.STAND",
@@ -12106,10 +12326,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_551",
+    "id": "offer_m_561",
     "code": "5853",
     "name": "NEUXAM 1GM TAB.STANDS",
     "genericName": "NEUXAM 1GM TAB.STANDS",
@@ -12128,10 +12348,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_552",
+    "id": "offer_m_562",
     "code": "658",
     "name": "ATOXAN TAB.SWISS",
     "genericName": "ATOXAN TAB.SWISS",
@@ -12150,10 +12370,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_553",
+    "id": "offer_m_563",
     "code": "C17",
     "name": "WELL D VITAMIN D3",
     "genericName": "WELL D VITAMIN D3",
@@ -12172,10 +12392,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_554",
+    "id": "offer_m_564",
     "code": "0341",
     "name": "B-LIVE SCH",
     "genericName": "B-LIVE SCH",
@@ -12194,10 +12414,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_555",
+    "id": "offer_m_565",
     "code": "C273",
     "name": "BARILUBE OPTH OINT",
     "genericName": "BARILUBE OPTH OINT",
@@ -12216,10 +12436,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_556",
+    "id": "offer_m_566",
     "code": "0400",
     "name": "BETABAR EYE DROP",
     "genericName": "BETABAR EYE DROP",
@@ -12238,10 +12458,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80"
   },
   {
-    "id": "offer_m_557",
+    "id": "offer_m_567",
     "code": "C156",
     "name": "CAL-K2",
     "genericName": "CAL-K2",
@@ -12260,10 +12480,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_558",
+    "id": "offer_m_568",
     "code": "0385",
     "name": "CDK TAB",
     "genericName": "CDK TAB",
@@ -12282,10 +12502,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_559",
+    "id": "offer_m_569",
     "code": "0237",
     "name": "COMBIHAL KHI",
     "genericName": "COMBIHAL KHI",
@@ -12304,10 +12524,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_560",
+    "id": "offer_m_570",
     "code": "0269",
     "name": "COSMIN-A",
     "genericName": "COSMIN-A",
@@ -12326,10 +12546,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_561",
+    "id": "offer_m_571",
     "code": "2100",
     "name": "CUTIS CREAM TABROS",
     "genericName": "CUTIS CREAM TABROS",
@@ -12348,10 +12568,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_562",
+    "id": "offer_m_572",
     "code": "A128",
     "name": "D-TRES INJ SMALL",
     "genericName": "D-TRES INJ SMALL",
@@ -12370,10 +12590,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_563",
+    "id": "offer_m_573",
     "code": "CE75",
     "name": "DAPAKAN 250MG",
     "genericName": "DAPAKAN 250MG",
@@ -12392,10 +12612,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_564",
+    "id": "offer_m_574",
     "code": "0522",
     "name": "DEMENTIN 10MG TAB",
     "genericName": "DEMENTIN 10MG TAB",
@@ -12414,10 +12634,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_565",
+    "id": "offer_m_575",
     "code": "0914",
     "name": "DERMA SMOOTH",
     "genericName": "DERMA SMOOTH",
@@ -12436,10 +12656,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_566",
+    "id": "offer_m_576",
     "code": "C238",
     "name": "DEVENDA 500",
     "genericName": "DEVENDA 500",
@@ -12458,10 +12678,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_567",
+    "id": "offer_m_577",
     "code": "2617",
     "name": "DURAGESIC FORTE TAB.",
     "genericName": "DURAGESIC FORTE TAB.",
@@ -12480,10 +12700,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_568",
+    "id": "offer_m_578",
     "code": "2618",
     "name": "DURAGESIC TABLET",
     "genericName": "DURAGESIC TABLET",
@@ -12502,10 +12722,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_569",
+    "id": "offer_m_579",
     "code": "0349",
     "name": "DUZALTA 30 NEW",
     "genericName": "DUZALTA 30 NEW",
@@ -12524,10 +12744,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_570",
+    "id": "offer_m_580",
     "code": "0138",
     "name": "ECASIL 600MG TAB",
     "genericName": "ECASIL 600MG TAB",
@@ -12546,10 +12766,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_571",
+    "id": "offer_m_581",
     "code": "0452",
     "name": "EVENTON C CREAM",
     "genericName": "EVENTON C CREAM",
@@ -12568,10 +12788,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_572",
+    "id": "offer_m_582",
     "code": "3277",
     "name": "FIXITIL 400MG CAPSULE",
     "genericName": "FIXITIL 400MG CAPSULE",
@@ -12590,10 +12810,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_573",
+    "id": "offer_m_583",
     "code": "3297",
     "name": "FLEET PLUS 75",
     "genericName": "FLEET PLUS 75",
@@ -12612,10 +12832,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_574",
+    "id": "offer_m_584",
     "code": "3378",
     "name": "FLYTRO 15GM CREAM",
     "genericName": "FLYTRO 15GM CREAM",
@@ -12634,10 +12854,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80"
   },
   {
-    "id": "offer_m_575",
+    "id": "offer_m_585",
     "code": "3384",
     "name": "FOCIN SYP",
     "genericName": "FOCIN SYP",
@@ -12656,10 +12876,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&q=80"
   },
   {
-    "id": "offer_m_576",
+    "id": "offer_m_586",
     "code": "3508",
     "name": "FUSIL CREAM 15GM LARGE TA",
     "genericName": "FUSIL CREAM 15GM LARGE TA",
@@ -12681,7 +12901,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
   },
   {
-    "id": "offer_m_577",
+    "id": "offer_m_587",
     "code": "3512",
     "name": "FUSIL-B CREAM 15GM LARGE",
     "genericName": "FUSIL-B CREAM 15GM LARGE",
@@ -12700,10 +12920,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_578",
+    "id": "offer_m_588",
     "code": "3515",
     "name": "FUSIL-HC CREAM 5GM SMALL",
     "genericName": "FUSIL-HC CREAM 5GM SMALL",
@@ -12722,10 +12942,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608248597359-0097c558c49d?w=500&q=80"
   },
   {
-    "id": "offer_m_579",
+    "id": "offer_m_589",
     "code": "0329",
     "name": "GETRYL 2 NEW NEW",
     "genericName": "GETRYL 2 NEW NEW",
@@ -12744,10 +12964,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_580",
+    "id": "offer_m_590",
     "code": "0905",
     "name": "ISOZAM 20MG CAP",
     "genericName": "ISOZAM 20MG CAP",
@@ -12766,10 +12986,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_581",
+    "id": "offer_m_591",
     "code": "0296",
     "name": "KINRA 250MG",
     "genericName": "KINRA 250MG",
@@ -12788,10 +13008,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_582",
+    "id": "offer_m_592",
     "code": "C78",
     "name": "LINJARDY 25/5 MG",
     "genericName": "LINJARDY 25/5 MG",
@@ -12810,10 +13030,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80"
   },
   {
-    "id": "offer_m_583",
+    "id": "offer_m_593",
     "code": "0295",
     "name": "MECROZ GELL",
     "genericName": "MECROZ GELL",
@@ -12835,7 +13055,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
   },
   {
-    "id": "offer_m_584",
+    "id": "offer_m_594",
     "code": "0264",
     "name": "NEBIL 2.5 NEW",
     "genericName": "NEBIL 2.5 NEW",
@@ -12854,10 +13074,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_585",
+    "id": "offer_m_595",
     "code": "A113",
     "name": "OLD CELBEX 200 MG",
     "genericName": "OLD CELBEX 200 MG",
@@ -12876,10 +13096,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_586",
+    "id": "offer_m_596",
     "code": "C231",
     "name": "OLD OLD NILSTATE DROP",
     "genericName": "OLD OLD NILSTATE DROP",
@@ -12898,10 +13118,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80"
   },
   {
-    "id": "offer_m_587",
+    "id": "offer_m_597",
     "code": "C265",
     "name": "OLD ZATOFEN SYP",
     "genericName": "OLD ZATOFEN SYP",
@@ -12923,7 +13143,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_588",
+    "id": "offer_m_598",
     "code": "6663",
     "name": "PAGECAL",
     "genericName": "PAGECAL",
@@ -12942,10 +13162,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_589",
+    "id": "offer_m_599",
     "code": "0350",
     "name": "PARACYL 20 NEW",
     "genericName": "PARACYL 20 NEW",
@@ -12964,10 +13184,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_590",
+    "id": "offer_m_600",
     "code": "0123",
     "name": "RECOL SYP",
     "genericName": "RECOL SYP",
@@ -12986,10 +13206,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&q=80"
   },
   {
-    "id": "offer_m_591",
+    "id": "offer_m_601",
     "code": "0260",
     "name": "ROLIP EZE 5/10MG TAB",
     "genericName": "ROLIP EZE 5/10MG TAB",
@@ -13008,10 +13228,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_592",
+    "id": "offer_m_602",
     "code": "0358",
     "name": "SITA 50 NEW",
     "genericName": "SITA 50 NEW",
@@ -13030,10 +13250,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_593",
+    "id": "offer_m_603",
     "code": "C36",
     "name": "TOLSURA CAP",
     "genericName": "TOLSURA CAP",
@@ -13052,10 +13272,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_594",
+    "id": "offer_m_604",
     "code": "A121",
     "name": "VORCAZ SYP",
     "genericName": "VORCAZ SYP",
@@ -13074,10 +13294,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&q=80"
   },
   {
-    "id": "offer_m_595",
+    "id": "offer_m_605",
     "code": "C57",
     "name": "XIRCONI CREAM 30GRM",
     "genericName": "XIRCONI CREAM 30GRM",
@@ -13096,10 +13316,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1556228852-6d35a585d566?w=500&q=80"
   },
   {
-    "id": "offer_m_596",
+    "id": "offer_m_606",
     "code": "0527",
     "name": "ZOHYDRO CREAM 10GRM",
     "genericName": "ZOHYDRO CREAM 10GRM",
@@ -13118,10 +13338,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608248597359-0097c558c49d?w=500&q=80"
   },
   {
-    "id": "offer_m_597",
+    "id": "offer_m_607",
     "code": "4726",
     "name": "LAZMA CREM 15GRAM",
     "genericName": "LAZMA CREM 15GRAM",
@@ -13140,10 +13360,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_598",
+    "id": "offer_m_608",
     "code": "2313",
     "name": "DETRUSITOL 2MG TABLET",
     "genericName": "DETRUSITOL 2MG TABLET",
@@ -13162,10 +13382,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_599",
+    "id": "offer_m_609",
     "code": "3994",
     "name": "HIGH-C 1000",
     "genericName": "HIGH-C 1000",
@@ -13184,10 +13404,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_600",
+    "id": "offer_m_610",
     "code": "5863",
     "name": "NEWDAY 10/160MG TAB.",
     "genericName": "NEWDAY 10/160MG TAB.",
@@ -13206,10 +13426,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_601",
+    "id": "offer_m_611",
     "code": "5864",
     "name": "NEWDAY 5/160MG TAB.",
     "genericName": "NEWDAY 5/160MG TAB.",
@@ -13228,10 +13448,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_602",
+    "id": "offer_m_612",
     "code": "5865",
     "name": "NEWDAY 5/80MG TAB.",
     "genericName": "NEWDAY 5/80MG TAB.",
@@ -13250,10 +13470,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_603",
+    "id": "offer_m_613",
     "code": "6962",
     "name": "PLANTCAL TAB",
     "genericName": "PLANTCAL TAB",
@@ -13272,10 +13492,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_604",
+    "id": "offer_m_614",
     "code": "7644",
     "name": "RIZE PLUS CAPSULE WERRICK",
     "genericName": "RIZE PLUS CAPSULE WERRICK",
@@ -13294,10 +13514,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_605",
+    "id": "offer_m_615",
     "code": "023",
     "name": "SOFTIN F 60MG TAB",
     "genericName": "SOFTIN F 60MG TAB",
@@ -13316,10 +13536,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_606",
+    "id": "offer_m_616",
     "code": "8167",
     "name": "SOFTIN OD TABLET",
     "genericName": "SOFTIN OD TABLET",
@@ -13338,10 +13558,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_607",
+    "id": "offer_m_617",
     "code": "1240",
     "name": "CALCEE POWDER SCH",
     "genericName": "CALCEE POWDER SCH",
@@ -13360,10 +13580,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_608",
+    "id": "offer_m_618",
     "code": "2365",
     "name": "DIAGESIC EXTRA TAB",
     "genericName": "DIAGESIC EXTRA TAB",
@@ -13382,10 +13602,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_609",
+    "id": "offer_m_619",
     "code": "2366",
     "name": "DIAGESIC P TAB",
     "genericName": "DIAGESIC P TAB",
@@ -13404,10 +13624,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_610",
+    "id": "offer_m_620",
     "code": "4811",
     "name": "LICE-O-NIL CREAM",
     "genericName": "LICE-O-NIL CREAM",
@@ -13426,10 +13646,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608248597359-0097c558c49d?w=500&q=80"
   },
   {
-    "id": "offer_m_611",
+    "id": "offer_m_621",
     "code": "7011",
     "name": "POLYPEP SYRUP",
     "genericName": "POLYPEP SYRUP",
@@ -13448,10 +13668,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&q=80"
   },
   {
-    "id": "offer_m_612",
+    "id": "offer_m_622",
     "code": "7013",
     "name": "POLYPIP 40MG TABLET WILSO",
     "genericName": "POLYPIP 40MG TABLET WILSO",
@@ -13470,10 +13690,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_613",
+    "id": "offer_m_623",
     "code": "7888",
     "name": "SEACAL SACHETS",
     "genericName": "SEACAL SACHETS",
@@ -13492,10 +13712,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
   },
   {
-    "id": "offer_m_614",
+    "id": "offer_m_624",
     "code": "7889",
     "name": "SEACAL TAB",
     "genericName": "SEACAL TAB",
@@ -13514,10 +13734,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_615",
+    "id": "offer_m_625",
     "code": "8170",
     "name": "SOFVASC 5 TAB",
     "genericName": "SOFVASC 5 TAB",
@@ -13536,10 +13756,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
   },
   {
-    "id": "offer_m_616",
+    "id": "offer_m_626",
     "code": "8172",
     "name": "SOFVASC-V 10/160MG TAB.WI",
     "genericName": "SOFVASC-V 10/160MG TAB.WI",
@@ -13561,7 +13781,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_617",
+    "id": "offer_m_627",
     "code": "8173",
     "name": "SOFVASC-V 5/160MG TAB.WIL",
     "genericName": "SOFVASC-V 5/160MG TAB.WIL",
@@ -13580,10 +13800,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_618",
+    "id": "offer_m_628",
     "code": "8174",
     "name": "SOFVASC-V 5/80MG TAB.WILS",
     "genericName": "SOFVASC-V 5/80MG TAB.WILS",
@@ -13602,10 +13822,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=500&q=80"
   },
   {
-    "id": "offer_m_619",
+    "id": "offer_m_629",
     "code": "9332",
     "name": "WILGESIC FORTE TAB.",
     "genericName": "WILGESIC FORTE TAB.",
@@ -13624,10 +13844,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_620",
+    "id": "offer_m_630",
     "code": "9333",
     "name": "WILGESIC TABLET",
     "genericName": "WILGESIC TABLET",
@@ -13649,7 +13869,7 @@ export const MOCK_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
   },
   {
-    "id": "offer_m_621",
+    "id": "offer_m_631",
     "code": "2804",
     "name": "ENTOX P TABLET",
     "genericName": "ENTOX P TABLET",
@@ -13668,10 +13888,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=500&q=80"
   },
   {
-    "id": "offer_m_622",
+    "id": "offer_m_632",
     "code": "4732",
     "name": "LEDERPLEX SYRUP",
     "genericName": "LEDERPLEX SYRUP",
@@ -13690,10 +13910,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1577401239170-897942555fb3?w=500&q=80"
   },
   {
-    "id": "offer_m_623",
+    "id": "offer_m_633",
     "code": "5539",
     "name": "MUCAINE SYRUP",
     "genericName": "MUCAINE SYRUP",
@@ -13712,10 +13932,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&q=80"
   },
   {
-    "id": "offer_m_624",
+    "id": "offer_m_634",
     "code": "0384",
     "name": "FAMILA INJ",
     "genericName": "FAMILA INJ",
@@ -13734,10 +13954,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": true,
     "coldStorage": true,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&q=80"
   },
   {
-    "id": "offer_m_625",
+    "id": "offer_m_635",
     "code": "3088",
     "name": "FAMILA TAB NEW",
     "genericName": "FAMILA TAB NEW",
@@ -13756,17 +13976,17 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&q=80"
   },
   {
-    "id": "offer_m_626",
+    "id": "offer_m_636",
     "code": "3392",
     "name": "FOLIC ACID TAB. SOIS PHAR",
     "genericName": "FOLIC ACID TAB. SOIS PHAR",
     "category": "medicines",
     "price": 60,
-    "originalPrice": null,
-    "discountPercent": 0,
+    "originalPrice": 69,
+    "discountPercent": 15,
     "packagingMode": "both",
     "stripsPerPack": 10,
     "hasStripOption": true,
@@ -13778,10 +13998,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80"
   },
   {
-    "id": "offer_m_627",
+    "id": "offer_m_637",
     "code": "7770",
     "name": "S.T.MOM 200MG TAB.ZAFA",
     "genericName": "S.T.MOM 200MG TAB.ZAFA",
@@ -13800,10 +14020,10 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=500&q=80"
   },
   {
-    "id": "offer_m_628",
+    "id": "offer_m_638",
     "code": "9456",
     "name": "XYNOSINE NASAL DROP",
     "genericName": "XYNOSINE NASAL DROP",
@@ -13822,6 +14042,6 @@ export const MOCK_PRODUCTS = [
     "requiresPrescription": false,
     "coldStorage": false,
     "showOnMainScreen": true,
-    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80"
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
   }
 ];

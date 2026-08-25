@@ -30,7 +30,8 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
   const deliveryFee = checkoutType === 'pickup' ? 0 : selectedZone.fee;
   const grandTotal = subtotal + deliveryFee;
   const isBelowMinOrder = checkoutType === 'delivery' && subtotal < selectedZone.minOrder;
-  const requiresRx = cartItems.some(item => item.requiresPrescription);
+  // B2B Retailers are licensed pharmacies and do not require consumer prescription upload
+  const requiresRx = !retailerUser && cartItems.some(item => item.requiresPrescription);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -125,12 +126,17 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
                 </div>
               ))}
             </div>
-            {requiresRx && (
+            {retailerUser ? (
+              <div className="b2b-license-badge" style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#f0fdf4', border: '1px solid #bbf7d0', color: '#15803d', padding: '7px 10px', borderRadius: '6px', fontSize: '0.8rem', marginTop: '10px' }}>
+                <ShieldCheck size={15} color="#16a34a" />
+                <span><strong>Commercial Pharmacy Exemption:</strong> Verified Retailer ({retailerUser.licenseNo || 'Drug License Verified'}). Prescription upload exempt.</span>
+              </div>
+            ) : requiresRx ? (
               <div className="rx-alert-mini">
                 <AlertTriangle size={14} color="#d97706" />
                 <span>Order contains prescription medicines. Verification required.</span>
               </div>
-            )}
+            ) : null}
           </div>
 
           {/* Delivery Option Segment */}
@@ -156,7 +162,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
                 <Store size={18} />
                 <div>
                   <strong>Store Pickup</strong>
-                  <small>Click & Collect (Free)</small>
+                  <small>Denso Hall, Karachi (Free)</small>
                 </div>
               </button>
             </div>
@@ -165,7 +171,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
           {/* Delivery Radius / Zone Dropdown */}
           {checkoutType === 'delivery' && (
             <div className="form-group">
-              <label><MapPin size={14} /> Select Delivery Zone / Locality *</label>
+              <label><MapPin size={14} /> Select Karachi Delivery Zone / Locality *</label>
               <select 
                 value={selectedZone.id} 
                 onChange={(e) => {
@@ -194,7 +200,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
             <input 
               type="text" 
               required 
-              placeholder="e.g. Usman Khan" 
+              placeholder="e.g. Muhammad Usman" 
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
             />
@@ -205,7 +211,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
             <input 
               type="tel" 
               required 
-              placeholder="e.g. 0300 1234567" 
+              placeholder="e.g. 0300-1234567" 
               value={formData.phone}
               onChange={(e) => setFormData({...formData, phone: e.target.value})}
             />
@@ -213,10 +219,10 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
 
           {checkoutType === 'delivery' && (
             <div className="form-group">
-              <label>Delivery Address *</label>
+              <label>Delivery Address in Karachi *</label>
               <textarea 
                 required 
-                placeholder="House #, Street #, Neighborhood/Sector details" 
+                placeholder="House/Flat #, Street #, Block/Area, Karachi (e.g. Block 5, Gulshan-e-Iqbal, Karachi)" 
                 value={formData.address}
                 onChange={(e) => setFormData({...formData, address: e.target.value})}
               />

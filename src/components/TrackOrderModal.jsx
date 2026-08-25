@@ -145,15 +145,18 @@ export default function TrackOrderModal({ isOpen, onClose, orders, activeOrder, 
                 </div>
               </div>
 
-              {/* Advance Status Demo Button (If active order) */}
-              {onAdvanceStatus && currentStep < 3 && searchedOrder.id === activeOrder?.id && (
-                <button 
-                  className="btn-advance-demo" 
-                  onClick={() => onAdvanceStatus(steps[currentStep + 1].title)}
+              {/* Live Order Support Link */}
+              <div style={{ marginTop: '16px', textAlign: 'center' }}>
+                <a 
+                  href={`https://wa.me/923000000000?text=${encodeURIComponent(`Assalam o Alaikum Dr. Waqas, I am checking the status of my order #${searchedOrder.id}.`)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-wa-order-help"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#ecfdf5', color: '#047857', border: '1px solid #a7f3d0', padding: '8px 18px', borderRadius: '20px', fontSize: '0.82rem', fontWeight: 800, textDecoration: 'none' }}
                 >
-                  Simulate Next Stage → ({steps[currentStep + 1].title})
-                </button>
-              )}
+                  Need Help? WhatsApp Dispatch Support
+                </a>
+              </div>
             </div>
           )}
 

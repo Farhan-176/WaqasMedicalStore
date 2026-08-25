@@ -5,7 +5,7 @@ export const INITIAL_RETAILERS = [
     username: 'ali_pharmacy', 
     password: 'retailer123', 
     licenseNo: '04-DL-1982', 
-    area: 'Sector G-9, Islamabad',
+    area: 'Denso Hall / Saddar, Karachi',
     discountTier: 'Wholesale Trade Price (12-15% OFF)',
     createdAt: '2026-08-20'
   },
@@ -15,7 +15,7 @@ export const INITIAL_RETAILERS = [
     username: 'city_clinic', 
     password: 'retailer123', 
     licenseNo: '04-DL-2415', 
-    area: 'Sector F-8, Islamabad',
+    area: 'Gulshan-e-Iqbal, Karachi',
     discountTier: 'Wholesale Trade Price (12-15% OFF)',
     createdAt: '2026-08-21'
   },
@@ -25,7 +25,7 @@ export const INITIAL_RETAILERS = [
     username: 'demo_retailer', 
     password: 'retailer123', 
     licenseNo: '04-DL-3390', 
-    area: 'Rawalpindi / Islamabad',
+    area: 'Clifton / DHA, Karachi',
     discountTier: 'Wholesale Trade Price (12-15% OFF)',
     createdAt: '2026-08-22'
   }

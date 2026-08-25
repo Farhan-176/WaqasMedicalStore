@@ -905,7 +905,7 @@ export default function AdminDashboard({
                   <label>Sector / Area</label>
                   <input 
                     type="text" 
-                    placeholder="e.g. Sector G-9/1, Islamabad"
+                    placeholder="e.g. Saddar / Clifton, Karachi"
                     value={newRetailer.area}
                     onChange={(e) => setNewRetailer(prev => ({ ...prev, area: e.target.value }))}
                   />

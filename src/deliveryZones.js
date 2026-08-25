@@ -1,6 +1,7 @@
 export const DELIVERY_ZONES = [
-  { id: 'zone-1', name: 'Sector G-9 (Local Pharmacy Radius)', fee: 0, minOrder: 0 },
-  { id: 'zone-2', name: 'Sector G-10 / G-8 / F-8', fee: 50, minOrder: 300 },
-  { id: 'zone-3', name: 'Sector F-6 / F-7 / G-11', fee: 100, minOrder: 500 },
-  { id: 'zone-4', name: 'Rawalpindi / Extended Islamabad', fee: 200, minOrder: 1000 }
+  { id: 'zone-khi-1', name: 'Saddar / Denso Hall / M.A Jinnah Road (Free Local Delivery)', fee: 0, minOrder: 0 },
+  { id: 'zone-khi-2', name: 'Gulshan-e-Iqbal / Gulistan-e-Johar / PECHS / Tariq Road', fee: 200, minOrder: 300 },
+  { id: 'zone-khi-3', name: 'Clifton / DHA (Defence) / Kharadar / Garden / Burns Road', fee: 180, minOrder: 400 },
+  { id: 'zone-khi-4', name: 'North Nazimabad / Nazimabad / Federal B Area / Liaquatabad', fee: 480, minOrder: 400 },
+  { id: 'zone-khi-5', name: 'Korangi / Landhi / Malir / Malir Cantt / Shah Faisal / SITE', fee: 520, minOrder: 500 }
 ];

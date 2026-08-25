@@ -1,11 +1,11 @@
 import React from 'react';
 import { X, Trash2, Plus, Minus, ArrowRight, MessageSquare, AlertTriangle } from 'lucide-react';
 
-export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantity, onRemoveItem, onProceedCheckout }) {
+export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantity, onRemoveItem, onProceedCheckout, retailerUser }) {
   if (!isOpen) return null;
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const requiresRx = cartItems.some(item => item.requiresPrescription);
+  const requiresRx = !retailerUser && cartItems.some(item => item.requiresPrescription);
 
   const generateWhatsAppPayload = () => {
     let message = `*NEW ORDER - WAQAS MEDICAL STORE*\n\n`;

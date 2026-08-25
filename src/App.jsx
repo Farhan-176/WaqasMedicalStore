@@ -9,6 +9,7 @@ import OrderTrackingModal from './components/OrderTrackingModal';
 import TrackOrderModal from './components/TrackOrderModal';
 import AdminLoginModal from './components/AdminLoginModal';
 import RetailerOrderHistoryModal from './components/RetailerOrderHistoryModal';
+import RetailerProfileModal from './components/RetailerProfileModal';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from './adminMockData';
 import { INITIAL_RETAILERS } from './retailersData';
 import { MOCK_CATEGORIES, MOCK_PRODUCTS } from './mockData';
@@ -58,6 +59,7 @@ export default function App() {
     return null;
   });
   const [isRetailerHistoryOpen, setIsRetailerHistoryOpen] = useState(false);
+  const [isRetailerProfileOpen, setIsRetailerProfileOpen] = useState(false);
 
   // Order Tracking State
   const [activeOrder, setActiveOrder] = useState(null);
@@ -165,12 +167,29 @@ export default function App() {
   const filteredProducts = products
     .filter(product => {
       const isVisibleOnMain = product.showOnMainScreen !== false;
-      const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-      const matchesLetter = selectedLetter === 'ALL' || product.name.trim().toUpperCase().startsWith(selectedLetter);
-      const query = searchQuery.toLowerCase();
-      const matchesSearch = 
-        product.name.toLowerCase().includes(query) || 
-        (product.genericName && product.genericName.toLowerCase().includes(query));
+      const query = searchQuery.trim().toLowerCase();
+      const isSearching = query.length > 0;
+
+      // When actively searching, search across the entire catalog without letter or category restriction
+      const matchesCategory = isSearching || selectedCategory === 'all' || product.category === selectedCategory;
+      const matchesLetter = isSearching || selectedLetter === 'ALL' || product.name.trim().toUpperCase().startsWith(selectedLetter);
+
+      if (!isSearching) {
+        return isVisibleOnMain && matchesCategory && matchesLetter;
+      }
+
+      // Smart search across name, generic formula, item code, and category
+      const name = (product.name || '').toLowerCase();
+      const generic = (product.genericName || '').toLowerCase();
+      const code = (product.code || '').toLowerCase();
+      const category = (product.category || '').toLowerCase();
+
+      // Split query into individual words (e.g. "panadol extra" -> "panadol" AND "extra")
+      const terms = query.split(/\s+/).filter(Boolean);
+      const matchesSearch = terms.every(term => 
+        name.includes(term) || generic.includes(term) || code.includes(term) || category.includes(term)
+      );
+
       return isVisibleOnMain && matchesCategory && matchesLetter && matchesSearch;
     })
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -253,6 +272,34 @@ export default function App() {
     showToast('Switched back to Consumer Retail pricing.', 'info');
   };
 
+  const handleUpdateRetailerProfile = async (updatedRetailer) => {
+    // 1. Update active session
+    setRetailerUser(updatedRetailer);
+
+    // 2. Update master retailers list so Admin section gets real-time updates
+    setRetailers(prev => prev.map(ret => 
+      (ret.id === updatedRetailer.id || ret.username === updatedRetailer.username)
+        ? { ...ret, ...updatedRetailer }
+        : ret
+    ));
+
+    showToast(`Profile updated & synced with Dr. Waqas Admin Portal! 🛡️`, 'success');
+
+    // 3. Persist to MongoDB Atlas cloud API
+    try {
+      const retId = updatedRetailer._id || updatedRetailer.id;
+      if (retId) {
+        await fetch(`/api/retailers/${retId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedRetailer)
+        });
+      }
+    } catch (e) {
+      console.warn('Updated in local storage mode');
+    }
+  };
+
   const handleUnifiedLoginSuccess = (user, role) => {
     setIsAdminLoginOpen(false);
     if (role === 'admin') {
@@ -323,8 +370,10 @@ export default function App() {
         onRetailerLogout={handleRetailerLogout}
         onOpenTrackOrder={() => setIsTrackOrderOpen(true)}
         onOpenRetailerHistory={() => setIsRetailerHistoryOpen(true)}
+        onOpenRetailerProfile={() => setIsRetailerProfileOpen(true)}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
+        products={products}
       />
 
       {/* Active Retailer Wholesale Mode Notification Bar */}
@@ -335,14 +384,6 @@ export default function App() {
             <span>
               <strong>B2B Wholesale Portal Active:</strong> Logged in as <strong>{retailerUser.name}</strong> ({retailerUser.area}). All catalog rates are unlocked at wholesale trade prices.
             </span>
-          </div>
-          <div className="retailer-banner-actions">
-            <button className="btn-banner-history" onClick={() => setIsRetailerHistoryOpen(true)}>
-              <FileText size={13} /> My Order History & Invoices
-            </button>
-            <button className="btn-exit-retailer" onClick={handleRetailerLogout}>
-              <LogOut size={13} /> Exit Wholesale Mode
-            </button>
           </div>
         </div>
       )}
@@ -421,9 +462,21 @@ export default function App() {
           </div>
 
           {filteredProducts.length === 0 ? (
-            <div className="no-results">
-              <p>No products found matching "<strong>{searchQuery}</strong>"</p>
-              <span>Try searching for generic names like Paracetamol, Amoxicillin, or Ibuprofen.</span>
+            <div className="no-results" style={{ textAlign: 'center', padding: '40px 20px' }}>
+              <AlertCircle size={44} style={{ color: '#94a3b8', margin: '0 auto 14px', display: 'block' }} />
+              <p style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>No products found matching "<strong>{searchQuery}</strong>"</p>
+              <span style={{ fontSize: '0.88rem', color: '#64748b', display: 'block', marginTop: '6px' }}>
+                Try searching for common medicine names like <em>Panadol, Brufen, Disprin, Augmentin, Sensodyne</em>, or formula names like <em>Paracetamol</em>.
+              </span>
+              <div style={{ marginTop: '20px' }}>
+                <button 
+                  className="btn-action-view" 
+                  onClick={() => { setSearchQuery(''); setSelectedCategory('all'); setSelectedLetter('ALL'); }}
+                  style={{ cursor: 'pointer', display: 'inline-flex', padding: '10px 22px' }}
+                >
+                  Clear Search & View All Products
+                </button>
+              </div>
             </div>
           ) : (
             <div className="products-grid">
@@ -451,6 +504,7 @@ export default function App() {
           setIsCartOpen(false);
           setIsCheckoutOpen(true);
         }}
+        retailerUser={retailerUser}
       />
 
       {/* Prescription Upload Modal */}
@@ -492,6 +546,15 @@ export default function App() {
         retailerUser={retailerUser}
         orders={orders}
         onReOrder={handleReOrder}
+      />
+
+      {/* Retailer Profile Modal */}
+      <RetailerProfileModal 
+        isOpen={isRetailerProfileOpen}
+        onClose={() => setIsRetailerProfileOpen(false)}
+        retailerUser={retailerUser}
+        onUpdateProfile={handleUpdateRetailerProfile}
+        onLogout={handleRetailerLogout}
       />
 
       {/* Unified Staff & Retailer Login Modal */}

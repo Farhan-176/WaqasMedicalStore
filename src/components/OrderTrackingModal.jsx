@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, CheckCircle, Package, Truck, ShieldCheck, MapPin, Phone, Clock } from 'lucide-react';
+import { X, CheckCircle, Package, Truck, ShieldCheck, MapPin, Phone, Clock, MessageSquare, Heart, Sparkles } from 'lucide-react';
 
 const TRACKING_STEPS = [
   { id: 'Received', label: 'Order Received', desc: 'Order received by pharmacy counter' },
@@ -8,7 +8,7 @@ const TRACKING_STEPS = [
   { id: 'Delivered', label: 'Delivered', desc: 'Successfully handed over' }
 ];
 
-export default function OrderTrackingModal({ isOpen, onClose, order, onAdvanceStatus }) {
+export default function OrderTrackingModal({ isOpen, onClose, order }) {
   if (!isOpen || !order) return null;
 
   // Determine current step index
@@ -52,11 +52,11 @@ export default function OrderTrackingModal({ isOpen, onClose, order, onAdvanceSt
               <span>Customer:</span> <strong>{order.customer.name} ({order.customer.phone})</strong>
             </div>
             <div className="info-row">
-              <span>Type:</span> <strong>{order.checkoutType === 'pickup' ? 'Store Pickup (Click & Collect)' : 'Home Delivery'}</strong>
+              <span>Type:</span> <strong>{order.checkoutType === 'pickup' ? 'Store Pickup (Denso Hall, Karachi)' : 'Home Delivery (Karachi)'}</strong>
             </div>
             {order.checkoutType === 'delivery' && (
               <div className="info-row">
-                <span>Address:</span> <strong>{order.customer.address} ({order.zone.name})</strong>
+                <span>Address:</span> <strong>{order.customer.address} {order.zone?.name ? `(${order.zone.name})` : ''}</strong>
               </div>
             )}
             <div className="info-row">
@@ -64,19 +64,25 @@ export default function OrderTrackingModal({ isOpen, onClose, order, onAdvanceSt
             </div>
           </div>
 
-          {/* Simulation Helper Button (To test status transitions) */}
-          <div className="simulation-bar">
-            <span>Simulate Staff Processing:</span>
-            {currentStepIndex < TRACKING_STEPS.length - 1 ? (
-              <button 
-                className="btn-advance" 
-                onClick={() => onAdvanceStatus(TRACKING_STEPS[currentStepIndex + 1].id)}
+          {/* Warm Thank You & Health Care Card */}
+          <div className="tracking-thankyou-card">
+            <div className="thankyou-card-header">
+              <Heart size={18} className="thankyou-heart-icon" />
+              <strong>Thank You for Choosing Waqas Medical Store!</strong>
+            </div>
+            <p className="thankyou-card-text">
+              We truly appreciate your order and trust in us. Our pharmacy team is preparing your authentic healthcare essentials with the utmost care and quality standards. Wishing you and your family good health!
+            </p>
+            <div className="thankyou-card-action">
+              <a 
+                href={`https://wa.me/923000000000?text=${encodeURIComponent(`Assalam o Alaikum Dr. Waqas, regarding my Order #${order.id} for ${order.customer.name}.`)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-thankyou-wa"
               >
-                Advance Status to: "{TRACKING_STEPS[currentStepIndex + 1].label}"
-              </button>
-            ) : (
-              <span className="status-delivered-badge">✅ Order Completed</span>
-            )}
+                <MessageSquare size={15} /> Need Help? Chat with Us on WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </div>
