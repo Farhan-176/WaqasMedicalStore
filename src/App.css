@@ -4499,6 +4499,64 @@
   color: #0284c7 !important;
 }
 
+/* Inline Medicine Title & Category Edit Inputs */
+.title-input {
+  width: 100% !important;
+  min-width: 180px !important;
+  padding: 6px 10px !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1.5px solid #cbd5e1 !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  background: #ffffff !important;
+  transition: all 0.2s ease !important;
+}
+
+.title-input:focus {
+  border-color: #0d9488 !important;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15) !important;
+  outline: none !important;
+}
+
+.category-select {
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #f8fafc;
+  color: #0f172a;
+  outline: none;
+  cursor: pointer;
+}
+
+.category-select:focus {
+  border-color: #0d9488;
+  background: #ffffff;
+}
+
+.btn-add-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1.5px solid #a7f3d0;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-add-category:hover {
+  background: #047857;
+  color: #ffffff;
+  border-color: #047857;
+}
+
 /* Side-by-Side Orders Fulfillment Queue Grid Layout */
 .orders-grid {
   display: grid !important;

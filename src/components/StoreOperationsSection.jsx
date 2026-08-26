@@ -23,6 +23,42 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
 
   const ALPHABET = ['ALL', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')];
 
+  // Custom Categories & Category Creation State
+  const [customCategories, setCustomCategories] = useState(['medicines', 'hygiene', 'baby-care', 'surgical', 'supplements', 'skincare']);
+  const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+
+  // Dynamically compute all unique categories from catalog + custom list
+  const allCategories = React.useMemo(() => {
+    const catSet = new Set([...customCategories]);
+    (editableProducts || []).forEach(p => {
+      if (p.category) catSet.add(p.category.toLowerCase().trim());
+    });
+    return Array.from(catSet);
+  }, [customCategories, editableProducts]);
+
+  const handleCreateCategory = (e) => {
+    e.preventDefault();
+    const clean = newCategoryName.trim().toLowerCase().replace(/\s+/g, '-');
+    if (!clean) return;
+    if (!customCategories.includes(clean)) {
+      setCustomCategories(prev => [...prev, clean]);
+    }
+    setNewCategoryName('');
+    setIsAddCategoryModalOpen(false);
+    setSaveSuccessMsg(`✅ Category "${clean.toUpperCase()}" created successfully!`);
+    setTimeout(() => setSaveSuccessMsg(''), 3000);
+  };
+
+  // Handle Inline Name & Category Quick-Edit
+  const handleNameChange = (id, newName) => {
+    setEditableProducts(prev => prev.map(p => p.id === id ? { ...p, name: newName } : p));
+  };
+
+  const handleCategoryChange = (id, newCategory) => {
+    setEditableProducts(prev => prev.map(p => p.id === id ? { ...p, category: newCategory } : p));
+  };
+
   // Bulk Pricing State
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [adjustmentPercent, setAdjustmentPercent] = useState(5);
@@ -317,6 +353,9 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                     className="ops-search-input"
                   />
                 </div>
+                <button className="btn-add-category" onClick={() => setIsAddCategoryModalOpen(true)}>
+                  <Plus size={14} /> Add Category
+                </button>
                 <button className="btn-add-item" onClick={handleOpenAddModal}>
                   <Plus size={14} /> Add Single Item
                 </button>
@@ -361,8 +400,32 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                 {currentItems.map(p => (
                   <tr key={p.id}>
                     <td><code>{p.code || 'N/A'}</code></td>
-                    <td><strong>{p.name}</strong></td>
-                    <td><span className="cat-pill">{p.category}</span></td>
+                    <td>
+                      <div className="inline-title-wrapper">
+                        <input 
+                          type="text" 
+                          className="inline-input title-input"
+                          value={p.name}
+                          onChange={(e) => handleNameChange(p.id, e.target.value)}
+                          placeholder="Medicine Name..."
+                          title="Click to edit medicine name"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <select 
+                        className="inline-select category-select"
+                        value={(p.category || 'medicines').toLowerCase()}
+                        onChange={(e) => handleCategoryChange(p.id, e.target.value)}
+                        title="Select category"
+                      >
+                        {allCategories.map(cat => (
+                          <option key={cat} value={cat}>
+                            {cat.toUpperCase().replace('-', ' ')}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
                     <td>
                       <input 
                         type="number" 
@@ -671,10 +734,11 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                     value={newItem.category} 
                     onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
                   >
-                    <option value="medicines">Medicines</option>
-                    <option value="baby-care">Baby Care</option>
-                    <option value="hygiene">Hygiene & Personal</option>
-                    <option value="otc-first-aid">OTC & First Aid</option>
+                    {allCategories.map(cat => (
+                      <option key={cat} value={cat}>
+                        {cat.toUpperCase().replace('-', ' ')}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -682,22 +746,23 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                   <label>Trade Price (Rs.) *</label>
                   <input 
                     type="number" 
-                    step="0.01" 
-                    placeholder="180.00" 
                     required 
+                    placeholder="e.g. 165.50" 
                     value={newItem.price} 
                     onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
                   />
                 </div>
+              </div>
 
+              <div className="form-row grid-3">
                 <div className="form-group">
-                  <label>Packaging Availability</label>
+                  <label>Packaging Mode</label>
                   <select 
                     value={newItem.packagingMode} 
                     onChange={(e) => setNewItem({ ...newItem, packagingMode: e.target.value })}
                   >
-                    <option value="both">Both (Pack & Strip)</option>
-                    <option value="pack">Only Per Pack</option>
+                    <option value="both">Both (Per Pack & Per Strip)</option>
+                    <option value="pack">Only Per Full Pack</option>
                     <option value="strip">Only Per Strip</option>
                   </select>
                 </div>
@@ -707,33 +772,26 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                   <input 
                     type="number" 
                     min="1" 
-                    max="100"
-                    placeholder="10" 
-                    disabled={newItem.packagingMode === 'pack'}
                     value={newItem.stripsPerPack} 
                     onChange={(e) => setNewItem({ ...newItem, stripsPerPack: e.target.value })}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Physical Stock Quantity</label>
+                  <label>Initial Physical Stock</label>
                   <input 
                     type="number" 
-                    placeholder="50" 
+                    min="0" 
                     value={newItem.stock} 
                     onChange={(e) => setNewItem({ ...newItem, stock: e.target.value })}
                   />
                 </div>
               </div>
 
-              {/* Product Picture Option Section */}
-              <div className="image-upload-section margin-top-15">
-                <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '8px' }}>
-                  📷 Product Picture Option
-                </label>
-
-                <div className="image-picker-box">
-                  <div className="image-preview-thumb">
+              <div className="form-group margin-top-10">
+                <label>Product Image</label>
+                <div className="image-picker-container">
+                  <div className="image-preview-box">
                     {newItem.image ? (
                       <img src={newItem.image} alt="Preview" />
                     ) : (
@@ -815,6 +873,51 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                 </button>
                 <button type="submit" className="btn-save-item">
                   <Plus size={16} /> Save Product to Catalog
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* CREATE NEW CATEGORY MODAL */}
+      {isAddCategoryModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsAddCategoryModalOpen(false)}>
+          <div className="modal-container add-category-modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '420px', padding: '24px' }}>
+            <div className="modal-header" style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Plus size={18} color="#0d9488" /> Create New Category
+              </h3>
+              <button className="close-btn" onClick={() => setIsAddCategoryModalOpen(false)} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer' }}>×</button>
+            </div>
+            <form onSubmit={handleCreateCategory}>
+              <div className="form-group" style={{ marginBottom: '16px' }}>
+                <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#334155', display: 'block', marginBottom: '6px' }}>New Category Name *</label>
+                <input 
+                  type="text" 
+                  required 
+                  placeholder="e.g. Surgical, Skin Care, Anti-Biotic, Cardiac..."
+                  value={newCategoryName}
+                  onChange={(e) => setNewCategoryName(e.target.value)}
+                  autoFocus
+                  style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem' }}
+                />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+                <button 
+                  type="button" 
+                  className="btn-cancel" 
+                  onClick={() => setIsAddCategoryModalOpen(false)}
+                  style={{ padding: '8px 16px', border: '1.5px solid #cbd5e1', borderRadius: '8px', background: '#f1f5f9', color: '#475569', fontWeight: 700, cursor: 'pointer' }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="btn-save-item"
+                  style={{ padding: '8px 18px', border: 'none', borderRadius: '8px', background: 'linear-gradient(135deg, #0d9488 0%, #10b981 100%)', color: '#ffffff', fontWeight: 800, cursor: 'pointer' }}
+                >
+                  + Add Category
                 </button>
               </div>
             </form>
