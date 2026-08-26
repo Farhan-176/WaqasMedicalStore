@@ -20,6 +20,7 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
   const [saveSuccessMsg, setSaveSuccessMsg] = useState('');
+  const [editingTitleId, setEditingTitleId] = useState(null);
 
   const ALPHABET = ['ALL', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')];
 
@@ -402,16 +403,39 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                     <tr key={p.id}>
                       <td><code>{p.code || 'N/A'}</code></td>
                       <td>
-                        <div className="inline-title-wrapper">
+                        {editingTitleId === p.id ? (
                           <input 
                             type="text" 
-                            className="inline-input title-input"
+                            className="inline-input title-input-active"
                             value={p.name}
                             onChange={(e) => handleNameChange(p.id, e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === 'Escape') setEditingTitleId(null);
+                            }}
+                            onBlur={() => setEditingTitleId(null)}
+                            autoFocus
                             placeholder="Medicine Name..."
-                            title="Click to edit medicine name"
                           />
-                        </div>
+                        ) : (
+                          <div 
+                            className="title-display-box" 
+                            onDoubleClick={() => setEditingTitleId(p.id)}
+                            title="Double-click or click pencil icon to edit title"
+                          >
+                            <strong className="title-display-text">{p.name}</strong>
+                            <button 
+                              type="button" 
+                              className="btn-title-edit-trigger" 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setEditingTitleId(p.id);
+                              }}
+                              title="Edit title"
+                            >
+                              <Edit3 size={12} />
+                            </button>
+                          </div>
+                        )}
                       </td>
                       <td>
                         <select 
