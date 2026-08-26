@@ -4500,13 +4500,36 @@
 }
 
 /* Inline Medicine Title & Category Edit Inputs */
+.ops-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.ops-table {
+  width: 100% !important;
+  font-size: 0.78rem !important;
+  table-layout: auto !important;
+}
+
+.ops-table th {
+  padding: 8px 6px !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  white-space: nowrap;
+}
+
+.ops-table td {
+  padding: 6px 4px !important;
+}
+
 .title-input {
   width: 100% !important;
-  min-width: 180px !important;
-  padding: 6px 10px !important;
+  min-width: 110px !important;
+  max-width: 150px !important;
+  padding: 4px 6px !important;
   border-radius: var(--radius-sm) !important;
   border: 1.5px solid #cbd5e1 !important;
-  font-size: 0.85rem !important;
+  font-size: 0.78rem !important;
   font-weight: 700 !important;
   color: #0f172a !important;
   background: #ffffff !important;
@@ -4520,15 +4543,16 @@
 }
 
 .category-select {
-  padding: 6px 8px;
+  padding: 4px 4px !important;
   border-radius: var(--radius-sm);
   border: 1.5px solid #cbd5e1;
-  font-size: 0.78rem;
+  font-size: 0.74rem !important;
   font-weight: 700;
   background: #f8fafc;
   color: #0f172a;
   outline: none;
   cursor: pointer;
+  max-width: 105px !important;
 }
 
 .category-select:focus {

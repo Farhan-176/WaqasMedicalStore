@@ -381,115 +381,117 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
               </div>
             </div>
 
-            <table className="admin-table ops-table">
-              <thead>
-                <tr>
-                  <th>Code</th>
-                  <th>Product Title</th>
-                  <th>Category</th>
-                  <th>Trade Price (Rs.)</th>
-                  <th>Packaging Option</th>
-                  <th>Discount %</th>
-                  <th>Physical Stock</th>
-                  <th>Rx Required</th>
-                  <th>Show on Storefront</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentItems.map(p => (
-                  <tr key={p.id}>
-                    <td><code>{p.code || 'N/A'}</code></td>
-                    <td>
-                      <div className="inline-title-wrapper">
-                        <input 
-                          type="text" 
-                          className="inline-input title-input"
-                          value={p.name}
-                          onChange={(e) => handleNameChange(p.id, e.target.value)}
-                          placeholder="Medicine Name..."
-                          title="Click to edit medicine name"
-                        />
-                      </div>
-                    </td>
-                    <td>
-                      <select 
-                        className="inline-select category-select"
-                        value={(p.category || 'medicines').toLowerCase()}
-                        onChange={(e) => handleCategoryChange(p.id, e.target.value)}
-                        title="Select category"
-                      >
-                        {allCategories.map(cat => (
-                          <option key={cat} value={cat}>
-                            {cat.toUpperCase().replace('-', ' ')}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      <input 
-                        type="number" 
-                        className="inline-input price-input"
-                        value={p.price}
-                        onChange={(e) => handlePriceChange(p.id, e.target.value)}
-                      />
-                    </td>
-                    <td>
-                      <select 
-                        className="inline-select packaging-select"
-                        value={p.packagingMode || (p.hasStripOption ? 'both' : 'pack')}
-                        onChange={(e) => handlePackagingModeChange(p.id, e.target.value)}
-                      >
-                        <option value="both">Both (Pack & Strip)</option>
-                        <option value="pack">Only Per Pack</option>
-                        <option value="strip">Only Per Strip</option>
-                      </select>
-                    </td>
-                    <td>
-                      <div className="discount-input-wrapper">
+            <div className="ops-table-wrapper">
+              <table className="admin-table ops-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Product Title</th>
+                    <th>Category</th>
+                    <th>Trade Price (Rs.)</th>
+                    <th>Packaging Option</th>
+                    <th>Discount %</th>
+                    <th>Physical Stock</th>
+                    <th>Rx Required</th>
+                    <th>Show on Storefront</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentItems.map(p => (
+                    <tr key={p.id}>
+                      <td><code>{p.code || 'N/A'}</code></td>
+                      <td>
+                        <div className="inline-title-wrapper">
+                          <input 
+                            type="text" 
+                            className="inline-input title-input"
+                            value={p.name}
+                            onChange={(e) => handleNameChange(p.id, e.target.value)}
+                            placeholder="Medicine Name..."
+                            title="Click to edit medicine name"
+                          />
+                        </div>
+                      </td>
+                      <td>
+                        <select 
+                          className="inline-select category-select"
+                          value={(p.category || 'medicines').toLowerCase()}
+                          onChange={(e) => handleCategoryChange(p.id, e.target.value)}
+                          title="Select category"
+                        >
+                          {allCategories.map(cat => (
+                            <option key={cat} value={cat}>
+                              {cat.toUpperCase().replace('-', ' ')}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                      <td>
                         <input 
                           type="number" 
-                          min="0" 
-                          max="90"
-                          className="inline-input discount-input"
-                          value={p.discountPercent || 0}
-                          onChange={(e) => handleDiscountChange(p.id, e.target.value)}
+                          className="inline-input price-input"
+                          value={p.price}
+                          onChange={(e) => handlePriceChange(p.id, e.target.value)}
                         />
-                        <span className="percent-symbol">%</span>
-                      </div>
-                    </td>
-                    <td>
-                      <input 
-                        type="number" 
-                        className={`inline-input stock-input ${p.stock < 10 ? 'low-stock-alert' : ''}`}
-                        value={p.stock}
-                        onChange={(e) => handleStockChange(p.id, e.target.value)}
-                      />
-                    </td>
-                    <td>{p.requiresPrescription ? '⚠️ Yes' : 'No'}</td>
-                    <td>
-                      <div 
-                        className={`radio-switch-wrapper ${p.showOnMainScreen !== false ? 'is-on' : 'is-off'}`}
-                        onClick={() => handleToggleStorefrontVisibility(p.id)}
-                        title={p.showOnMainScreen !== false ? 'Click to HIDE product from Customer Main Screen' : 'Click to SHOW product on Customer Main Screen'}
-                      >
-                        <div className="radio-switch-track">
-                          <div className="radio-switch-knob"></div>
+                      </td>
+                      <td>
+                        <select 
+                          className="inline-select packaging-select"
+                          value={p.packagingMode || (p.hasStripOption ? 'both' : 'pack')}
+                          onChange={(e) => handlePackagingModeChange(p.id, e.target.value)}
+                        >
+                          <option value="both">Both (Pack & Strip)</option>
+                          <option value="pack">Only Per Pack</option>
+                          <option value="strip">Only Per Strip</option>
+                        </select>
+                      </td>
+                      <td>
+                        <div className="discount-input-wrapper">
+                          <input 
+                            type="number" 
+                            min="0" 
+                            max="90"
+                            className="inline-input discount-input"
+                            value={p.discountPercent || 0}
+                            onChange={(e) => handleDiscountChange(p.id, e.target.value)}
+                          />
+                          <span className="percent-symbol">%</span>
                         </div>
-                        <span className="radio-switch-status">
-                          {p.showOnMainScreen !== false ? 'ON (Visible)' : 'OFF (Hidden)'}
-                        </span>
-                      </div>
-                    </td>
-                    <td>
-                      <button className="btn-row-save" onClick={handleSaveQuickEdit}>
-                        Save Row
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      </td>
+                      <td>
+                        <input 
+                          type="number" 
+                          className={`inline-input stock-input ${p.stock < 10 ? 'low-stock-alert' : ''}`}
+                          value={p.stock}
+                          onChange={(e) => handleStockChange(p.id, e.target.value)}
+                        />
+                      </td>
+                      <td>{p.requiresPrescription ? '⚠️ Yes' : 'No'}</td>
+                      <td>
+                        <div 
+                          className={`radio-switch-wrapper ${p.showOnMainScreen !== false ? 'is-on' : 'is-off'}`}
+                          onClick={() => handleToggleStorefrontVisibility(p.id)}
+                          title={p.showOnMainScreen !== false ? 'Click to HIDE product from Customer Main Screen' : 'Click to SHOW product on Customer Main Screen'}
+                        >
+                          <div className="radio-switch-track">
+                            <div className="radio-switch-knob"></div>
+                          </div>
+                          <span className="radio-switch-status">
+                            {p.showOnMainScreen !== false ? 'ON' : 'OFF'}
+                          </span>
+                        </div>
+                      </td>
+                      <td>
+                        <button className="btn-row-save" onClick={handleSaveQuickEdit}>
+                          Save Row
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             {/* Catalog Pagination Controls */}
             <div className="ops-pagination">
