@@ -79,14 +79,6 @@ export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess, retai
         </div>
 
         <form className="modal-body" onSubmit={handleLogin}>
-          <div className="admin-badge-notice">
-            <ShieldCheck size={20} color="#0d9488" />
-            <div>
-              <strong>Single Sign-On Portal</strong>
-              <p>Sign in with your <strong>Staff ID</strong> for Admin management or your <strong>Store Code</strong> to unlock wholesale discounted prices.</p>
-            </div>
-          </div>
-
           {error && (
             <div className="login-error-alert">
               <AlertCircle size={16} />
@@ -95,7 +87,7 @@ export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess, retai
           )}
 
           <div className="form-group">
-            <label>Username / Staff ID / Store Code</label>
+            <label>Username</label>
             <input 
               type="text" 
               required 
