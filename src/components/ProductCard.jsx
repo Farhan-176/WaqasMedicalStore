@@ -54,13 +54,9 @@ export default function ProductCard({ product, onAddToCart, isRetailer = false }
         />
         
         {/* Tier Pricing Badge */}
-        {isRetailer ? (
+        {isRetailer && (
           <span className="badge badge-retailer-wholesale">
             <Store size={11} /> Wholesale Trade ({discountPercent}% OFF)
-          </span>
-        ) : (
-          <span className="badge badge-retail-price">
-            Standard Retail MRP
           </span>
         )}
 
@@ -137,9 +133,6 @@ export default function ProductCard({ product, onAddToCart, isRetailer = false }
               <span className="original-mrp-strikethrough">
                 MRP: Rs. {mrpReference.toFixed(2)}
               </span>
-            )}
-            {!isRetailer && (
-              <span className="price-type-label">Retail Price</span>
             )}
           </div>
 
