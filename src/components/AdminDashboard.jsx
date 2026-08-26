@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   FileText, CheckCircle, XCircle, Phone, MessageSquare, Printer, 
-  Eye, ShieldCheck, Package, Clock, LogOut, Search, Filter, Table, TrendingUp, Store, Plus, Trash2, Key
+  Eye, ShieldCheck, Package, Clock, LogOut, Search, Filter, Table, TrendingUp, Store, Plus, Trash2, Key, MapPin, UserCheck, FileCheck
 } from 'lucide-react';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from '../adminMockData';
 import { INITIAL_RETAILERS } from '../retailersData';
@@ -856,124 +856,134 @@ export default function AdminDashboard({
         {/* TAB 5: B2B Retailer Accounts Management */}
         {activeTab === 'retailers' && (
           <section className="admin-section">
-            <div className="section-header">
-              <h2>Verified B2B Retailer Accounts</h2>
-              <p>Create and manage pharmacy/clinic credentials. Registered retailers log in via the main <strong>Staff Login</strong> button to unlock wholesale trade prices.</p>
-            </div>
-
-            {/* Create New Retailer Form */}
-            <div className="admin-retailer-create-box">
-              <div className="arc-header">
-                <h4><Plus size={16} /> Register New Partner Retailer</h4>
-                <span>Assign a Store Code / Username and Password</span>
+            <div className="ops-card">
+              <div className="ops-card-header">
+                <div className="ops-header-title-block">
+                  <h3>
+                    Verified B2B Pharmacy Accounts 
+                    <span className="ops-count-pill">{retailersList.length} Active Partners</span>
+                  </h3>
+                  <p>Register and manage B2B pharmacy credentials. Registered retailers log in to unlock wholesale trade prices.</p>
+                </div>
               </div>
-              <form className="arc-form-grid" onSubmit={handleCreateRetailer}>
-                <div className="form-group-compact">
-                  <label>Store / Clinic Name *</label>
-                  <input 
-                    type="text" 
-                    required 
-                    placeholder="e.g. Shifa Pharmacy & Clinic"
-                    value={newRetailer.name}
-                    onChange={(e) => setNewRetailer(prev => ({ ...prev, name: e.target.value }))}
-                  />
-                </div>
 
-                <div className="form-group-compact">
-                  <label>Store Code / Username *</label>
-                  <input 
-                    type="text" 
-                    required 
-                    placeholder="e.g. shifa_pharmacy"
-                    value={newRetailer.username}
-                    onChange={(e) => setNewRetailer(prev => ({ ...prev, username: e.target.value }))}
-                  />
+              {/* Create New Retailer Form Card */}
+              <div className="admin-retailer-create-box">
+                <div className="arc-header">
+                  <h4><ShieldCheck size={16} color="#0d9488" /> Register New B2B Pharmacy Partner</h4>
+                  <span>Assign Store Code / Username and Password credentials for wholesale pricing access</span>
                 </div>
+                <form className="arc-form-grid" onSubmit={handleCreateRetailer}>
+                  <div className="form-group-compact">
+                    <label><Store size={13} /> Store / Clinic Name *</label>
+                    <input 
+                      type="text" 
+                      required 
+                      placeholder="e.g. Shifa Pharmacy & Clinic"
+                      value={newRetailer.name}
+                      onChange={(e) => setNewRetailer(prev => ({ ...prev, name: e.target.value }))}
+                    />
+                  </div>
 
-                <div className="form-group-compact">
-                  <label>Login Password *</label>
-                  <input 
-                    type="text" 
-                    required 
-                    placeholder="e.g. pass123"
-                    value={newRetailer.password}
-                    onChange={(e) => setNewRetailer(prev => ({ ...prev, password: e.target.value }))}
-                  />
-                </div>
+                  <div className="form-group-compact">
+                    <label><UserCheck size={13} /> Store Code / Username *</label>
+                    <input 
+                      type="text" 
+                      required 
+                      placeholder="e.g. shifa_pharmacy"
+                      value={newRetailer.username}
+                      onChange={(e) => setNewRetailer(prev => ({ ...prev, username: e.target.value }))}
+                    />
+                  </div>
 
-                <div className="form-group-compact">
-                  <label>Sector / Area</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. Saddar / Clifton, Karachi"
-                    value={newRetailer.area}
-                    onChange={(e) => setNewRetailer(prev => ({ ...prev, area: e.target.value }))}
-                  />
-                </div>
+                  <div className="form-group-compact">
+                    <label><Key size={13} /> Login Password *</label>
+                    <input 
+                      type="text" 
+                      required 
+                      placeholder="e.g. pass123"
+                      value={newRetailer.password}
+                      onChange={(e) => setNewRetailer(prev => ({ ...prev, password: e.target.value }))}
+                    />
+                  </div>
 
-                <div className="form-group-compact">
-                  <label>Drug License # (Optional)</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. 04-DL-9823"
-                    value={newRetailer.licenseNo}
-                    onChange={(e) => setNewRetailer(prev => ({ ...prev, licenseNo: e.target.value }))}
-                  />
-                </div>
+                  <div className="form-group-compact">
+                    <label><MapPin size={13} /> Sector / Area (Karachi)</label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. Saddar / Clifton, Karachi"
+                      value={newRetailer.area}
+                      onChange={(e) => setNewRetailer(prev => ({ ...prev, area: e.target.value }))}
+                    />
+                  </div>
 
-                <div className="form-group-compact arc-submit-wrap">
-                  <label>&nbsp;</label>
-                  <button type="submit" className="btn-add-retailer">
-                    <Plus size={15} /> Save & Grant Access
-                  </button>
-                </div>
-              </form>
-            </div>
+                  <div className="form-group-compact">
+                    <label><FileCheck size={13} /> Drug License # (Optional)</label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. 04-DL-9823"
+                      value={newRetailer.licenseNo}
+                      onChange={(e) => setNewRetailer(prev => ({ ...prev, licenseNo: e.target.value }))}
+                    />
+                  </div>
 
-            {/* Active Retailers Table */}
-            <div className="admin-table-wrapper">
-              <table className="admin-data-table">
-                <thead>
-                  <tr>
-                    <th>Store / Clinic Name</th>
-                    <th>Store Code (Username)</th>
-                    <th>Password</th>
-                    <th>Area / Location</th>
-                    <th>License #</th>
-                    <th>Discount Tier</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {retailersList.map(ret => (
-                    <tr key={ret.id}>
-                      <td>
-                        <strong className="retailer-row-name"><Store size={14} color="#0d9488" /> {ret.name}</strong>
-                      </td>
-                      <td>
-                        <code>{ret.username}</code>
-                      </td>
-                      <td>
-                        <span className="pwd-mask">{ret.password}</span>
-                      </td>
-                      <td>{ret.area}</td>
-                      <td><small className="license-tag">{ret.licenseNo || 'Verified'}</small></td>
-                      <td>
-                        <span className="badge-trade-pill">Wholesale Trade (12-15%)</span>
-                      </td>
-                      <td>
-                        <button 
-                          className="btn-delete-retailer" 
-                          onClick={() => handleDeleteRetailer(ret.id, ret.name, ret)}
-                          title="Revoke retailer wholesale access"
-                        >
-                          <Trash2 size={14} /> Remove
-                        </button>
-                      </td>
+                  <div className="form-group-compact arc-submit-wrap">
+                    <label>&nbsp;</label>
+                    <button type="submit" className="btn-add-retailer">
+                      <Plus size={15} /> Save & Grant Access
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              {/* Active Retailers Table with Dark Slate Header & Zebra Striping */}
+              <div className="ops-table-wrapper" style={{ marginTop: '24px' }}>
+                <table className="admin-table ops-table">
+                  <thead>
+                    <tr>
+                      <th>Store / Clinic Name</th>
+                      <th>Store Code (Username)</th>
+                      <th>Password</th>
+                      <th>Area / Location</th>
+                      <th>License #</th>
+                      <th>Discount Tier</th>
+                      <th>Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {retailersList.map(ret => (
+                      <tr key={ret.id}>
+                        <td>
+                          <strong className="retailer-row-name" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#0f172a' }}>
+                            <Store size={14} color="#0d9488" /> {ret.name}
+                          </strong>
+                        </td>
+                        <td>
+                          <code style={{ background: '#f1f5f9', padding: '3px 8px', borderRadius: '4px', fontSize: '0.8rem', color: '#0f766e', fontWeight: 700 }}>{ret.username}</code>
+                        </td>
+                        <td>
+                          <span className="pwd-mask" style={{ background: '#f8fafc', padding: '3px 8px', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '0.8rem', color: '#475569' }}>{ret.password}</span>
+                        </td>
+                        <td>{ret.area || 'Karachi'}</td>
+                        <td><small className="license-tag" style={{ background: '#e0f2fe', color: '#0369a1', padding: '2px 8px', borderRadius: '4px', fontWeight: 700, fontSize: '0.74rem' }}>{ret.licenseNo || '04-DL-VERIFIED'}</small></td>
+                        <td>
+                          <span className="badge-trade-pill" style={{ background: '#dcfce7', color: '#15803d', padding: '3px 10px', borderRadius: '12px', fontWeight: 800, fontSize: '0.74rem' }}>Wholesale Trade (12-15% OFF)</span>
+                        </td>
+                        <td>
+                          <button 
+                            className="btn-delete-retailer" 
+                            onClick={() => handleDeleteRetailer(ret.id, ret.name, ret)}
+                            title="Revoke retailer wholesale access"
+                            style={{ background: '#fff1f2', color: '#e11d48', border: '1px solid #fecdd3', padding: '4px 10px', borderRadius: '6px', fontSize: '0.76rem', fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                          >
+                            <Trash2 size={13} /> Remove Access
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </section>
         )}

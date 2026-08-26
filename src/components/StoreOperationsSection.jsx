@@ -68,6 +68,8 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
   // POS Lite State
   const [posCart, setPosCart] = useState([]);
   const [posPaymentMethod, setPosPaymentMethod] = useState('cash');
+  const [posSearchQuery, setPosSearchQuery] = useState('');
+  const [posCategoryFilter, setPosCategoryFilter] = useState('ALL');
 
   // Single Item Add Modal
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -257,6 +259,22 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
     });
   };
 
+  const handlePosQuantityChange = (id, delta) => {
+    setPosCart(prev => {
+      return prev.map(item => {
+        if (item.id === id) {
+          const newQty = item.quantity + delta;
+          return newQty > 0 ? { ...item, quantity: newQty } : null;
+        }
+        return item;
+      }).filter(Boolean);
+    });
+  };
+
+  const handlePosRemoveItem = (id) => {
+    setPosCart(prev => prev.filter(item => item.id !== id));
+  };
+
   const handleCompletePosSale = () => {
     // Deduct stock
     const updated = editableProducts.map(p => {
@@ -340,11 +358,15 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
         return (
           <div className="ops-card">
             <div className="ops-card-header">
-              <div>
-                <h3>Full Store Product Catalog ({filteredOpsProducts.length} Filtered / {editableProducts.length} Total)</h3>
+              <div className="ops-header-title-block">
+                <h3>
+                  Full Store Product Catalog 
+                  <span className="ops-count-pill">{filteredOpsProducts.length} Filtered / {editableProducts.length} Total</span>
+                </h3>
                 <p>Search by name/generic formula, or filter by starting letter (A-Z) to edit trade rates and stock.</p>
               </div>
-              <div className="ops-actions-group">
+              
+              <div className="ops-toolbar-row">
                 <div className="ops-search-box">
                   <input 
                     type="text" 
@@ -543,56 +565,142 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
       })()}
 
       {/* TAB 2: POS Lite Counter Sale */}
-      {activeOpsTab === 'pos-lite' && (
-        <div className="ops-card pos-lite-layout">
-          <div className="pos-catalog-side">
-            <h3>Counter Sale Quick Select</h3>
-            <div className="pos-search-grid">
-              {editableProducts.slice(0, 12).map(p => (
-                <div key={p.id} className="pos-item-card" onClick={() => handlePosAddToCart(p)}>
-                  <h4>{p.name}</h4>
-                  <p>Rs. {p.price} • Stock: {p.stock}</p>
-                  <button className="btn-pos-add">+ Select</button>
+      {activeOpsTab === 'pos-lite' && (() => {
+        const filteredPosProducts = editableProducts.filter(p => {
+          const catMatch = posCategoryFilter === 'ALL' || (p.category && p.category.toLowerCase() === posCategoryFilter.toLowerCase());
+          const query = posSearchQuery.trim().toLowerCase();
+          const searchMatch = !query || 
+            p.name.toLowerCase().includes(query) ||
+            (p.code && p.code.toLowerCase().includes(query)) ||
+            (p.genericName && p.genericName.toLowerCase().includes(query));
+          return catMatch && searchMatch;
+        });
+
+        const displayedPosProducts = filteredPosProducts.slice(0, 30);
+
+        return (
+          <div className="ops-card pos-lite-layout">
+            <div className="pos-catalog-side">
+              <div className="pos-header-bar">
+                <div className="pos-header-title">
+                  <h3>Counter Sale Quick Select ({filteredPosProducts.length} Available)</h3>
+                  <p>Search any medicine across full store catalog or filter by category for quick billing.</p>
                 </div>
-              ))}
+
+                {/* Instant Search Bar */}
+                <div className="pos-search-wrapper">
+                  <input 
+                    type="text" 
+                    className="pos-search-input-field"
+                    placeholder="🔍 Search medicine name, formula, or code..."
+                    value={posSearchQuery}
+                    onChange={(e) => setPosSearchQuery(e.target.value)}
+                  />
+                  {posSearchQuery && (
+                    <button className="btn-clear-pos-search" onClick={() => setPosSearchQuery('')}>×</button>
+                  )}
+                </div>
+
+                {/* Category Filter Pills */}
+                <div className="pos-category-pills-bar">
+                  <button 
+                    className={`pos-cat-pill ${posCategoryFilter === 'ALL' ? 'active' : ''}`}
+                    onClick={() => setPosCategoryFilter('ALL')}
+                  >
+                    ALL ({editableProducts.length})
+                  </button>
+                  {allCategories.map(cat => (
+                    <button 
+                      key={cat}
+                      className={`pos-cat-pill ${posCategoryFilter === cat ? 'active' : ''}`}
+                      onClick={() => setPosCategoryFilter(cat)}
+                    >
+                      {cat.toUpperCase().replace('-', ' ')}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Product Grid */}
+              <div className="pos-search-grid">
+                {displayedPosProducts.length > 0 ? (
+                  displayedPosProducts.map(p => (
+                    <div key={p.id} className="pos-item-card" onClick={() => handlePosAddToCart(p)}>
+                      <span className="pos-cat-tag">{p.category ? p.category.toUpperCase().replace('-', ' ') : 'MEDICINES'}</span>
+                      <h4>{p.name}</h4>
+                      <p>
+                        <strong>Rs. {p.price.toFixed(2)}</strong> &bull; <small className={p.stock < 10 ? 'low-stock-txt' : ''}>Stock: {p.stock}</small>
+                      </p>
+                      <button className="btn-pos-add">+ Add to Bill</button>
+                    </div>
+                  ))
+                ) : (
+                  <div className="pos-empty-results">
+                    <p>No products matching "<strong>{posSearchQuery}</strong>" in <span>{posCategoryFilter}</span>.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* POS Billing Cart Side */}
+            <div className="pos-bill-side">
+              <div className="pos-bill-header-row">
+                <h3>Current Billing Cart ({posCart.length})</h3>
+                {posCart.length > 0 && (
+                  <button className="pos-clear-cart-btn" onClick={() => setPosCart([])}>Clear</button>
+                )}
+              </div>
+
+              <div className="pos-bill-list">
+                {posCart.length > 0 ? (
+                  posCart.map(item => (
+                    <div key={item.id} className="pos-bill-row">
+                      <div className="pos-bill-item-info">
+                        <strong>{item.name}</strong>
+                        <small>Rs. {item.price} per unit</small>
+                      </div>
+                      <div className="pos-bill-qty-controls">
+                        <button type="button" onClick={() => handlePosQuantityChange(item.id, -1)}>-</button>
+                        <span>{item.quantity}</span>
+                        <button type="button" onClick={() => handlePosQuantityChange(item.id, 1)}>+</button>
+                        <button type="button" className="pos-remove-btn" onClick={() => handlePosRemoveItem(item.id)} title="Remove item">🗑️</button>
+                      </div>
+                      <strong className="pos-item-subtotal">Rs. {(item.price * item.quantity).toFixed(2)}</strong>
+                    </div>
+                  ))
+                ) : (
+                  <div className="pos-empty-cart-state">
+                    <ShoppingCart size={32} color="#cbd5e1" />
+                    <p>Click any product on the left grid to add to counter bill</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="pos-payment-selector">
+                <label>Payment Method:</label>
+                <select value={posPaymentMethod} onChange={(e) => setPosPaymentMethod(e.target.value)}>
+                  <option value="cash">Cash on Counter</option>
+                  <option value="easypaisa">EasyPaisa / JazzCash QR</option>
+                  <option value="card">Debit / Credit Card</option>
+                </select>
+              </div>
+
+              <div className="pos-bill-total">
+                <span>Grand Total:</span>
+                <strong>Rs. {posSubtotal.toFixed(2)}</strong>
+              </div>
+
+              <button 
+                className="btn-complete-pos" 
+                disabled={posCart.length === 0}
+                onClick={handleCompletePosSale}
+              >
+                Complete Counter Sale & Print Receipt
+              </button>
             </div>
           </div>
-
-          <div className="pos-bill-side">
-            <h3>Current Billing Cart ({posCart.length})</h3>
-            <div className="pos-bill-list">
-              {posCart.map(item => (
-                <div key={item.id} className="pos-bill-row">
-                  <span>{item.name} (x{item.quantity})</span>
-                  <span>Rs. {item.price * item.quantity}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="pos-payment-selector">
-              <label>Payment Method:</label>
-              <select value={posPaymentMethod} onChange={(e) => setPosPaymentMethod(e.target.value)}>
-                <option value="cash">Cash on Counter</option>
-                <option value="easypaisa">EasyPaisa / JazzCash QR</option>
-                <option value="card">Debit / Credit Card</option>
-              </select>
-            </div>
-
-            <div className="pos-bill-total">
-              <span>Grand Total:</span>
-              <strong>Rs. {posSubtotal}</strong>
-            </div>
-
-            <button 
-              className="btn-complete-pos" 
-              disabled={posCart.length === 0}
-              onClick={handleCompletePosSale}
-            >
-              Complete Counter Sale & Print Receipt
-            </button>
-          </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* TAB 3: Expiry & Batch Alerts */}
       {activeOpsTab === 'expiry-alerts' && (

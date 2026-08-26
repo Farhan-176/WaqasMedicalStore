@@ -2110,17 +2110,121 @@
   margin-top: 14px;
 }
 
+.pos-header-bar {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pos-header-title h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.pos-header-title p {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.pos-search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.pos-search-input-field {
+  width: 100%;
+  padding: 9px 14px 9px 14px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid #cbd5e1;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #0f172a;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.pos-search-input-field:focus {
+  border-color: #0d9488;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+.btn-clear-pos-search {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #e2e8f0;
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pos-category-pills-bar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.pos-cat-pill {
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  color: #475569;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.pos-cat-pill:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.pos-cat-pill.active {
+  background: linear-gradient(135deg, #0d9488 0%, #10b981 100%);
+  color: #ffffff;
+  border-color: #0d9488;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
+}
+
+.pos-cat-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #0d9488;
+  background: #ccfbf1;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  width: fit-content;
+}
+
 .pos-item-card {
   background: #ffffff;
   border: 1.5px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 14px;
-  cursor: pointer;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
+  cursor: pointer;
 }
 
 .pos-item-card:hover {
@@ -2130,7 +2234,7 @@
 }
 
 .pos-item-card h4 { 
-  font-size: 0.88rem; 
+  font-size: 0.86rem; 
   font-weight: 700; 
   color: #0f172a; 
 }
@@ -2140,6 +2244,11 @@
   color: #64748b; 
   margin: 6px 0 10px 0; 
   font-weight: 600;
+}
+
+.low-stock-txt {
+  color: #dc2626;
+  font-weight: 800;
 }
 
 .btn-pos-add {
@@ -2156,6 +2265,65 @@
 .btn-pos-add:hover {
   background: #0284c7;
   color: #ffffff;
+}
+
+.pos-bill-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pos-clear-cart-btn {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #e11d48;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pos-bill-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pos-bill-qty-controls button {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pos-bill-qty-controls button:hover {
+  background: #e2e8f0;
+}
+
+.pos-remove-btn {
+  background: transparent !important;
+  border: none !important;
+  font-size: 0.8rem;
+  margin-left: 2px;
+}
+
+.pos-empty-cart-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 10px;
+  text-align: center;
+  color: #94a3b8;
+  gap: 8px;
+  font-size: 0.8rem;
 }
 
 .pos-bill-side {
@@ -4503,23 +4671,65 @@
 .ops-table-wrapper {
   width: 100%;
   overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
 }
 
 .ops-table {
   width: 100% !important;
   font-size: 0.78rem !important;
   table-layout: auto !important;
+  border-collapse: collapse;
 }
 
 .ops-table th {
-  padding: 8px 6px !important;
-  font-size: 0.72rem !important;
+  padding: 10px 8px !important;
+  font-size: 0.73rem !important;
   font-weight: 800 !important;
   white-space: nowrap;
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 2.5px solid #0d9488 !important;
 }
 
 .ops-table td {
-  padding: 6px 4px !important;
+  padding: 6px 6px !important;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+/* Zebra Striping for Easy Reading Across 10 Columns */
+.ops-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.ops-table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.ops-table tbody tr:hover {
+  background-color: #f0fdf4 !important;
+}
+
+.ops-toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ops-count-pill {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 10px;
+  background: #ccfbf1;
+  color: #0f766e;
+  border-radius: var(--radius-full);
+  font-size: 0.74rem;
+  font-weight: 800;
 }
 
 .title-display-box {
