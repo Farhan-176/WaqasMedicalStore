@@ -1,10 +1,19 @@
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'waqas_medical_prod_jwt_secret_key_98234710293847';
+let jwtSecret = process.env.JWT_SECRET;
 
-if (!process.env.JWT_SECRET) {
-  console.warn('⚠️ Security Warning: JWT_SECRET environment variable is missing. Using fallback configuration key.');
+if (!jwtSecret) {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('FATAL SECURITY ERROR: JWT_SECRET environment variable must be set in production mode.');
+  } else {
+    // Generate a secure random secret per server process instance in development
+    jwtSecret = crypto.randomBytes(32).toString('hex');
+    console.warn('⚠️ Security Warning: JWT_SECRET is unset. A temporary strong random key was generated for this session.');
+  }
 }
+
+const JWT_SECRET = jwtSecret;
 
 const adminOnly = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -15,11 +24,22 @@ const adminOnly = (req, res, next) => {
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
+    if (!decoded || (decoded.role !== 'admin' && decoded.role !== 'Pharmacist Admin')) {
+      return res.status(403).json({ error: 'Access denied. Administrative privileges required.' });
+    }
     req.user = decoded;
     next();
   } catch (err) {
-    return res.status(403).json({ error: 'Invalid or expired authorization token.' });
+    return res.status(401).json({ error: 'Invalid or expired authorization token.' });
   }
 };
 
-module.exports = { adminOnly, JWT_SECRET };
+const verifyToken = (token) => {
+  try {
+    return jwt.verify(token, JWT_SECRET);
+  } catch (err) {
+    return null;
+  }
+};
+
+module.exports = { adminOnly, verifyToken, JWT_SECRET };

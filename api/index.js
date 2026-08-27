@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const app = require('../server/server');
+const app = require('../server/app');
 
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -10,7 +10,7 @@ async function connectToDatabase() {
     return cachedConnection;
   }
 
-  if (!cachedConnection) {
+  if (!cachedConnection && MONGO_URI) {
     cachedConnection = mongoose.connect(MONGO_URI, {
       bufferCommands: false,
       serverSelectionTimeoutMS: 5000
@@ -18,7 +18,9 @@ async function connectToDatabase() {
   }
 
   try {
-    await cachedConnection;
+    if (cachedConnection) {
+      await cachedConnection;
+    }
     return mongoose.connection;
   } catch (error) {
     cachedConnection = null;

@@ -4,39 +4,67 @@ const multer = require('multer');
 const Prescription = require('../models/Prescription');
 const { adminOnly } = require('../middleware/authMiddleware');
 
-// Storage configuration for prescription uploads
 const storage = multer.memoryStorage();
 
-// Strict File Filter: Only allow legitimate image files
 const imageFileFilter = (req, file, cb) => {
   const allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-  if (allowedMimeTypes.includes(file.mimetype)) {
+  if (allowedMimeTypes.includes(file.mimetype.toLowerCase())) {
     cb(null, true);
   } else {
-    cb(new Error('Security error: Only PNG, JPG, JPEG, and WEBP prescription image files are allowed.'), false);
+    cb(new Error('Security restriction: Only JPG, JPEG, PNG, and WEBP images are allowed.'), false);
   }
 };
 
 const upload = multer({
   storage,
-  limits: { fileSize: 8 * 1024 * 1024 }, // 8MB limit
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
   fileFilter: imageFileFilter
 });
+
+/**
+ * Validates actual binary buffer magic bytes to prevent file extension spoofing
+ */
+function isValidImageMagicNumber(buffer) {
+  if (!buffer || buffer.length < 12) return false;
+
+  // JPEG magic bytes: FF D8 FF
+  const isJpeg = buffer[0] === 0xFF && buffer[1] === 0xD8 && buffer[2] === 0xFF;
+
+  // PNG magic bytes: 89 50 4E 47 (\x89PNG)
+  const isPng = buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4E && buffer[3] === 0x47;
+
+  // WebP magic bytes: RIFF .... WEBP
+  const isRiff = buffer[0] === 0x52 && buffer[1] === 0x49 && buffer[2] === 0x46 && buffer[3] === 0x46;
+  const isWebp = buffer[8] === 0x57 && buffer[9] === 0x45 && buffer[10] === 0x42 && buffer[11] === 0x50;
+
+  return isJpeg || isPng || (isRiff && isWebp);
+}
 
 // POST /api/prescriptions/upload - Customer Upload Rx Photo
 router.post('/upload', upload.single('prescriptionImage'), async (req, res) => {
   try {
     const { customerName, phone, address, notes } = req.body;
-    const prescriptionId = 'RX-' + Math.floor(100 + Math.random() * 900);
-    
-    const mockCloudinaryUrl = req.file ? `https://res.cloudinary.com/waqasmedical/image/upload/rx_${Date.now()}.jpg` : 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80';
+
+    if (req.file) {
+      const isValidBinary = isValidImageMagicNumber(req.file.buffer);
+      if (!isValidBinary) {
+        return res.status(400).json({ 
+          error: 'Security failure: Binary magic-number inspection failed. File content does not match a valid image format.' 
+        });
+      }
+    }
+
+    const prescriptionId = 'RX-' + Math.floor(1000 + Math.random() * 9000);
+    const mockCloudinaryUrl = req.file 
+      ? `https://res.cloudinary.com/waqasmedical/image/upload/rx_${Date.now()}.jpg` 
+      : 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80';
 
     const newRx = new Prescription({
       prescriptionId,
-      customerName,
-      phone,
-      address,
-      notes,
+      customerName: customerName || 'Anonymous Customer',
+      phone: phone || '',
+      address: address || '',
+      notes: notes || '',
       imageUrl: mockCloudinaryUrl
     });
 
@@ -47,7 +75,7 @@ router.post('/upload', upload.single('prescriptionImage'), async (req, res) => {
   }
 });
 
-// GET /api/prescriptions - Admin Review Inbox
+// GET /api/prescriptions - Admin Review Inbox (Strict Admin Authorization Required)
 router.get('/', adminOnly, async (req, res) => {
   try {
     const prescriptions = await Prescription.find().sort({ createdAt: -1 });

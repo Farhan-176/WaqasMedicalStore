@@ -1,6 +1,7 @@
 /**
  * NoSQL Injection & Input Sanitization Middleware
- * Strips leading $ keys and ensures query params and body values are string/boolean/number primitives
+ * Recursively strips MongoDB operator keys (starting with $ or containing .)
+ * and sanitizes primitive values across body, query, and params.
  */
 function sanitizeValue(value) {
   if (value === null || value === undefined) return value;
@@ -8,8 +9,9 @@ function sanitizeValue(value) {
   if (typeof value === 'object' && !Array.isArray(value)) {
     const cleanObj = {};
     for (const key of Object.keys(value)) {
-      if (key.startsWith('$')) {
-        continue; // Strip MongoDB operator keys like $gt, $ne, $where
+      // Strip any MongoDB operator injection keys ($gt, $ne, $where, etc.) and dot notation property traversal
+      if (key.startsWith('$') || key.includes('.')) {
+        continue;
       }
       cleanObj[key] = sanitizeValue(value[key]);
     }
@@ -21,7 +23,8 @@ function sanitizeValue(value) {
   }
 
   if (typeof value === 'string') {
-    return value.trim();
+    // Strip null byte injections and trim whitespace
+    return value.replace(/\0/g, '').trim();
   }
 
   return value;
