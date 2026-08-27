@@ -10,6 +10,7 @@ import TrackOrderModal from './components/TrackOrderModal';
 import AdminLoginModal from './components/AdminLoginModal';
 import RetailerOrderHistoryModal from './components/RetailerOrderHistoryModal';
 import RetailerProfileModal from './components/RetailerProfileModal';
+import ErrorBoundary from './components/ErrorBoundary';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from './adminMockData';
 import { INITIAL_RETAILERS } from './retailersData';
 import { MOCK_CATEGORIES, MOCK_PRODUCTS } from './mockData';
@@ -76,6 +77,38 @@ export default function App() {
   });
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
 
+  // Validate Admin Session Token against backend API
+  React.useEffect(() => {
+    if (adminUser) {
+      if (!adminUser.token) {
+        setAdminUser(null);
+        localStorage.removeItem('wms_admin_user');
+        return;
+      }
+      fetch('/api/auth/verify', {
+        headers: { 'Authorization': `Bearer ${adminUser.token}` }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (!data || !data.valid) {
+          console.warn('Security invalidation: Expired or unverified admin JWT token.');
+          setAdminUser(null);
+          localStorage.removeItem('wms_admin_user');
+        }
+      })
+      .catch(() => {});
+    }
+
+    const handleAuthEviction = () => {
+      setAdminUser(null);
+      showToast('Session expired. Please sign in again.', 'error');
+    };
+
+    window.addEventListener('wms:auth-invalidated', handleAuthEviction);
+    return () => window.removeEventListener('wms:auth-invalidated', handleAuthEviction);
+  }, [adminUser?.token]);
+
+
   // Sync state changes to localStorage
   React.useEffect(() => {
     localStorage.setItem('wms_retailers', JSON.stringify(retailers));
@@ -104,6 +137,20 @@ export default function App() {
   // Fetch live cloud data from MongoDB Atlas on mount
   React.useEffect(() => {
     const fetchCloudData = async () => {
+      try {
+        const prodRes = await fetch('/api/products');
+        if (prodRes.ok) {
+          const cloudProducts = await prodRes.json();
+          if (Array.isArray(cloudProducts) && cloudProducts.length > 0) {
+            setProducts(cloudProducts.map(p => ({
+              ...p,
+              id: p._id || p.id,
+              code: p.code || 'N/A'
+            })));
+          }
+        }
+      } catch (e) {}
+
       try {
         const retRes = await fetch('/api/retailers');
         if (retRes.ok) {
@@ -163,14 +210,13 @@ export default function App() {
 
   const ALPHABET = ['ALL', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')];
 
-  // Filter products by main screen visibility toggle, category, letter index, and instant search, aligned alphabetically (A-Z)
+  // Filter products by main screen visibility toggle, category, letter index, and instant search
   const filteredProducts = products
     .filter(product => {
       const isVisibleOnMain = product.showOnMainScreen !== false;
       const query = searchQuery.trim().toLowerCase();
       const isSearching = query.length > 0;
 
-      // When actively searching, search across the entire catalog without letter or category restriction
       const matchesCategory = isSearching || selectedCategory === 'all' || product.category === selectedCategory;
       const matchesLetter = isSearching || selectedLetter === 'ALL' || product.name.trim().toUpperCase().startsWith(selectedLetter);
 
@@ -178,13 +224,11 @@ export default function App() {
         return isVisibleOnMain && matchesCategory && matchesLetter;
       }
 
-      // Smart search across name, generic formula, item code, and category
       const name = (product.name || '').toLowerCase();
       const generic = (product.genericName || '').toLowerCase();
       const code = (product.code || '').toLowerCase();
       const category = (product.category || '').toLowerCase();
 
-      // Split query into individual words (e.g. "panadol extra" -> "panadol" AND "extra")
       const terms = query.split(/\s+/).filter(Boolean);
       const matchesSearch = terms.every(term => 
         name.includes(term) || generic.includes(term) || code.includes(term) || category.includes(term)
@@ -273,10 +317,8 @@ export default function App() {
   };
 
   const handleUpdateRetailerProfile = async (updatedRetailer) => {
-    // 1. Update active session
     setRetailerUser(updatedRetailer);
 
-    // 2. Update master retailers list so Admin section gets real-time updates
     setRetailers(prev => prev.map(ret => 
       (ret.id === updatedRetailer.id || ret.username === updatedRetailer.username)
         ? { ...ret, ...updatedRetailer }
@@ -285,7 +327,6 @@ export default function App() {
 
     showToast(`Profile updated & synced with Dr. Waqas Admin Portal! 🛡️`, 'success');
 
-    // 3. Persist to MongoDB Atlas cloud API
     try {
       const retId = updatedRetailer._id || updatedRetailer.id;
       if (retId) {
@@ -307,271 +348,276 @@ export default function App() {
       showToast(`Welcome back, ${user.name}! Staff Portal active. 🛡️`, 'success');
     } else {
       setRetailerUser(user);
-      setCart([]); // Reset cart so it recalculates with wholesale trade rates
+      setCart([]);
       showToast(`Welcome ${user.name}! Wholesale Trade Rates are now ACTIVE on main screen. 🏢`, 'success');
     }
   };
 
-  // If Admin is logged in, show full Admin Dashboard View wrapped in Suspense for code splitting
+  // If Admin is logged in, show full Admin Dashboard View wrapped in ErrorBoundary & Suspense
   if (adminUser) {
     return (
-      <Suspense fallback={
-        <div className="admin-loading-spinner">
-          <div className="spinner-ring"></div>
-          <p>Loading Admin Dashboard Portal...</p>
-        </div>
-      }>
-        <AdminDashboard 
-          user={adminUser} 
-          products={products}
-          onUpdateProducts={setProducts}
-          orders={orders}
-          onUpdateOrders={setOrders}
-          prescriptions={prescriptions}
-          onUpdatePrescriptions={setPrescriptions}
-          retailers={retailers}
-          onUpdateRetailers={setRetailers}
-          onLogout={() => setAdminUser(null)} 
-        />
-      </Suspense>
+      <ErrorBoundary fallbackTitle="Admin Dashboard Error">
+        <Suspense fallback={
+          <div className="admin-loading-spinner">
+            <div className="spinner-ring"></div>
+            <p>Loading Admin Dashboard Portal...</p>
+          </div>
+        }>
+          <AdminDashboard 
+            user={adminUser} 
+            products={products}
+            onUpdateProducts={setProducts}
+            orders={orders}
+            onUpdateOrders={setOrders}
+            prescriptions={prescriptions}
+            onUpdatePrescriptions={setPrescriptions}
+            retailers={retailers}
+            onUpdateRetailers={setRetailers}
+            onLogout={() => setAdminUser(null)} 
+          />
+        </Suspense>
+      </ErrorBoundary>
     );
   }
 
   return (
-    <div className="app-container">
-      {/* Website Intro Splash Screen */}
-      {showIntro && (
-        <div className="intro-splash-screen" onClick={() => setShowIntro(false)}>
-          <div className="intro-splash-content">
-            <div className="intro-logo-glow-ring">
-              <img 
-                src="/wms-icon.png" 
-                alt="Waqas Medical Store" 
-                className="intro-splash-logo" 
-              />
-            </div>
-            <span className="intro-welcome-text">Welcome To</span>
-            <h1 className="intro-title">WAQAS MEDICAL STORE</h1>
-            <p className="intro-subtitle">Authentic Healthcare & Medicine Solutions</p>
-            <div className="intro-loader-bar">
-              <div className="intro-loader-progress"></div>
-            </div>
-            <span className="intro-tap-hint">Tap anywhere to enter</span>
-          </div>
-        </div>
-      )}
-
-      {/* Top Navbar */}
-      <Header 
-        cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
-        onOpenCart={() => setIsCartOpen(true)}
-        onOpenAdminLogin={() => setIsAdminLoginOpen(true)}
-        retailerUser={retailerUser}
-        onRetailerLogout={handleRetailerLogout}
-        onOpenTrackOrder={() => setIsTrackOrderOpen(true)}
-        onOpenRetailerHistory={() => setIsRetailerHistoryOpen(true)}
-        onOpenRetailerProfile={() => setIsRetailerProfileOpen(true)}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        products={products}
-      />
-
-      {/* Active Retailer Wholesale Mode Notification Bar */}
-      {retailerUser && (
-        <div className="retailer-active-banner">
-          <div className="banner-left">
-            <Store size={18} color="#10b981" />
-            <span>
-              <strong>B2B Wholesale Portal Active:</strong> Logged in as <strong>{retailerUser.name}</strong> ({retailerUser.area}). All catalog rates are unlocked at wholesale trade prices.
-            </span>
-          </div>
-        </div>
-      )}
-
-      {/* Main Content Body */}
-      <main className="main-content-body">
-        {/* Pure Healthcare Hero Banner */}
-        <section className="hero-banner">
-          <div className="banner-content">
-            <span className="hero-badge">
-              {retailerUser ? '🏢 B2B Wholesale Commercial Pharmacy Portal' : '⚡ Instant Local Pharmacy Delivery'}
-            </span>
-            <h2>
-              {retailerUser 
-                ? 'Wholesale Trade Medicines & Commercial Pharmacy Supply'
-                : 'Authentic Medicines & Daily Essentials Delivered'
-              }
-            </h2>
-            <p>
-              {retailerUser
-                ? 'Order bulk medicine packs, cartons, and verified pharmaceutical formulas with authorized commercial invoicing.'
-                : 'Upload your doctor\'s prescription or browse our extensive range of genuine products with generic formula alternatives.'
-              }
-            </p>
-            <div className="hero-features">
-              <span><ShieldCheck size={16} /> 100% Genuine Medicines</span>
-              <span><Truck size={16} /> Fast Delivery in 45 Mins</span>
-              <span><RefreshCw size={16} /> Batch Expire Verified</span>
+    <ErrorBoundary fallbackTitle="Application Interface Error">
+      <div className="app-container">
+        {/* Website Intro Splash Screen */}
+        {showIntro && (
+          <div className="intro-splash-screen" onClick={() => setShowIntro(false)}>
+            <div className="intro-splash-content">
+              <div className="intro-logo-glow-ring">
+                <img 
+                  src="/wms-icon.png" 
+                  alt="Waqas Medical Store" 
+                  className="intro-splash-logo" 
+                />
+              </div>
+              <span className="intro-welcome-text">Welcome To</span>
+              <h1 className="intro-title">WAQAS MEDICAL STORE</h1>
+              <p className="intro-subtitle">Authentic Healthcare & Medicine Solutions</p>
+              <div className="intro-loader-bar">
+                <div className="intro-loader-progress"></div>
+              </div>
+              <span className="intro-tap-hint">Tap anywhere to enter</span>
             </div>
           </div>
-        </section>
+        )}
 
-        {/* Category Pills Navigation Slider */}
-        <section className="category-section">
-          <div className="category-pills">
-            {MOCK_CATEGORIES.map(cat => (
-              <button
-                key={cat.id}
-                className={`pill-btn ${selectedCategory === cat.id ? 'active' : ''}`}
-                onClick={() => setSelectedCategory(cat.id)}
-              >
-                <span>{cat.label}</span>
-              </button>
-            ))}
-          </div>
+        {/* Top Navbar */}
+        <Header 
+          cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
+          onOpenCart={() => setIsCartOpen(true)}
+          onOpenAdminLogin={() => setIsAdminLoginOpen(true)}
+          retailerUser={retailerUser}
+          onRetailerLogout={handleRetailerLogout}
+          onOpenTrackOrder={() => setIsTrackOrderOpen(true)}
+          onOpenRetailerHistory={() => setIsRetailerHistoryOpen(true)}
+          onOpenRetailerProfile={() => setIsRetailerProfileOpen(true)}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          products={products}
+        />
 
-          {/* Alphabetical A-Z Letter Filter Bar */}
-          <div className="alphabet-bar">
-            <span className="alphabet-title">Filter by Letter:</span>
-            <div className="alphabet-pills">
-              {ALPHABET.map(letter => (
-                <button
-                  key={letter}
-                  className={`alphabet-btn ${selectedLetter === letter ? 'active' : ''}`}
-                  onClick={() => setSelectedLetter(letter)}
-                >
-                  {letter}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Product Catalog Grid Section */}
-        <section className="catalog-section">
-          <div className="catalog-header">
-            <h3>
-              {selectedCategory === 'all' ? 'All Catalog Products' : selectedCategory.replace('-', ' ').toUpperCase()} 
-              <span className="count-tag"> ({filteredProducts.length} items)</span>
-            </h3>
-            {retailerUser && (
-              <span className="wholesale-pricing-active-tag">
-                <Sparkles size={13} /> Wholesale Trade Rates Active
+        {/* Active Retailer Wholesale Mode Notification Bar */}
+        {retailerUser && (
+          <div className="retailer-active-banner">
+            <div className="banner-left">
+              <Store size={18} color="#10b981" />
+              <span>
+                <strong>B2B Wholesale Portal Active:</strong> Logged in as <strong>{retailerUser.name}</strong> ({retailerUser.area}). All catalog rates are unlocked at wholesale trade prices.
               </span>
-            )}
+            </div>
           </div>
+        )}
 
-          {filteredProducts.length === 0 ? (
-            <div className="no-results" style={{ textAlign: 'center', padding: '40px 20px' }}>
-              <AlertCircle size={44} style={{ color: '#94a3b8', margin: '0 auto 14px', display: 'block' }} />
-              <p style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>No products found matching "<strong>{searchQuery}</strong>"</p>
-              <span style={{ fontSize: '0.88rem', color: '#64748b', display: 'block', marginTop: '6px' }}>
-                Try searching for common medicine names like <em>Panadol, Brufen, Disprin, Augmentin, Sensodyne</em>, or formula names like <em>Paracetamol</em>.
+        {/* Main Content Body */}
+        <main className="main-content-body">
+          {/* Healthcare Hero Banner */}
+          <section className="hero-banner">
+            <div className="banner-content">
+              <span className="hero-badge">
+                {retailerUser ? '🏢 B2B Wholesale Commercial Pharmacy Portal' : '⚡ Instant Local Pharmacy Delivery'}
               </span>
-              <div style={{ marginTop: '20px' }}>
-                <button 
-                  className="btn-action-view" 
-                  onClick={() => { setSearchQuery(''); setSelectedCategory('all'); setSelectedLetter('ALL'); }}
-                  style={{ cursor: 'pointer', display: 'inline-flex', padding: '10px 22px' }}
-                >
-                  Clear Search & View All Products
-                </button>
+              <h2>
+                {retailerUser 
+                  ? 'Wholesale Trade Medicines & Commercial Pharmacy Supply'
+                  : 'Authentic Medicines & Daily Essentials Delivered'
+                }
+              </h2>
+              <p>
+                {retailerUser
+                  ? 'Order bulk medicine packs, cartons, and verified pharmaceutical formulas with authorized commercial invoicing.'
+                  : 'Upload your doctor\'s prescription or browse our extensive range of genuine products with generic formula alternatives.'
+                }
+              </p>
+              <div className="hero-features">
+                <span><ShieldCheck size={16} /> 100% Genuine Medicines</span>
+                <span><Truck size={16} /> Fast Delivery in 45 Mins</span>
+                <span><RefreshCw size={16} /> Batch Expire Verified</span>
               </div>
             </div>
-          ) : (
-            <div className="products-grid">
-              {filteredProducts.map(product => (
-                <ProductCard 
-                  key={product.id}
-                  product={product}
-                  onAddToCart={handleAddToCart}
-                  isRetailer={Boolean(retailerUser)}
-                />
+          </section>
+
+          {/* Category Pills Navigation Slider */}
+          <section className="category-section">
+            <div className="category-pills">
+              {MOCK_CATEGORIES.map(cat => (
+                <button
+                  key={cat.id}
+                  className={`pill-btn ${selectedCategory === cat.id ? 'active' : ''}`}
+                  onClick={() => setSelectedCategory(cat.id)}
+                >
+                  <span>{cat.label}</span>
+                </button>
               ))}
             </div>
-          )}
-        </section>
-      </main>
 
-      {/* Cart Slide-out Drawer */}
-      <CartDrawer 
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartItems={cart}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-        onProceedCheckout={() => {
-          setIsCartOpen(false);
-          setIsCheckoutOpen(true);
-        }}
-        retailerUser={retailerUser}
-      />
+            {/* Alphabetical A-Z Letter Filter Bar */}
+            <div className="alphabet-bar">
+              <span className="alphabet-title">Filter by Letter:</span>
+              <div className="alphabet-pills">
+                {ALPHABET.map(letter => (
+                  <button
+                    key={letter}
+                    className={`alphabet-btn ${selectedLetter === letter ? 'active' : ''}`}
+                    onClick={() => setSelectedLetter(letter)}
+                  >
+                    {letter}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </section>
 
-      {/* Prescription Upload Modal */}
-      <PrescriptionModal 
-        isOpen={isPrescriptionOpen}
-        onClose={() => setIsPrescriptionOpen(false)}
-      />
+          {/* Product Catalog Grid Section */}
+          <section className="catalog-section">
+            <div className="catalog-header">
+              <h3>
+                {selectedCategory === 'all' ? 'All Catalog Products' : selectedCategory.replace('-', ' ').toUpperCase()} 
+                <span className="count-tag"> ({filteredProducts.length} items)</span>
+              </h3>
+              {retailerUser && (
+                <span className="wholesale-pricing-active-tag">
+                  <Sparkles size={13} /> Wholesale Trade Rates Active
+                </span>
+              )}
+            </div>
 
-      {/* Standard Checkout Modal */}
-      <CheckoutModal 
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        cartItems={cart}
-        onOrderPlaced={handleOrderPlaced}
-        retailerUser={retailerUser}
-      />
+            <ErrorBoundary fallbackTitle="Catalog Grid Error">
+              {filteredProducts.length === 0 ? (
+                <div className="no-results" style={{ textAlign: 'center', padding: '40px 20px' }}>
+                  <AlertCircle size={44} style={{ color: '#94a3b8', margin: '0 auto 14px', display: 'block' }} />
+                  <p style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>No products found matching "<strong>{searchQuery}</strong>"</p>
+                  <span style={{ fontSize: '0.88rem', color: '#64748b', display: 'block', marginTop: '6px' }}>
+                    Try searching for common medicine names like <em>Panadol, Brufen, Disprin, Augmentin, Sensodyne</em>, or formula names like <em>Paracetamol</em>.
+                  </span>
+                  <div style={{ marginTop: '20px' }}>
+                    <button 
+                      className="btn-action-view" 
+                      onClick={() => { setSearchQuery(''); setSelectedCategory('all'); setSelectedLetter('ALL'); }}
+                      style={{ cursor: 'pointer', display: 'inline-flex', padding: '10px 22px' }}
+                    >
+                      Clear Search & View All Products
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="products-grid">
+                  {filteredProducts.map(product => (
+                    <ProductCard 
+                      key={product.id}
+                      product={product}
+                      onAddToCart={handleAddToCart}
+                      isRetailer={Boolean(retailerUser)}
+                    />
+                  ))}
+                </div>
+              )}
+            </ErrorBoundary>
+          </section>
+        </main>
 
-      {/* Post-Checkout Live Order Tracking Confirmation Modal */}
-      <OrderTrackingModal 
-        isOpen={isTrackingOpen}
-        onClose={() => setIsTrackingOpen(false)}
-        order={activeOrder}
-        onAdvanceStatus={handleAdvanceStatus}
-      />
+        {/* Modals wrapped in ErrorBoundary */}
+        <ErrorBoundary fallbackTitle="Cart Component Error">
+          <CartDrawer 
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            cartItems={cart}
+            onUpdateQuantity={handleUpdateQuantity}
+            onRemoveItem={handleRemoveItem}
+            onProceedCheckout={() => {
+              setIsCartOpen(false);
+              setIsCheckoutOpen(true);
+            }}
+            retailerUser={retailerUser}
+          />
+        </ErrorBoundary>
 
-      {/* On-Demand Navbar Track Order Lookup Modal */}
-      <TrackOrderModal 
-        isOpen={isTrackOrderOpen}
-        onClose={() => setIsTrackOrderOpen(false)}
-        orders={orders}
-        activeOrder={activeOrder}
-        onAdvanceStatus={handleAdvanceStatus}
-      />
+        <ErrorBoundary fallbackTitle="Prescription Modal Error">
+          <PrescriptionModal 
+            isOpen={isPrescriptionOpen}
+            onClose={() => setIsPrescriptionOpen(false)}
+          />
+        </ErrorBoundary>
 
-      {/* Retailer B2B Order History & Invoices Modal */}
-      <RetailerOrderHistoryModal 
-        isOpen={isRetailerHistoryOpen}
-        onClose={() => setIsRetailerHistoryOpen(false)}
-        retailerUser={retailerUser}
-        orders={orders}
-        onReOrder={handleReOrder}
-      />
+        <ErrorBoundary fallbackTitle="Checkout Modal Error">
+          <CheckoutModal 
+            isOpen={isCheckoutOpen}
+            onClose={() => setIsCheckoutOpen(false)}
+            cartItems={cart}
+            onOrderPlaced={handleOrderPlaced}
+            retailerUser={retailerUser}
+          />
+        </ErrorBoundary>
 
-      {/* Retailer Profile Modal */}
-      <RetailerProfileModal 
-        isOpen={isRetailerProfileOpen}
-        onClose={() => setIsRetailerProfileOpen(false)}
-        retailerUser={retailerUser}
-        onUpdateProfile={handleUpdateRetailerProfile}
-        onLogout={handleRetailerLogout}
-      />
+        <OrderTrackingModal 
+          isOpen={isTrackingOpen}
+          onClose={() => setIsTrackingOpen(false)}
+          order={activeOrder}
+          onAdvanceStatus={handleAdvanceStatus}
+        />
 
-      {/* Unified Staff & Retailer Login Modal */}
-      <AdminLoginModal 
-        isOpen={isAdminLoginOpen}
-        onClose={() => setIsAdminLoginOpen(false)}
-        retailers={retailers}
-        onLoginSuccess={handleUnifiedLoginSuccess}
-      />
+        <TrackOrderModal 
+          isOpen={isTrackOrderOpen}
+          onClose={() => setIsTrackOrderOpen(false)}
+          orders={orders}
+          activeOrder={activeOrder}
+          onAdvanceStatus={handleAdvanceStatus}
+        />
 
-      {/* Floating Animated Toast Banner */}
-      {toast && (
-        <div className={`toast-notification toast-${toast.type}`}>
-          {toast.type === 'error' ? <AlertCircle size={18} /> : <CheckCircle2 size={18} />}
-          <span>{toast.message}</span>
-        </div>
-      )}
-    </div>
+        <RetailerOrderHistoryModal 
+          isOpen={isRetailerHistoryOpen}
+          onClose={() => setIsRetailerHistoryOpen(false)}
+          retailerUser={retailerUser}
+          orders={orders}
+          onReOrder={handleReOrder}
+        />
+
+        <RetailerProfileModal 
+          isOpen={isRetailerProfileOpen}
+          onClose={() => setIsRetailerProfileOpen(false)}
+          retailerUser={retailerUser}
+          onUpdateProfile={handleUpdateRetailerProfile}
+          onLogout={handleRetailerLogout}
+        />
+
+        <AdminLoginModal 
+          isOpen={isAdminLoginOpen}
+          onClose={() => setIsAdminLoginOpen(false)}
+          retailers={retailers}
+          onLoginSuccess={handleUnifiedLoginSuccess}
+        />
+
+        {/* Floating Animated Toast Banner */}
+        {toast && (
+          <div className={`toast-notification toast-${toast.type}`}>
+            {toast.type === 'error' ? <AlertCircle size={18} /> : <CheckCircle2 size={18} />}
+            <span>{toast.message}</span>
+          </div>
+        )}
+      </div>
+    </ErrorBoundary>
   );
 }

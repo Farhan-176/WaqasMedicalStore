@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { X, MapPin, Truck, Store, CreditCard, ShieldCheck, ArrowRight, AlertTriangle } from 'lucide-react';
+import { X, MapPin, Truck, Store, CreditCard, ShieldCheck, ArrowRight, AlertTriangle, FileText, Upload } from 'lucide-react';
 import { DELIVERY_ZONES } from '../deliveryZones';
+
+function roundCurrency(val) {
+  return Math.round((Number(val) || 0) * 100) / 100;
+}
 
 export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlaced, retailerUser }) {
   const [selectedZone, setSelectedZone] = useState(DELIVERY_ZONES[0]);
   const [checkoutType, setCheckoutType] = useState('delivery'); // 'delivery' or 'pickup'
+  const [rxRefNumber, setRxRefNumber] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: retailerUser ? retailerUser.name : '',
     phone: '',
@@ -26,16 +32,19 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
 
   if (!isOpen) return null;
 
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const deliveryFee = checkoutType === 'pickup' ? 0 : selectedZone.fee;
-  const grandTotal = subtotal + deliveryFee;
+  const rawSubtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = roundCurrency(rawSubtotal);
+  const deliveryFee = checkoutType === 'pickup' ? 0 : roundCurrency(selectedZone.fee);
+  const grandTotal = roundCurrency(subtotal + deliveryFee);
   const isBelowMinOrder = checkoutType === 'delivery' && subtotal < selectedZone.minOrder;
-  // B2B Retailers are licensed pharmacies and do not require consumer prescription upload
+  
+  // B2B Retailers are licensed pharmacies and exempt from consumer prescription upload
   const requiresRx = !retailerUser && cartItems.some(item => item.requiresPrescription);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isBelowMinOrder) return;
+    setIsSubmitting(true);
 
     const payload = {
       items: cartItems.map(item => ({
@@ -43,24 +52,28 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
         name: item.name,
         quantity: item.quantity,
         price: item.price,
+        unit: item.unit || 'Per Pack',
         requiresPrescription: item.requiresPrescription
       })),
       customer: {
         ...formData,
         isRetailer: Boolean(retailerUser),
         retailerName: retailerUser ? retailerUser.name : null,
-        licenseNo: retailerUser ? retailerUser.licenseNo : null
+        licenseNo: retailerUser ? retailerUser.licenseNo : null,
+        notes: rxRefNumber ? `Prescription Ref: ${rxRefNumber}. ${formData.notes}` : formData.notes
       },
       orderType: retailerUser ? 'b2b_retailer' : 'b2c_consumer',
+      retailerUsername: retailerUser ? retailerUser.username : '',
       checkoutType,
       zone: selectedZone,
       subtotal,
       deliveryFee,
       grandTotal,
-      requiresRx
+      requiresRx,
+      prescriptionId: rxRefNumber || null
     };
 
-    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/orders`, {
@@ -70,15 +83,16 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
       });
       if (response.ok) {
         const savedOrder = await response.json();
+        setIsSubmitting(false);
         onOrderPlaced({
           id: savedOrder.orderId || ('ORD-' + Math.floor(100000 + Math.random() * 900000)),
           items: cartItems,
           customer: formData,
           checkoutType,
           zone: selectedZone,
-          subtotal,
-          deliveryFee,
-          grandTotal,
+          subtotal: savedOrder.subtotal || subtotal,
+          deliveryFee: savedOrder.deliveryFee || deliveryFee,
+          grandTotal: savedOrder.grandTotal || grandTotal,
           requiresRx,
           status: savedOrder.status || 'Received',
           createdAt: new Date().toLocaleString()
@@ -89,6 +103,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
       console.warn('⚠️ Server offline or connection issue. Using local order placement fallback:', err.message);
     }
 
+    setIsSubmitting(false);
     const fallbackOrder = {
       id: 'ORD-' + Math.floor(100000 + Math.random() * 900000),
       items: cartItems,
@@ -122,7 +137,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
               {cartItems.map(item => (
                 <div key={item.id} className="summary-item-row">
                   <span>{item.name} (x{item.quantity})</span>
-                  <span>Rs. {item.price * item.quantity}</span>
+                  <span>Rs. {roundCurrency(item.price * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -132,9 +147,20 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
                 <span><strong>Commercial Pharmacy Exemption:</strong> Verified Retailer ({retailerUser.licenseNo || 'Drug License Verified'}). Prescription upload exempt.</span>
               </div>
             ) : requiresRx ? (
-              <div className="rx-alert-mini">
-                <AlertTriangle size={14} color="#d97706" />
-                <span>Order contains prescription medicines. Verification required.</span>
+              <div className="rx-alert-mini" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <AlertTriangle size={14} color="#d97706" />
+                  <span><strong>Schedule G/H Medication:</strong> Prescription required by drug regulation laws.</span>
+                </div>
+                <div style={{ marginTop: '4px' }}>
+                  <input
+                    type="text"
+                    placeholder="Enter Prescription ID / Doctor Notes (Optional if submitted via Rx Portal)"
+                    value={rxRefNumber}
+                    onChange={(e) => setRxRefNumber(e.target.value)}
+                    style={{ width: '100%', padding: '6px 10px', fontSize: '0.82rem', border: '1px solid #fed7aa', borderRadius: '4px', background: '#fff' }}
+                  />
+                </div>
               </div>
             ) : null}
           </div>
@@ -229,28 +255,28 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
             </div>
           )}
 
-          {/* Total Breakdown */}
+          {/* Total Breakdown with Strict 2 Decimal Formatting */}
           <div className="total-calculation-box">
             <div className="calc-row">
               <span>Subtotal</span>
-              <span>Rs. {subtotal}</span>
+              <span>Rs. {subtotal.toFixed(2)}</span>
             </div>
             <div className="calc-row">
               <span>Delivery Fee</span>
-              <span>{deliveryFee === 0 ? 'FREE' : `Rs. ${deliveryFee}`}</span>
+              <span>{deliveryFee === 0 ? 'FREE' : `Rs. ${deliveryFee.toFixed(2)}`}</span>
             </div>
             <div className="calc-row grand-total">
               <span>Grand Total</span>
-              <span>Rs. {grandTotal}</span>
+              <span>Rs. {grandTotal.toFixed(2)}</span>
             </div>
           </div>
 
           <button 
             type="submit" 
             className="btn-place-order"
-            disabled={isBelowMinOrder}
+            disabled={isBelowMinOrder || isSubmitting}
           >
-            Confirm & Place Order <ArrowRight size={18} />
+            {isSubmitting ? 'Processing Order...' : 'Confirm & Place Order'} <ArrowRight size={18} />
           </button>
         </form>
       </div>

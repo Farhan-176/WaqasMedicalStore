@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   FileText, CheckCircle, XCircle, Phone, MessageSquare, Printer, 
-  Eye, ShieldCheck, Package, Clock, LogOut, Search, Filter, Table, TrendingUp, Store, Plus, Trash2, Key, MapPin, UserCheck, FileCheck
+  Eye, ShieldCheck, Package, Clock, LogOut, Search, Filter, Table, TrendingUp, Store, Plus, Trash2, Key, MapPin, UserCheck, FileCheck,
+  ChevronLeft, ChevronRight, Menu
 } from 'lucide-react';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from '../adminMockData';
 import { INITIAL_RETAILERS } from '../retailersData';
@@ -24,6 +25,7 @@ export default function AdminDashboard({
   onLogout 
 }) {
   const [activeTab, setActiveTab] = useState('prescriptions'); // 'prescriptions', 'orders', 'store-ops', 'analytics', 'retailers'
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [prescriptions, setPrescriptions] = useState(propPrescriptions || INITIAL_PRESCRIPTIONS);
   const [orders, setOrders] = useState(propOrders || INITIAL_FULFILLMENT_ORDERS);
   const [retailersList, setRetailersList] = useState(propRetailers || INITIAL_RETAILERS);
@@ -437,76 +439,148 @@ export default function AdminDashboard({
   };
 
   return (
-    <div className="admin-portal-container">
-      {/* Admin Top Navigation Bar */}
-      <header className="admin-nav">
-        <div className="admin-brand">
-          <div className="brand-icon-badge">
-            <ShieldCheck size={20} color="#ffffff" />
+    <div className={`admin-portal-container admin-sidebar-layout ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+      {/* Modern Left Sidebar Navigation */}
+      <aside className={`admin-sidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+        <div className="admin-sidebar-header">
+          <div className="admin-brand">
+            <div className="brand-icon-badge" title="Waqas Pharmacy Staff Portal">
+              <ShieldCheck size={22} color="#ffffff" />
+            </div>
+            {!isSidebarCollapsed && (
+              <div className="admin-brand-text">
+                <h3>WAQAS <span>PHARMACY</span></h3>
+                <span className="portal-sub-badge">Clinical Staff Portal</span>
+              </div>
+            )}
           </div>
-          <div>
-            <h3>WAQAS <span>STAFF PORTAL</span></h3>
-            <span className="user-role-tag">{user.name}</span>
-          </div>
+          <button 
+            type="button" 
+            className="btn-toggle-sidebar" 
+            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            title={isSidebarCollapsed ? "Expand Sidebar" : "Close / Collapse Sidebar"}
+            aria-label="Toggle Sidebar"
+          >
+            {isSidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+          </button>
         </div>
 
-        <div className="admin-nav-tabs">
+        {/* Navigation Tabs */}
+        <nav className="admin-sidebar-nav">
+          {!isSidebarCollapsed && <div className="nav-section-label">OPERATIONS</div>}
           <button 
-            className={`admin-tab-btn ${activeTab === 'prescriptions' ? 'active' : ''}`}
+            className={`admin-side-btn ${activeTab === 'prescriptions' ? 'active' : ''}`}
             onClick={() => setActiveTab('prescriptions')}
+            title={isSidebarCollapsed ? "Rx Verification" : undefined}
           >
-            <FileText size={15} />
-            <span>Rx Verification</span>
-            <span className="count-badge red">
-              {prescriptions.filter(p => p.status === 'Pending').length}
-            </span>
+            <FileText size={17} />
+            {!isSidebarCollapsed && <span className="btn-label">Rx Verification</span>}
+            {prescriptions.filter(p => p.status === 'Pending').length > 0 && (
+              <span className="side-count-badge badge-red">
+                {prescriptions.filter(p => p.status === 'Pending').length}
+              </span>
+            )}
           </button>
 
           <button 
-            className={`admin-tab-btn ${activeTab === 'orders' ? 'active' : ''}`}
+            className={`admin-side-btn ${activeTab === 'orders' ? 'active' : ''}`}
             onClick={() => setActiveTab('orders')}
+            title={isSidebarCollapsed ? "Orders Queue" : undefined}
           >
-            <Package size={15} />
-            <span>Orders Queue</span>
-            <span className="count-badge blue">{orders.length}</span>
+            <Package size={17} />
+            {!isSidebarCollapsed && <span className="btn-label">Orders Queue</span>}
+            <span className="side-count-badge badge-blue">{orders.length}</span>
           </button>
 
           <button 
-            className={`admin-tab-btn ${activeTab === 'store-ops' ? 'active' : ''}`}
+            className={`admin-side-btn ${activeTab === 'store-ops' ? 'active' : ''}`}
             onClick={() => setActiveTab('store-ops')}
+            title={isSidebarCollapsed ? "Store Operations" : undefined}
           >
-            <Table size={15} />
-            <span>Store Operations</span>
+            <Table size={17} />
+            {!isSidebarCollapsed && <span className="btn-label">Store Operations</span>}
+            <span className="side-count-badge badge-teal">LIVE</span>
           </button>
 
+          {!isSidebarCollapsed && <div className="nav-section-label">MANAGEMENT & DATA</div>}
           <button 
-            className={`admin-tab-btn ${activeTab === 'retailers' ? 'active' : ''}`}
+            className={`admin-side-btn ${activeTab === 'retailers' ? 'active' : ''}`}
             onClick={() => setActiveTab('retailers')}
+            title={isSidebarCollapsed ? "Retailer Accounts" : undefined}
           >
-            <Store size={15} />
-            <span>Retailer Accounts</span>
-            <span className="count-badge green">{retailersList.length}</span>
+            <Store size={17} />
+            {!isSidebarCollapsed && <span className="btn-label">Retailer Accounts</span>}
+            <span className="side-count-badge badge-green">{retailersList.length}</span>
           </button>
 
           <button 
-            className={`admin-tab-btn ${activeTab === 'analytics' ? 'active' : ''}`}
+            className={`admin-side-btn ${activeTab === 'analytics' ? 'active' : ''}`}
             onClick={() => setActiveTab('analytics')}
+            title={isSidebarCollapsed ? "Sales & Analytics" : undefined}
           >
-            <TrendingUp size={15} />
-            <span>Sales & Analytics</span>
-            <span className="count-badge green">LIVE</span>
+            <TrendingUp size={17} />
+            {!isSidebarCollapsed && <span className="btn-label">Sales & Analytics</span>}
+            <span className="side-count-badge badge-pulse">LIVE</span>
+          </button>
+        </nav>
+
+        {/* Sidebar Pharmacist Footer */}
+        <div className="admin-sidebar-footer">
+          <div className="pharmacist-profile-card" title={user.name || 'Dr. Waqas'}>
+            <div className="pharmacist-avatar">
+              👨‍⚕️
+            </div>
+            {!isSidebarCollapsed && (
+              <div className="pharmacist-info">
+                <strong className="pharmacist-name">{user.name || 'Dr. Waqas'}</strong>
+                <span className="pharmacist-duty">
+                  <span className="duty-dot"></span> On Duty • Chief Pharmacist
+                </span>
+              </div>
+            )}
+          </div>
+          <button className="btn-sidebar-logout" onClick={onLogout} title="Sign Out of Staff Portal">
+            <LogOut size={15} /> {!isSidebarCollapsed && <span>Sign Out</span>}
           </button>
         </div>
+      </aside>
 
-        <div className="admin-nav-right">
-          <button className="btn-logout" onClick={onLogout}>
-            <LogOut size={15} /> Logout
-          </button>
-        </div>
-      </header>
+      {/* Main Admin View Canvas */}
+      <main className="admin-main-canvas">
+        <header className="admin-top-header">
+          <div className="header-breadcrumbs-wrap">
+            {isSidebarCollapsed && (
+              <button 
+                type="button" 
+                className="btn-canvas-toggle-sidebar"
+                onClick={() => setIsSidebarCollapsed(false)}
+                title="Expand Sidebar Navigation"
+              >
+                <Menu size={17} />
+                <span>Menu</span>
+              </button>
+            )}
+            <div className="header-breadcrumbs">
+              <span className="breadcrumb-root">Staff Hub</span>
+              <span className="breadcrumb-separator">/</span>
+              <span className="breadcrumb-active">
+                {activeTab === 'prescriptions' && 'Rx Verification Inbox'}
+                {activeTab === 'orders' && 'Order Fulfillment Queue'}
+                {activeTab === 'store-ops' && 'Store Operations & Inventory'}
+                {activeTab === 'retailers' && 'B2B Retailer Accounts'}
+                {activeTab === 'analytics' && 'Sales & Audit Intelligence'}
+              </span>
+            </div>
+          </div>
 
-      {/* Main Admin View Content */}
-      <div className="admin-body">
+          <div className="header-right-badges">
+            <span className="session-security-pill">
+              <ShieldCheck size={13} color="#10b981" /> DRAP Authorized Session
+            </span>
+          </div>
+        </header>
+
+        <div className="admin-body">
         {/* TAB 1: Prescription Review Inbox */}
         {activeTab === 'prescriptions' && (
           <section className="admin-section">
@@ -827,6 +901,8 @@ export default function AdminDashboard({
         {activeTab === 'store-ops' && (
           <StoreOperationsSection 
             catalog={catalog} 
+            retailers={retailersList}
+            currentUser={user}
             onUpdateCatalog={(newCatalog) => {
               setCatalog(newCatalog);
               if (onUpdateProducts) {
@@ -987,7 +1063,8 @@ export default function AdminDashboard({
             </div>
           </section>
         )}
-      </div>
+        </div>
+      </main>
 
       {/* Clickable Prescription Image Inspector Modal */}
       {selectedRx && (

@@ -7,18 +7,19 @@ export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess, retai
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     const cleanUsername = username.trim().toLowerCase();
 
-    // 1. Check if backend API is online
     try {
       const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
@@ -26,48 +27,42 @@ export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess, retai
         body: JSON.stringify({ username: cleanUsername, password })
       });
       const data = await response.json();
-      if (response.ok) {
+
+      if (response.ok && data.token) {
         const userRole = data.user?.role === 'retailer' ? 'retailer' : 'admin';
         onLoginSuccess({
           ...data.user,
           token: data.token
         }, userRole);
+        setLoading(false);
+        return;
+      } else {
+        setError(data.error || 'Invalid credentials. Access denied.');
+        setLoading(false);
         return;
       }
     } catch (err) {
-      // Backend not running, seamlessly proceed to local auth check
+      // If API connection fails (e.g. offline dev mode without backend server running)
+      const matchedRetailer = (retailers || INITIAL_RETAILERS).find(
+        r => r.username.toLowerCase() === cleanUsername && r.password === password
+      );
+
+      if (matchedRetailer) {
+        onLoginSuccess({
+          id: matchedRetailer.id || `ret-${matchedRetailer.username}`,
+          name: matchedRetailer.name,
+          username: matchedRetailer.username,
+          licenseNo: matchedRetailer.licenseNo,
+          area: matchedRetailer.area,
+          role: 'retailer'
+        }, 'retailer');
+        setLoading(false);
+        return;
+      }
+
+      setError('Authentication server error. Please ensure server API is running.');
+      setLoading(false);
     }
-
-    // 2. Check Admin Credentials
-    if (cleanUsername === 'admin' && password === 'admin123') {
-      onLoginSuccess({
-        id: 'staff-01',
-        name: 'Dr. Waqas (Chief Pharmacist)',
-        username: 'admin',
-        role: 'Pharmacist Admin',
-        token: 'mock-jwt-token-xyz789'
-      }, 'admin');
-      return;
-    }
-
-    // 3. Check Retailer Credentials (from admin-assigned retailers list)
-    const matchedRetailer = (retailers || INITIAL_RETAILERS).find(
-      r => r.username.toLowerCase() === cleanUsername && r.password === password
-    );
-
-    if (matchedRetailer) {
-      onLoginSuccess({
-        id: matchedRetailer.id || `ret-${matchedRetailer.username}`,
-        name: matchedRetailer.name,
-        username: matchedRetailer.username,
-        licenseNo: matchedRetailer.licenseNo,
-        area: matchedRetailer.area,
-        role: 'Verified Retailer'
-      }, 'retailer');
-      return;
-    }
-
-    setError('Invalid username or password. Please check your credentials.');
   };
 
   return (
@@ -119,13 +114,13 @@ export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess, retai
           </div>
 
           <div className="demo-hint" style={{ lineHeight: 1.5 }}>
-            💡 <strong>Demo Accounts:</strong><br />
-            • <strong>Staff Admin:</strong> <code>admin</code> / <code>admin123</code> (Opens Admin Portal)<br />
+            💡 <strong>Staff & Partner Auth:</strong><br />
+            • <strong>Staff Admin:</strong> <code>admin</code> / <code>admin123</code> (Requires DB Verified Auth Token)<br />
             • <strong>Partner Retailer:</strong> <code>demo_retailer</code> / <code>retailer123</code> (Unlocks Wholesale Rates)
           </div>
 
-          <button type="submit" className="btn-admin-submit">
-            <Key size={16} /> Sign In
+          <button type="submit" className="btn-admin-submit" disabled={loading}>
+            <Key size={16} /> {loading ? 'Authenticating...' : 'Sign In'}
           </button>
         </form>
       </div>

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Table, Edit3, Save, AlertTriangle, ShoppingCart, Plus, Upload, 
-  Percent, FileSpreadsheet, AlertCircle, ShieldAlert, Truck, DollarSign, Check
+  FileSpreadsheet, AlertCircle, ShieldAlert, DollarSign, Check,
+  Printer, Zap, Trash2, Search, RefreshCw, UserCheck, ShieldCheck, CheckCircle2, ChevronRight, Store
 } from 'lucide-react';
-import { INITIAL_EXPIRY_BATCHES, SUPPLIERS } from '../storeOpsData';
+import { INITIAL_EXPIRY_BATCHES } from '../storeOpsData';
 
-export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
-  const [activeOpsTab, setActiveOpsTab] = useState('quick-edit'); // 'quick-edit', 'pos-lite', 'expiry-alerts', 'bulk-price', 'suppliers'
+export default function StoreOperationsSection({ catalog, onUpdateCatalog, retailers = [], currentUser }) {
+  const [activeOpsTab, setActiveOpsTab] = useState('quick-edit'); // 'quick-edit', 'pos-lite', 'expiry-alerts'
   
   // Local catalog copy for inline table edit (Full Store Catalog)
   const [editableProducts, setEditableProducts] = useState(catalog);
@@ -60,16 +61,16 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
     setEditableProducts(prev => prev.map(p => p.id === id ? { ...p, category: newCategory } : p));
   };
 
-  // Bulk Pricing State
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [adjustmentPercent, setAdjustmentPercent] = useState(5);
-  const [adjustmentType, setAdjustmentType] = useState('increase'); // 'increase' or 'decrease'
-
-  // POS Lite State
+  // Wholesale High-Speed POS Counter State
   const [posCart, setPosCart] = useState([]);
-  const [posPaymentMethod, setPosPaymentMethod] = useState('cash');
+  const [posPaymentMethod, setPosPaymentMethod] = useState('cash'); // 'cash', 'raast', 'ledger', 'card'
   const [posSearchQuery, setPosSearchQuery] = useState('');
   const [posCategoryFilter, setPosCategoryFilter] = useState('ALL');
+  const [posCustomerType, setPosCustomerType] = useState('walkin'); // 'walkin' or 'b2b'
+  const [posSelectedRetailerId, setPosSelectedRetailerId] = useState('');
+  const [posTradeDiscount, setPosTradeDiscount] = useState(0); // 0, 5, 10, 12, 15
+  const [posCashTendered, setPosCashTendered] = useState('');
+  const [posInvoiceNo, setPosInvoiceNo] = useState(`WMS-POS-${Date.now().toString().slice(-5)}`);
 
   // Single Item Add Modal
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -233,37 +234,40 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
     setTimeout(() => setSaveSuccessMsg(''), 3000);
   };
 
-  // Bulk Category Adjustment
-  const handleApplyBulkPricing = () => {
-    const updated = editableProducts.map(p => {
-      if (selectedCategory === 'all' || p.category === selectedCategory) {
-        const factor = adjustmentType === 'increase' ? (1 + adjustmentPercent / 100) : (1 - adjustmentPercent / 100);
-        return { ...p, price: Math.round(p.price * factor * 100) / 100 };
-      }
-      return p;
-    });
-    setEditableProducts(updated);
-    onUpdateCatalog(updated);
-    setSaveSuccessMsg(`✅ Applied ${adjustmentPercent}% ${adjustmentType} across ${selectedCategory}!`);
-    setTimeout(() => setSaveSuccessMsg(''), 3000);
-  };
+  // Wholesale High-Speed POS Counter Methods
+  const handlePosAddToCart = (product, mode = 'pack') => {
+    const rawPrice = Number(product.price) || 0;
+    const strips = Number(product.stripsPerPack) || 10;
+    const rawStripPrice = Number(product.stripPrice) || (rawPrice / strips);
+    const unitPrice = mode === 'strip' ? rawStripPrice : rawPrice;
 
-  // POS Lite Quick Deduct
-  const handlePosAddToCart = (product) => {
     setPosCart(prev => {
-      const existing = prev.find(i => i.id === product.id);
+      const existing = prev.find(i => i.id === product.id && i.selectedPackaging === mode);
       if (existing) {
-        return prev.map(i => i.id === product.id ? { ...i, quantity: i.quantity + 1 } : i);
+        return prev.map(i => (i.id === product.id && i.selectedPackaging === mode) ? { ...i, quantity: (Number(i.quantity) || 1) + 1 } : i);
       }
-      return [...prev, { ...product, quantity: 1 }];
+      return [...prev, {
+        id: product.id,
+        code: product.code || 'N/A',
+        name: product.name,
+        genericName: product.genericName,
+        price: rawPrice,
+        stripPrice: rawStripPrice,
+        unitPrice: unitPrice,
+        stripsPerPack: strips,
+        packagingMode: product.packagingMode || 'pack',
+        selectedPackaging: mode,
+        quantity: 1,
+        stock: product.stock
+      }];
     });
   };
 
-  const handlePosQuantityChange = (id, delta) => {
+  const handlePosQuantityChange = (id, mode, delta) => {
     setPosCart(prev => {
       return prev.map(item => {
-        if (item.id === id) {
-          const newQty = item.quantity + delta;
+        if (item.id === id && item.selectedPackaging === mode) {
+          const newQty = (Number(item.quantity) || 1) + delta;
           return newQty > 0 ? { ...item, quantity: newQty } : null;
         }
         return item;
@@ -271,26 +275,165 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
     });
   };
 
-  const handlePosRemoveItem = (id) => {
-    setPosCart(prev => prev.filter(item => item.id !== id));
+  const handlePosDirectQuantity = (id, mode, val) => {
+    const qty = parseInt(val) || 1;
+    setPosCart(prev => prev.map(item => {
+      if (item.id === id && item.selectedPackaging === mode) {
+        return { ...item, quantity: Math.max(1, qty) };
+      }
+      return item;
+    }));
   };
 
-  const handleCompletePosSale = () => {
+  const handlePosTogglePackaging = (id, currentMode) => {
+    setPosCart(prev => prev.map(item => {
+      if (item.id === id && item.selectedPackaging === currentMode) {
+        const nextMode = currentMode === 'pack' ? 'strip' : 'pack';
+        const newUnitPrice = nextMode === 'strip' ? Number(item.stripPrice) : Number(item.price);
+        return { ...item, selectedPackaging: nextMode, unitPrice: newUnitPrice };
+      }
+      return item;
+    }));
+  };
+
+  const handlePosRemoveItem = (id, mode) => {
+    setPosCart(prev => prev.filter(item => !(item.id === id && item.selectedPackaging === mode)));
+  };
+
+  const handlePrintWholesaleSlip = (saleData) => {
+    const slipWin = window.open('', '_blank');
+    const selectedRetailer = retailers.find(r => r.id === posSelectedRetailerId || r._id === posSelectedRetailerId);
+    const customerTitle = posCustomerType === 'b2b' && selectedRetailer 
+      ? `${selectedRetailer.name} (Code: ${selectedRetailer.username} | Lic: ${selectedRetailer.licenseNo || 'N/A'})`
+      : 'Walk-In Counter Customer';
+    
+    slipWin.document.write(`
+      <html>
+        <head>
+          <title>Wholesale Tax Invoice - ${saleData.invoiceNo}</title>
+          <style>
+            body { font-family: 'Courier New', monospace; padding: 20px; max-width: 440px; margin: auto; color: #000; }
+            .hdr { text-align: center; border-bottom: 2px dashed #000; padding-bottom: 10px; margin-bottom: 12px; }
+            .hdr h2 { margin: 0; font-size: 1.3rem; }
+            .hdr p { margin: 2px 0; font-size: 0.8rem; }
+            .meta { font-size: 0.82rem; margin-bottom: 10px; }
+            table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 10px 0; }
+            th { border-bottom: 1px solid #000; text-align: left; padding: 4px 2px; }
+            td { padding: 4px 2px; vertical-align: top; }
+            .num { text-align: right; }
+            .totals { border-top: 1px dashed #000; padding-top: 8px; font-size: 0.85rem; }
+            .tot-row { display: flex; justify-content: space-between; margin: 3px 0; }
+            .grand { font-weight: bold; font-size: 1rem; border-top: 1px solid #000; padding-top: 4px; }
+            .ftr { text-align: center; margin-top: 20px; font-size: 0.75rem; border-top: 1px dashed #000; padding-top: 8px; }
+          </style>
+        </head>
+        <body>
+          <div class="hdr">
+            <h2>WAQAS MEDICAL STORE</h2>
+            <p>DRAP Lic # 04-DL-KAR-2024 &bull; Wholesale & Retail</p>
+            <p>Main Commercial Branch, Karachi &bull; Tel: +92 300 1234567</p>
+            <h4>COUNTER SALE INVOICE</h4>
+          </div>
+          <div class="meta">
+            <div><strong>Invoice #:</strong> ${saleData.invoiceNo}</div>
+            <div><strong>Date/Time:</strong> ${new Date().toLocaleString()}</div>
+            <div><strong>Customer:</strong> ${customerTitle}</div>
+            <div><strong>Cashier:</strong> ${currentUser?.name || 'Dr. Waqas'}</div>
+            <div><strong>Payment:</strong> ${saleData.paymentMethod.toUpperCase()}</div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Mode</th>
+                <th class="num">Qty</th>
+                <th class="num">Rate</th>
+                <th class="num">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${saleData.items.map(it => `
+                <tr>
+                  <td>${it.name}</td>
+                  <td>${it.selectedPackaging.toUpperCase()}</td>
+                  <td class="num">${it.quantity}</td>
+                  <td class="num">${it.unitPrice.toFixed(2)}</td>
+                  <td class="num">${(it.unitPrice * it.quantity).toFixed(2)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <div class="totals">
+            <div class="tot-row"><span>Gross Subtotal:</span><span>Rs. ${saleData.subtotal.toFixed(2)}</span></div>
+            ${saleData.discountPercent > 0 ? `<div class="tot-row"><span>Trade Discount (${saleData.discountPercent}%):</span><span>- Rs. ${saleData.discountAmount.toFixed(2)}</span></div>` : ''}
+            <div class="tot-row grand"><span>NET PAYABLE:</span><span>Rs. ${saleData.netPayable.toFixed(2)}</span></div>
+            ${saleData.cashTendered ? `
+              <div class="tot-row"><span>Cash Paid:</span><span>Rs. ${parseFloat(saleData.cashTendered).toFixed(2)}</span></div>
+              <div class="tot-row"><span>Change Returned:</span><span>Rs. ${saleData.change.toFixed(2)}</span></div>
+            ` : ''}
+          </div>
+          <div class="ftr">
+            <p>*** Software Verified Wholesale Slip ***</p>
+            <p>Goods once sold can only be returned within 3 days with valid invoice.</p>
+            <p>Thank you for your business!</p>
+          </div>
+          <script>window.print();</script>
+        </body>
+      </html>
+    `);
+  };
+
+  const handleCompletePosSale = (shouldPrint = false) => {
+    if (posCart.length === 0) return;
+
     // Deduct stock
     const updated = editableProducts.map(p => {
-      const posItem = posCart.find(i => i.id === p.id);
-      if (posItem) {
-        return { ...p, stock: Math.max(0, p.stock - posItem.quantity) };
+      const cartItemsForProduct = posCart.filter(i => i.id === p.id);
+      if (cartItemsForProduct.length > 0) {
+        let totalUnitsDeducted = 0;
+        cartItemsForProduct.forEach(ci => {
+          if (ci.selectedPackaging === 'strip') {
+            totalUnitsDeducted += Math.ceil(ci.quantity / (p.stripsPerPack || 10));
+          } else {
+            totalUnitsDeducted += ci.quantity;
+          }
+        });
+        return { ...p, stock: Math.max(0, p.stock - totalUnitsDeducted) };
       }
       return p;
     });
+
+    const posGrossSubtotal = posCart.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+    const posDiscountAmount = Math.round((posGrossSubtotal * (posTradeDiscount / 100)) * 100) / 100;
+    const posNetPayable = Math.max(0, Math.round((posGrossSubtotal - posDiscountAmount) * 100) / 100);
+    const posCashChange = posCashTendered ? Math.max(0, parseFloat(posCashTendered) - posNetPayable) : 0;
+
+    const saleData = {
+      invoiceNo: posInvoiceNo,
+      items: [...posCart],
+      subtotal: posGrossSubtotal,
+      discountPercent: posTradeDiscount,
+      discountAmount: posDiscountAmount,
+      netPayable: posNetPayable,
+      paymentMethod: posPaymentMethod,
+      cashTendered: posCashTendered,
+      change: posCashChange
+    };
+
+    if (shouldPrint) {
+      handlePrintWholesaleSlip(saleData);
+    }
+
     setEditableProducts(updated);
     onUpdateCatalog(updated);
-    alert(`Counter Sale Completed (${posPaymentMethod.toUpperCase()})! Physical inventory deducted.`);
-    setPosCart([]);
-  };
+    setSaveSuccessMsg(`✅ Counter Invoice #${posInvoiceNo} completed! Inventory auto-deducted.`);
+    setTimeout(() => setSaveSuccessMsg(''), 4000);
 
-  const posSubtotal = posCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    // Reset register for next fast sale
+    setPosCart([]);
+    setPosCashTendered('');
+    setPosInvoiceNo(`WMS-POS-${Date.now().toString().slice(-5)}`);
+  };
 
   return (
     <div className="store-ops-container">
@@ -315,20 +458,6 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
           onClick={() => setActiveOpsTab('expiry-alerts')}
         >
           <AlertTriangle size={16} /> Expiry & Batch Alerts
-        </button>
-
-        <button 
-          className={`ops-tab-btn ${activeOpsTab === 'bulk-price' ? 'active' : ''}`}
-          onClick={() => setActiveOpsTab('bulk-price')}
-        >
-          <Percent size={16} /> Bulk Category Pricing
-        </button>
-
-        <button 
-          className={`ops-tab-btn ${activeOpsTab === 'suppliers' ? 'active' : ''}`}
-          onClick={() => setActiveOpsTab('suppliers')}
-        >
-          <Truck size={16} /> Supplier Directory
         </button>
       </div>
 
@@ -408,22 +537,21 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
               <table className="admin-table ops-table">
                 <thead>
                   <tr>
-                    <th>Code</th>
+                    <th style={{ width: '65px' }}>Code</th>
                     <th>Product Title</th>
-                    <th>Category</th>
-                    <th>Trade Price (Rs.)</th>
-                    <th>Packaging Option</th>
-                    <th>Discount %</th>
-                    <th>Physical Stock</th>
-                    <th>Rx Required</th>
-                    <th>Show on Storefront</th>
-                    <th>Actions</th>
+                    <th style={{ width: '120px' }}>Category</th>
+                    <th style={{ width: '90px' }}>Trade (Rs.)</th>
+                    <th style={{ width: '125px' }}>Packaging</th>
+                    <th style={{ width: '80px' }}>Disc. %</th>
+                    <th style={{ width: '80px' }}>Stock</th>
+                    <th style={{ width: '60px', textAlign: 'center' }}>Rx?</th>
+                    <th style={{ width: '100px', textAlign: 'center' }}>Storefront</th>
                   </tr>
                 </thead>
                 <tbody>
                   {currentItems.map(p => (
                     <tr key={p.id}>
-                      <td><code>{p.code || 'N/A'}</code></td>
+                      <td><code className="product-code-chip">{p.code || 'N/A'}</code></td>
                       <td>
                         {editingTitleId === p.id ? (
                           <input 
@@ -487,9 +615,9 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                           value={p.packagingMode || (p.hasStripOption ? 'both' : 'pack')}
                           onChange={(e) => handlePackagingModeChange(p.id, e.target.value)}
                         >
-                          <option value="both">Both (Pack & Strip)</option>
-                          <option value="pack">Only Per Pack</option>
-                          <option value="strip">Only Per Strip</option>
+                          <option value="both">Pack & Strip</option>
+                          <option value="pack">Pack Only</option>
+                          <option value="strip">Strip Only</option>
                         </select>
                       </td>
                       <td>
@@ -513,12 +641,19 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                           onChange={(e) => handleStockChange(p.id, e.target.value)}
                         />
                       </td>
-                      <td>{p.requiresPrescription ? '⚠️ Yes' : 'No'}</td>
-                      <td>
+                      <td style={{ textAlign: 'center' }}>
+                        {p.requiresPrescription ? (
+                          <span className="rx-required-tag" title="Prescription Required">⚠️ Rx</span>
+                        ) : (
+                          <span className="rx-optional-tag">–</span>
+                        )}
+                      </td>
+                      <td style={{ textAlign: 'center' }}>
                         <div 
                           className={`radio-switch-wrapper ${p.showOnMainScreen !== false ? 'is-on' : 'is-off'}`}
                           onClick={() => handleToggleStorefrontVisibility(p.id)}
                           title={p.showOnMainScreen !== false ? 'Click to HIDE product from Customer Main Screen' : 'Click to SHOW product on Customer Main Screen'}
+                          style={{ margin: '0 auto' }}
                         >
                           <div className="radio-switch-track">
                             <div className="radio-switch-knob"></div>
@@ -527,11 +662,6 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                             {p.showOnMainScreen !== false ? 'ON' : 'OFF'}
                           </span>
                         </div>
-                      </td>
-                      <td>
-                        <button className="btn-row-save" onClick={handleSaveQuickEdit}>
-                          Save Row
-                        </button>
                       </td>
                     </tr>
                   ))}
@@ -564,11 +694,11 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
         );
       })()}
 
-      {/* TAB 2: POS Lite Counter Sale */}
+      {/* TAB 2: High-Speed Wholesale POS Terminal */}
       {activeOpsTab === 'pos-lite' && (() => {
+        const query = posSearchQuery.trim().toLowerCase();
         const filteredPosProducts = editableProducts.filter(p => {
           const catMatch = posCategoryFilter === 'ALL' || (p.category && p.category.toLowerCase() === posCategoryFilter.toLowerCase());
-          const query = posSearchQuery.trim().toLowerCase();
           const searchMatch = !query || 
             p.name.toLowerCase().includes(query) ||
             (p.code && p.code.toLowerCase().includes(query)) ||
@@ -576,32 +706,95 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
           return catMatch && searchMatch;
         });
 
-        const displayedPosProducts = filteredPosProducts.slice(0, 30);
+        const topMatchProduct = filteredPosProducts.length > 0 ? filteredPosProducts[0] : null;
+        const displayedPosProducts = filteredPosProducts.slice(0, 40);
+
+        const posGrossSubtotal = posCart.reduce((sum, item) => sum + ((Number(item.unitPrice) || 0) * (Number(item.quantity) || 1)), 0);
+        const posDiscountAmount = Math.round((posGrossSubtotal * (Number(posTradeDiscount) / 100)) * 100) / 100;
+        const posNetPayable = Math.max(0, Math.round((posGrossSubtotal - posDiscountAmount) * 100) / 100);
+        const tenderedNum = parseFloat(posCashTendered) || 0;
+        const posCashChange = tenderedNum >= posNetPayable ? Math.max(0, Math.round((tenderedNum - posNetPayable) * 100) / 100) : 0;
+        const totalUnitsCount = posCart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
 
         return (
-          <div className="ops-card pos-lite-layout">
-            <div className="pos-catalog-side">
-              <div className="pos-header-bar">
-                <div className="pos-header-title">
-                  <h3>Counter Sale Quick Select ({filteredPosProducts.length} Available)</h3>
-                  <p>Search any medicine across full store catalog or filter by category for quick billing.</p>
+          <div className="wholesale-pos-terminal-container">
+            {/* Top Wholesaler / Customer & Terminal Bar */}
+            <div className="pos-terminal-topbar">
+              <div className="pos-top-left">
+                <div className="terminal-badge">
+                  <Zap size={16} color="#0d9488" />
+                  <strong>Wholesale Counter Terminal</strong>
                 </div>
+                <span className="terminal-inventory-stat">
+                  ⚡ <strong>{editableProducts.length}</strong> Live Medicines Ready
+                </span>
+              </div>
 
-                {/* Instant Search Bar */}
-                <div className="pos-search-wrapper">
+              <div className="pos-top-right">
+                <div className="pos-customer-selector-group">
+                  <span className="pos-customer-lbl">Billed To:</span>
+                  <div className="pos-cust-type-toggle">
+                    <button 
+                      type="button" 
+                      className={`cust-type-btn ${posCustomerType === 'walkin' ? 'active' : ''}`}
+                      onClick={() => { setPosCustomerType('walkin'); setPosSelectedRetailerId(''); }}
+                    >
+                      🛍️ Walk-In Counter
+                    </button>
+                    <button 
+                      type="button" 
+                      className={`cust-type-btn ${posCustomerType === 'b2b' ? 'active' : ''}`}
+                      onClick={() => setPosCustomerType('b2b')}
+                    >
+                      🏢 B2B Retailer Account
+                    </button>
+                  </div>
+
+                  {posCustomerType === 'b2b' && (
+                    <select 
+                      className="pos-retailer-dropdown"
+                      value={posSelectedRetailerId}
+                      onChange={(e) => setPosSelectedRetailerId(e.target.value)}
+                    >
+                      <option value="">-- Select Registered Pharmacy Partner --</option>
+                      {retailers.map(r => (
+                        <option key={r.id || r._id} value={r.id || r._id}>
+                          {r.name} ({r.username}) - {r.area || 'Karachi'}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Split Screen Workspace */}
+            <div className="pos-split-workspace">
+              {/* LEFT 55%: Lightning Catalog Search & Rapid Product Picker Table */}
+              <div className="pos-catalog-panel">
+                {/* Search Bar with Barcode Scanner & Hotkey Hint */}
+                <div className="pos-scanner-search-box">
+                  <Search size={18} color="#0d9488" className="pos-search-icon" />
                   <input 
                     type="text" 
-                    className="pos-search-input-field"
-                    placeholder="🔍 Search medicine name, formula, or code..."
+                    className="pos-terminal-search-input"
+                    placeholder="Scan barcode or type medicine name / item code (Press ENTER to quick-add top item)..."
                     value={posSearchQuery}
                     onChange={(e) => setPosSearchQuery(e.target.value)}
+                    onKeyDown={(e) => handlePosSearchKeyDown(e, topMatchProduct)}
+                    autoFocus
                   />
                   {posSearchQuery && (
-                    <button className="btn-clear-pos-search" onClick={() => setPosSearchQuery('')}>×</button>
+                    <button className="btn-clear-pos-term" onClick={() => setPosSearchQuery('')}>×</button>
+                  )}
+                  {topMatchProduct && posSearchQuery && (
+                    <span className="pos-enter-hint">
+                      ⏎ Press Enter to Add: <strong>{topMatchProduct.name}</strong>
+                    </span>
                   )}
                 </div>
 
-                {/* Category Filter Pills */}
+                {/* Category Quick Pills */}
                 <div className="pos-category-pills-bar">
                   <button 
                     className={`pos-cat-pill ${posCategoryFilter === 'ALL' ? 'active' : ''}`}
@@ -619,84 +812,292 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
                     </button>
                   ))}
                 </div>
+
+                {/* High Density Table for rapid adding */}
+                <div className="pos-items-table-wrapper">
+                  <table className="pos-fast-table">
+                    <thead>
+                      <tr>
+                        <th style={{ width: '60px' }}>Code</th>
+                        <th>Medicine Title & Generic Formula</th>
+                        <th style={{ width: '80px', textAlign: 'center' }}>Stock</th>
+                        <th style={{ width: '95px', textAlign: 'right' }}>Trade Rate</th>
+                        <th style={{ width: '80px', textAlign: 'center' }}>Quick Add</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {displayedPosProducts.length > 0 ? (
+                        displayedPosProducts.map(p => (
+                          <tr 
+                            key={p.id} 
+                            className="pos-fast-row"
+                            onClick={() => handlePosAddToCart(p)}
+                            title="Click row to add to bill"
+                          >
+                            <td><code className="pos-code-tag">{p.code || 'N/A'}</code></td>
+                            <td>
+                              <div className="pos-med-info">
+                                <strong className="pos-med-name">{p.name}</strong>
+                                {p.genericName && <span className="pos-generic-txt">{p.genericName}</span>}
+                              </div>
+                            </td>
+                            <td style={{ textAlign: 'center' }}>
+                              <span className={`pos-stock-pill ${p.stock < 10 ? 'stock-low' : 'stock-ok'}`}>
+                                {p.stock}
+                              </span>
+                            </td>
+                            <td style={{ textAlign: 'right' }}>
+                              <strong className="pos-price-num">Rs. {p.price.toFixed(2)}</strong>
+                            </td>
+                            <td style={{ textAlign: 'center' }}>
+                              <button 
+                                type="button" 
+                                className="btn-fast-add"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handlePosAddToCart(p);
+                                }}
+                              >
+                                + Add
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="5" className="pos-no-items">
+                            No medicines found matching "<strong>{posSearchQuery}</strong>"
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
-              {/* Product Grid */}
-              <div className="pos-search-grid">
-                {displayedPosProducts.length > 0 ? (
-                  displayedPosProducts.map(p => (
-                    <div key={p.id} className="pos-item-card" onClick={() => handlePosAddToCart(p)}>
-                      <span className="pos-cat-tag">{p.category ? p.category.toUpperCase().replace('-', ' ') : 'MEDICINES'}</span>
-                      <h4>{p.name}</h4>
-                      <p>
-                        <strong>Rs. {p.price.toFixed(2)}</strong> &bull; <small className={p.stock < 10 ? 'low-stock-txt' : ''}>Stock: {p.stock}</small>
-                      </p>
-                      <button className="btn-pos-add">+ Add to Bill</button>
-                    </div>
-                  ))
-                ) : (
-                  <div className="pos-empty-results">
-                    <p>No products matching "<strong>{posSearchQuery}</strong>" in <span>{posCategoryFilter}</span>.</p>
+              {/* RIGHT 45%: Wholesale Register & Active Counter Bill */}
+              <div className="pos-register-panel">
+                {/* Register Header */}
+                <div className="register-header-box">
+                  <div>
+                    <h4>Counter Invoice</h4>
+                    <span className="register-invoice-no">{posInvoiceNo}</span>
                   </div>
-                )}
-              </div>
-            </div>
-
-            {/* POS Billing Cart Side */}
-            <div className="pos-bill-side">
-              <div className="pos-bill-header-row">
-                <h3>Current Billing Cart ({posCart.length})</h3>
-                {posCart.length > 0 && (
-                  <button className="pos-clear-cart-btn" onClick={() => setPosCart([])}>Clear</button>
-                )}
-              </div>
-
-              <div className="pos-bill-list">
-                {posCart.length > 0 ? (
-                  posCart.map(item => (
-                    <div key={item.id} className="pos-bill-row">
-                      <div className="pos-bill-item-info">
-                        <strong>{item.name}</strong>
-                        <small>Rs. {item.price} per unit</small>
-                      </div>
-                      <div className="pos-bill-qty-controls">
-                        <button type="button" onClick={() => handlePosQuantityChange(item.id, -1)}>-</button>
-                        <span>{item.quantity}</span>
-                        <button type="button" onClick={() => handlePosQuantityChange(item.id, 1)}>+</button>
-                        <button type="button" className="pos-remove-btn" onClick={() => handlePosRemoveItem(item.id)} title="Remove item">🗑️</button>
-                      </div>
-                      <strong className="pos-item-subtotal">Rs. {(item.price * item.quantity).toFixed(2)}</strong>
-                    </div>
-                  ))
-                ) : (
-                  <div className="pos-empty-cart-state">
-                    <ShoppingCart size={32} color="#cbd5e1" />
-                    <p>Click any product on the left grid to add to counter bill</p>
+                  <div className="register-header-meta">
+                    <span className="cashier-tag">👨‍⚕️ {currentUser?.name || 'Dr. Waqas'}</span>
+                    {posCart.length > 0 && (
+                      <button 
+                        type="button" 
+                        className="btn-clear-register"
+                        onClick={() => setPosCart([])}
+                        title="Clear current bill"
+                      >
+                        <Trash2 size={13} /> Clear
+                      </button>
+                    )}
                   </div>
-                )}
-              </div>
+                </div>
 
-              <div className="pos-payment-selector">
-                <label>Payment Method:</label>
-                <select value={posPaymentMethod} onChange={(e) => setPosPaymentMethod(e.target.value)}>
-                  <option value="cash">Cash on Counter</option>
-                  <option value="easypaisa">EasyPaisa / JazzCash QR</option>
-                  <option value="card">Debit / Credit Card</option>
-                </select>
-              </div>
+                {/* Line Items Table */}
+                <div className="register-items-scroll">
+                  {posCart.length > 0 ? (
+                    <table className="register-lines-table">
+                      <thead>
+                        <tr>
+                          <th>Item</th>
+                          <th style={{ width: '90px' }}>Packaging</th>
+                          <th style={{ width: '70px', textAlign: 'right' }}>Rate</th>
+                          <th style={{ width: '100px', textAlign: 'center' }}>Qty</th>
+                          <th style={{ width: '75px', textAlign: 'right' }}>Total</th>
+                          <th style={{ width: '28px' }}></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {posCart.map(item => (
+                          <tr key={`${item.id}-${item.selectedPackaging}`}>
+                            <td>
+                              <div className="reg-item-cell">
+                                <strong className="reg-item-title">{item.name}</strong>
+                                <small className="reg-item-code">#{item.code}</small>
+                              </div>
+                            </td>
+                            <td>
+                              {item.packagingMode === 'both' ? (
+                                <button 
+                                  type="button" 
+                                  className={`btn-mode-toggle ${item.selectedPackaging === 'strip' ? 'is-strip' : 'is-pack'}`}
+                                  onClick={() => handlePosTogglePackaging(item.id, item.selectedPackaging)}
+                                  title="Click to toggle Pack / Strip"
+                                >
+                                  {item.selectedPackaging === 'strip' ? '💊 Strip' : '📦 Pack'}
+                                </button>
+                              ) : (
+                                <span className="fixed-packaging-tag">
+                                  {item.selectedPackaging === 'strip' ? 'Strip' : 'Pack'}
+                                </span>
+                              )}
+                            </td>
+                            <td style={{ textAlign: 'right' }}>
+                              <span className="reg-unit-rate">{item.unitPrice.toFixed(2)}</span>
+                            </td>
+                            <td>
+                              <div className="reg-qty-stepper">
+                                <button type="button" onClick={() => handlePosQuantityChange(item.id, item.selectedPackaging, -1)}>-</button>
+                                <input 
+                                  type="number" 
+                                  min="1"
+                                  value={item.quantity}
+                                  onChange={(e) => handlePosDirectQuantity(item.id, item.selectedPackaging, e.target.value)}
+                                  className="reg-qty-input"
+                                />
+                                <button type="button" onClick={() => handlePosQuantityChange(item.id, item.selectedPackaging, 1)}>+</button>
+                              </div>
+                            </td>
+                            <td style={{ textAlign: 'right' }}>
+                              <strong className="reg-line-total">
+                                Rs. {(item.unitPrice * item.quantity).toFixed(2)}
+                              </strong>
+                            </td>
+                            <td>
+                              <button 
+                                type="button" 
+                                className="btn-reg-remove"
+                                onClick={() => handlePosRemoveItem(item.id, item.selectedPackaging)}
+                                title="Remove line"
+                              >
+                                ×
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div className="register-empty-state">
+                      <ShoppingCart size={40} color="#cbd5e1" />
+                      <p>Register is Empty</p>
+                      <small>Scan barcode or click items from left catalog to start billing</small>
+                    </div>
+                  )}
+                </div>
 
-              <div className="pos-bill-total">
-                <span>Grand Total:</span>
-                <strong>Rs. {posSubtotal.toFixed(2)}</strong>
-              </div>
+                {/* Register Footer: Financial Totals, Discounts & Payment */}
+                <div className="register-financial-footer">
+                  {/* Totals Breakdown */}
+                  <div className="reg-totals-box">
+                    <div className="reg-tot-row">
+                      <span>Gross Subtotal ({totalUnitsCount} Units):</span>
+                      <strong>Rs. {posGrossSubtotal.toFixed(2)}</strong>
+                    </div>
 
-              <button 
-                className="btn-complete-pos" 
-                disabled={posCart.length === 0}
-                onClick={handleCompletePosSale}
-              >
-                Complete Counter Sale & Print Receipt
-              </button>
+                    {/* Wholesale Discount Selector */}
+                    <div className="reg-discount-row">
+                      <span className="disc-lbl">Wholesale Discount:</span>
+                      <div className="discount-pill-selector">
+                        {[0, 5, 10, 12, 15].map(pct => (
+                          <button
+                            key={pct}
+                            type="button"
+                            className={`disc-pill-btn ${posTradeDiscount === pct ? 'active' : ''}`}
+                            onClick={() => setPosTradeDiscount(pct)}
+                          >
+                            {pct}%
+                          </button>
+                        ))}
+                      </div>
+                      {posDiscountAmount > 0 && (
+                        <span className="disc-val-txt">- Rs. {posDiscountAmount.toFixed(2)}</span>
+                      )}
+                    </div>
+
+                    {/* Grand Total */}
+                    <div className="reg-grand-total-row">
+                      <span>NET PAYABLE:</span>
+                      <span className="grand-price-text">Rs. {posNetPayable.toFixed(2)}</span>
+                    </div>
+                  </div>
+
+                  {/* Payment Method & Cash Tender */}
+                  <div className="reg-payment-section">
+                    <div className="reg-payment-method-row">
+                      <label>Payment:</label>
+                      <div className="reg-pay-radios">
+                        <label className={`pay-radio-chip ${posPaymentMethod === 'cash' ? 'active' : ''}`}>
+                          <input 
+                            type="radio" 
+                            name="posPay" 
+                            value="cash" 
+                            checked={posPaymentMethod === 'cash'} 
+                            onChange={() => setPosPaymentMethod('cash')} 
+                          />
+                          💵 Cash
+                        </label>
+                        <label className={`pay-radio-chip ${posPaymentMethod === 'raast' ? 'active' : ''}`}>
+                          <input 
+                            type="radio" 
+                            name="posPay" 
+                            value="raast" 
+                            checked={posPaymentMethod === 'raast'} 
+                            onChange={() => setPosPaymentMethod('raast')} 
+                          />
+                          📱 Raast / QR
+                        </label>
+                        <label className={`pay-radio-chip ${posPaymentMethod === 'ledger' ? 'active' : ''}`}>
+                          <input 
+                            type="radio" 
+                            name="posPay" 
+                            value="ledger" 
+                            checked={posPaymentMethod === 'ledger'} 
+                            onChange={() => setPosPaymentMethod('ledger')} 
+                          />
+                          🏢 B2B Khata
+                        </label>
+                      </div>
+                    </div>
+
+                    {posPaymentMethod === 'cash' && (
+                      <div className="reg-cash-calculator-row">
+                        <div className="cash-input-field-wrap">
+                          <label>Cash Received (Rs.):</label>
+                          <input 
+                            type="number" 
+                            placeholder="e.g. 5000"
+                            value={posCashTendered}
+                            onChange={(e) => setPosCashTendered(e.target.value)}
+                            className="cash-received-input"
+                          />
+                        </div>
+                        {posCashTendered && parseFloat(posCashTendered) >= posNetPayable && (
+                          <div className="cash-change-badge">
+                            <span>Change:</span>
+                            <strong>Rs. {posCashChange.toFixed(2)}</strong>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Fast Action Buttons */}
+                  <div className="reg-action-buttons-row">
+                    <button 
+                      type="button"
+                      className="btn-complete-and-print"
+                      disabled={posCart.length === 0}
+                      onClick={() => handleCompletePosSale(true)}
+                    >
+                      <Printer size={16} /> Complete & Print Slip
+                    </button>
+                    <button 
+                      type="button"
+                      className="btn-fast-complete"
+                      disabled={posCart.length === 0}
+                      onClick={() => handleCompletePosSale(false)}
+                    >
+                      <Check size={16} /> Fast Complete
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         );
@@ -742,76 +1143,6 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog }) {
               ))}
             </tbody>
           </table>
-        </div>
-      )}
-
-      {/* TAB 4: Bulk Category Pricing */}
-      {activeOpsTab === 'bulk-price' && (
-        <div className="ops-card">
-          <div className="ops-card-header">
-            <div>
-              <h3>Bulk Category Pricing Tool</h3>
-              <p>Apply percentage price increases or decreases across entire categories at once.</p>
-            </div>
-          </div>
-
-          <div className="bulk-pricing-form">
-            <div className="form-group">
-              <label>Select Category</label>
-              <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-                <option value="all">All Product Categories</option>
-                <option value="medicines">Medicines</option>
-                <option value="baby-care">Baby Care</option>
-                <option value="hygiene">Hygiene & Personal</option>
-                <option value="otc-first-aid">OTC & First Aid</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Adjustment Type</label>
-              <select value={adjustmentType} onChange={(e) => setAdjustmentType(e.target.value)}>
-                <option value="increase">Price Increase (+%)</option>
-                <option value="decrease">Price Discount (-%)</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Percentage Amount (%)</label>
-              <input 
-                type="number" 
-                value={adjustmentPercent} 
-                onChange={(e) => setAdjustmentPercent(parseFloat(e.target.value) || 0)}
-              />
-            </div>
-
-            <button className="btn-apply-bulk" onClick={handleApplyBulkPricing}>
-              Apply Rate Adjustment Across Category
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 5: Supplier Directory */}
-      {activeOpsTab === 'suppliers' && (
-        <div className="ops-card">
-          <div className="ops-card-header">
-            <div>
-              <h3>Supplier Directory & Restock Contacts</h3>
-              <p>Pharmaceutical distributor contact directory and restock purchase order details.</p>
-            </div>
-          </div>
-
-          <div className="suppliers-grid">
-            {SUPPLIERS.map(s => (
-              <div key={s.id} className="supplier-card">
-                <h4>{s.name}</h4>
-                <p><strong>Contact:</strong> {s.contact}</p>
-                <p><strong>Distribution Hub:</strong> {s.city}</p>
-                <small>Total Purchase Orders: {s.totalOrders}</small>
-                <button className="btn-restock-order">Auto-Generate Restock List</button>
-              </div>
-            ))}
-          </div>
         </div>
       )}
 
