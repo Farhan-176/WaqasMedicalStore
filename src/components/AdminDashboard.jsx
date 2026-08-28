@@ -9,6 +9,7 @@ import { INITIAL_RETAILERS } from '../retailersData';
 import { MOCK_PRODUCTS } from '../mockData';
 import { INITIAL_AUDIT_LOGS } from '../adminAnalyticsData';
 import StoreOperationsSection from './StoreOperationsSection';
+import CounterSaleSection from './CounterSaleSection';
 import AdminAnalyticsSection from './AdminAnalyticsSection';
 import '../App.css';
 
@@ -592,13 +593,12 @@ export default function AdminDashboard({
         </header>
 
         <div className="admin-body">
-        {/* TAB 0: High-Speed Counter Sale POS */}
+        {/* TAB 0: Standalone High-Speed Counter Sale POS */}
         {activeTab === 'counter-sale' && (
-          <StoreOperationsSection 
+          <CounterSaleSection 
             catalog={catalog} 
             retailers={retailersList}
             currentUser={user}
-            initialTab="pos-lite"
             onUpdateCatalog={(newCatalog) => {
               setCatalog(newCatalog);
               if (onUpdateProducts) {
