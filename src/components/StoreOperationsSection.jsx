@@ -4,10 +4,15 @@ import {
   FileSpreadsheet, AlertCircle, ShieldAlert, DollarSign, Check,
   Printer, Zap, Trash2, Search, RefreshCw, UserCheck, ShieldCheck, CheckCircle2, ChevronRight, Store
 } from 'lucide-react';
-import { INITIAL_EXPIRY_BATCHES } from '../storeOpsData';
 
-export default function StoreOperationsSection({ catalog, onUpdateCatalog, retailers = [], currentUser }) {
-  const [activeOpsTab, setActiveOpsTab] = useState('quick-edit'); // 'quick-edit', 'pos-lite', 'expiry-alerts'
+export default function StoreOperationsSection({ catalog, onUpdateCatalog, retailers = [], currentUser, initialTab = 'quick-edit' }) {
+  const [activeOpsTab, setActiveOpsTab] = useState(initialTab); // 'quick-edit', 'low-stock', 'pos-lite'
+  
+  useEffect(() => {
+    if (initialTab) {
+      setActiveOpsTab(initialTab);
+    }
+  }, [initialTab]);
   
   // Local catalog copy for inline table edit (Full Store Catalog)
   const [editableProducts, setEditableProducts] = useState(catalog);
@@ -234,6 +239,16 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog, retai
     setTimeout(() => setSaveSuccessMsg(''), 3000);
   };
 
+  const handleQuickRestock = (id, addQty = 50) => {
+    setEditableProducts(prev => {
+      const updated = prev.map(p => p.id === id ? { ...p, stock: (Number(p.stock) || 0) + addQty } : p);
+      onUpdateCatalog(updated);
+      return updated;
+    });
+    setSaveSuccessMsg(`✅ Added +${addQty} units to product stock! Inventory updated.`);
+    setTimeout(() => setSaveSuccessMsg(''), 3000);
+  };
+
   // Wholesale High-Speed POS Counter Methods
   const handlePosAddToCart = (product, mode = 'pack') => {
     const rawPrice = Number(product.price) || 0;
@@ -447,17 +462,20 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog, retai
         </button>
 
         <button 
+          className={`ops-tab-btn ${activeOpsTab === 'low-stock' ? 'active' : ''}`}
+          onClick={() => setActiveOpsTab('low-stock')}
+        >
+          <AlertTriangle size={16} color={activeOpsTab === 'low-stock' ? '#ffffff' : '#ef4444'} /> Low Stock Reorder (≤20 Pcs)
+          <span className="side-count-badge badge-red" style={{ marginLeft: '6px', fontSize: '0.72rem', background: '#ef4444', color: '#ffffff' }}>
+            {editableProducts.filter(p => (Number(p.stock) || 0) <= 20).length}
+          </span>
+        </button>
+
+        <button 
           className={`ops-tab-btn ${activeOpsTab === 'pos-lite' ? 'active' : ''}`}
           onClick={() => setActiveOpsTab('pos-lite')}
         >
           <ShoppingCart size={16} /> POS Lite (Counter Sale)
-        </button>
-
-        <button 
-          className={`ops-tab-btn ${activeOpsTab === 'expiry-alerts' ? 'active' : ''}`}
-          onClick={() => setActiveOpsTab('expiry-alerts')}
-        >
-          <AlertTriangle size={16} /> Expiry & Batch Alerts
         </button>
       </div>
 
@@ -1103,48 +1121,159 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog, retai
         );
       })()}
 
-      {/* TAB 3: Expiry & Batch Alerts */}
-      {activeOpsTab === 'expiry-alerts' && (
-        <div className="ops-card">
-          <div className="ops-card-header">
-            <div>
-              <h3>Expiry Date & Batch Alert System</h3>
-              <p>Automated warnings for batch items expiring within 30, 60, or 90 days to prevent inventory loss.</p>
+      {/* TAB 3: Low Stock Reorder Table (Range: <= 20 pieces) */}
+      {activeOpsTab === 'low-stock' && (() => {
+        const lowStockProducts = editableProducts.filter(p => (Number(p.stock) || 0) <= 20);
+
+        return (
+          <div className="ops-card">
+            <div className="ops-card-header" style={{ flexWrap: 'wrap', gap: '12px', marginBottom: '18px' }}>
+              <div className="ops-header-title-block">
+                <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#0f172a', margin: 0 }}>
+                  <AlertTriangle size={22} color="#ef4444" />
+                  Low Stock Reorder & Rate Table
+                  <span className="ops-count-pill" style={{ background: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5', padding: '4px 12px', borderRadius: '12px', fontWeight: 800, fontSize: '0.8rem' }}>
+                    {lowStockProducts.length} Items (≤ 20 Pcs Left)
+                  </span>
+                </h3>
+                <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.85rem' }}>
+                  Medicines and items running low in physical inventory (20 pieces or less). Quick-edit trade rates, adjust stock quantities, or click 1-Touch Restock (+50 Pcs).
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                <button 
+                  className="btn-save-rates" 
+                  onClick={handleSaveQuickEdit}
+                  style={{ background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)', color: '#ffffff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 2px 8px rgba(22, 163, 74, 0.3)' }}
+                >
+                  <Save size={16} /> Save All Edits
+                </button>
+              </div>
+            </div>
+
+            {/* Filter Search */}
+            <div className="catalog-toolbar-header" style={{ background: '#f8fafc', padding: '12px 14px', borderRadius: '10px', marginBottom: '16px', border: '1px solid #e2e8f0', display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <div className="ops-search-box" style={{ flex: 1, position: 'relative' }}>
+                <Search size={16} color="#64748b" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+                <input 
+                  type="text" 
+                  placeholder="Filter low stock items by title, generic formula or item code..."
+                  value={opsSearchQuery}
+                  onChange={(e) => setOpsSearchQuery(e.target.value)}
+                  style={{ width: '100%', paddingLeft: '36px', paddingRight: '12px', paddingTop: '8px', paddingBottom: '8px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.88rem' }}
+                />
+              </div>
+            </div>
+
+            {/* Low Stock Table */}
+            <div className="ops-table-wrapper">
+              <table className="admin-table ops-table">
+                <thead>
+                  <tr>
+                    <th>ITEM CODE</th>
+                    <th>MEDICINE TITLE & GENERIC FORMULA</th>
+                    <th>CATEGORY</th>
+                    <th>CURRENT STOCK</th>
+                    <th>TRADE PRICE (RS.)</th>
+                    <th>STOCK ALERT STATUS</th>
+                    <th style={{ textAlign: 'center' }}>QUICK RESTOCK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {lowStockProducts.length === 0 ? (
+                    <tr>
+                      <td colSpan="7" style={{ textAlign: 'center', padding: '40px 20px', color: '#166534', fontWeight: 700, background: '#f0fdf4' }}>
+                        🎉 Great news! Zero products are currently running low in stock (All catalog items have over 20 pieces).
+                      </td>
+                    </tr>
+                  ) : (
+                    lowStockProducts
+                      .filter(p => {
+                        const q = opsSearchQuery.toLowerCase();
+                        return p.name.toLowerCase().includes(q) || (p.code && p.code.toLowerCase().includes(q)) || (p.genericName && p.genericName.toLowerCase().includes(q));
+                      })
+                      .map(p => (
+                        <tr key={p.id} style={{ background: p.stock <= 5 ? '#fff1f2' : (p.stock <= 10 ? '#fffbeb' : 'inherit') }}>
+                          <td>
+                            <code style={{ background: '#0f172a', color: '#38bdf8', padding: '3px 8px', borderRadius: '4px', fontWeight: 800, fontSize: '0.85rem' }}>
+                              {p.code || 'N/A'}
+                            </code>
+                          </td>
+                          <td>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                              <strong style={{ color: '#0f172a', fontSize: '0.9rem' }}>{p.name}</strong>
+                              <small style={{ color: '#64748b', fontSize: '0.76rem' }}>{p.genericName || p.name}</small>
+                            </div>
+                          </td>
+                          <td>
+                            <span style={{ background: '#e2e8f0', color: '#334155', padding: '2px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>
+                              {p.category || 'Medicines'}
+                            </span>
+                          </td>
+                          <td>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <input 
+                                type="number" 
+                                min="0"
+                                value={p.stock}
+                                onChange={(e) => handleStockChange(p.id, e.target.value)}
+                                style={{ width: '70px', padding: '4px 8px', border: '1.5px solid #ef4444', borderRadius: '6px', fontWeight: 800, color: '#dc2626', background: '#ffffff' }}
+                              />
+                              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b' }}>Pcs</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b' }}>Rs.</span>
+                              <input 
+                                type="number" 
+                                min="0"
+                                step="0.5"
+                                value={p.price}
+                                onChange={(e) => handlePriceChange(p.id, e.target.value)}
+                                style={{ width: '90px', padding: '4px 8px', border: '1px solid #cbd5e1', borderRadius: '6px', fontWeight: 700 }}
+                              />
+                            </div>
+                          </td>
+                          <td>
+                            {p.stock <= 5 ? (
+                              <span style={{ background: '#ef4444', color: '#ffffff', padding: '4px 10px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                🚨 CRITICAL ({p.stock} Left)
+                              </span>
+                            ) : (
+                              <span style={{ background: '#f59e0b', color: '#ffffff', padding: '4px 10px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                ⚠️ LOW STOCK ({p.stock} Left)
+                              </span>
+                            )}
+                          </td>
+                          <td style={{ textAlign: 'center' }}>
+                            <div style={{ display: 'inline-flex', gap: '6px' }}>
+                              <button 
+                                onClick={() => handleQuickRestock(p.id, 50)}
+                                style={{ background: '#0284c7', color: '#ffffff', border: 'none', padding: '5px 10px', borderRadius: '6px', fontSize: '0.76rem', fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                                title="Add +50 pieces to stock immediately"
+                              >
+                                <Plus size={13} /> +50 Pcs
+                              </button>
+                              <button 
+                                onClick={() => handleQuickRestock(p.id, 100)}
+                                style={{ background: '#0d9488', color: '#ffffff', border: 'none', padding: '5px 10px', borderRadius: '6px', fontSize: '0.76rem', fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                                title="Add +100 pieces to stock immediately"
+                              >
+                                <Plus size={13} /> +100 Pcs
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
-
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>Batch #</th>
-                <th>Medicine Name</th>
-                <th>Supplier</th>
-                <th>Expiry Date</th>
-                <th>Days Remaining</th>
-                <th>Stock</th>
-                <th>Alert Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {INITIAL_EXPIRY_BATCHES.map(b => (
-                <tr key={b.batchNo}>
-                  <td><code>{b.batchNo}</code></td>
-                  <td><strong>{b.productName}</strong></td>
-                  <td>{b.supplier}</td>
-                  <td>{b.expiryDate}</td>
-                  <td><strong className="red-text">{b.daysRemaining} Days</strong></td>
-                  <td>{b.stock} Units</td>
-                  <td>
-                    <span className="expiry-warning-pill">
-                      ⚠️ Expiring Soon
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Add Single Item Modal */}
       {isAddModalOpen && (

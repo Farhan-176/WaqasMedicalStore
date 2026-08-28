@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   FileText, CheckCircle, XCircle, Phone, MessageSquare, Printer, 
   Eye, ShieldCheck, Package, Clock, LogOut, Search, Filter, Table, TrendingUp, Store, Plus, Trash2, Key, MapPin, UserCheck, FileCheck,
-  ChevronLeft, ChevronRight, Menu
+  ChevronLeft, ChevronRight, Menu, ShoppingCart
 } from 'lucide-react';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from '../adminMockData';
 import { INITIAL_RETAILERS } from '../retailersData';
@@ -469,6 +469,16 @@ export default function AdminDashboard({
         <nav className="admin-sidebar-nav">
           {!isSidebarCollapsed && <div className="nav-section-label">OPERATIONS</div>}
           <button 
+            className={`admin-side-btn ${activeTab === 'counter-sale' ? 'active' : ''}`}
+            onClick={() => setActiveTab('counter-sale')}
+            title={isSidebarCollapsed ? "Counter Sale (POS)" : undefined}
+          >
+            <ShoppingCart size={17} />
+            {!isSidebarCollapsed && <span className="btn-label">Counter Sale (POS)</span>}
+            <span className="side-count-badge badge-teal">FAST</span>
+          </button>
+
+          <button 
             className={`admin-side-btn ${activeTab === 'prescriptions' ? 'active' : ''}`}
             onClick={() => setActiveTab('prescriptions')}
             title={isSidebarCollapsed ? "Rx Verification" : undefined}
@@ -564,6 +574,7 @@ export default function AdminDashboard({
               <span className="breadcrumb-root">Staff Hub</span>
               <span className="breadcrumb-separator">/</span>
               <span className="breadcrumb-active">
+                {activeTab === 'counter-sale' && 'High-Speed Counter Sale (POS)'}
                 {activeTab === 'prescriptions' && 'Rx Verification Inbox'}
                 {activeTab === 'orders' && 'Order Fulfillment Queue'}
                 {activeTab === 'store-ops' && 'Store Operations & Inventory'}
@@ -581,6 +592,31 @@ export default function AdminDashboard({
         </header>
 
         <div className="admin-body">
+        {/* TAB 0: High-Speed Counter Sale POS */}
+        {activeTab === 'counter-sale' && (
+          <StoreOperationsSection 
+            catalog={catalog} 
+            retailers={retailersList}
+            currentUser={user}
+            initialTab="pos-lite"
+            onUpdateCatalog={(newCatalog) => {
+              setCatalog(newCatalog);
+              if (onUpdateProducts) {
+                onUpdateProducts(newCatalog);
+              }
+              handleAddAuditLog({
+                id: `LOG-${Date.now().toString().slice(-4)}`,
+                timestamp: 'Just now',
+                staff: user.name,
+                actionType: 'POS_SALE',
+                category: 'Counter Sale',
+                details: 'Processed high-speed wholesale counter sale via POS billing terminal',
+                severity: 'info'
+              });
+            }} 
+          />
+        )}
+
         {/* TAB 1: Prescription Review Inbox */}
         {activeTab === 'prescriptions' && (
           <section className="admin-section">
