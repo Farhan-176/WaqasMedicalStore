@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   FileText, CheckCircle, XCircle, Phone, MessageSquare, Printer, 
   Eye, ShieldCheck, Package, Clock, LogOut, Search, Filter, Table, TrendingUp, Store, Plus, Trash2, Key, MapPin, UserCheck, FileCheck,
-  ChevronLeft, ChevronRight, Menu, ShoppingCart
+  ChevronLeft, ChevronRight, Menu, ShoppingCart, Edit, X, Tag
 } from 'lucide-react';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from '../adminMockData';
 import { INITIAL_RETAILERS } from '../retailersData';
@@ -36,7 +36,7 @@ export default function AdminDashboard({
   const [orderQueueFilter, setOrderQueueFilter] = useState('all'); // 'all', 'active', 'delivered', 'b2b', 'b2c'
   const [orderSearchQuery, setOrderSearchQuery] = useState('');
 
-  // New Retailer Form State
+  // Retailer State: New & Edit
   const [newRetailer, setNewRetailer] = useState({
     name: '',
     username: '',
@@ -44,6 +44,7 @@ export default function AdminDashboard({
     area: '',
     licenseNo: ''
   });
+  const [editingRetailer, setEditingRetailer] = useState(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -409,6 +410,70 @@ export default function AdminDashboard({
     });
 
     setNewRetailer({ name: '', username: '', password: '', area: '', licenseNo: '' });
+  };
+
+  const handleOpenEditRetailer = (ret) => {
+    setEditingRetailer({
+      id: ret.id,
+      _id: ret._id,
+      name: ret.name || '',
+      username: ret.username || '',
+      password: ret.password || '',
+      area: ret.area || '',
+      licenseNo: ret.licenseNo || '',
+      discountTier: ret.discountTier || 'Wholesale Trade Price (12-15% OFF)',
+      phone: ret.phone || ''
+    });
+  };
+
+  const handleSaveEditRetailer = async (e) => {
+    e.preventDefault();
+    if (!editingRetailer || !editingRetailer.name || !editingRetailer.username) return;
+
+    const targetId = editingRetailer._id || editingRetailer.id;
+    const updatedData = {
+      ...editingRetailer,
+      name: editingRetailer.name.trim(),
+      username: editingRetailer.username.trim().toLowerCase(),
+      password: editingRetailer.password.trim(),
+      area: editingRetailer.area.trim(),
+      licenseNo: editingRetailer.licenseNo.trim(),
+      discountTier: editingRetailer.discountTier || 'Wholesale Trade Price (12-15% OFF)',
+      phone: editingRetailer.phone ? editingRetailer.phone.trim() : ''
+    };
+
+    // Update remote backend if available
+    try {
+      await fetch(`${API_BASE_URL}/api/retailers/${targetId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user?.token}`
+        },
+        body: JSON.stringify(updatedData)
+      });
+    } catch (err) {
+      console.warn('Updated in local state:', err.message);
+    }
+
+    // Update local state
+    setRetailersList(prev => {
+      const updated = prev.map(r => (r.id === editingRetailer.id || r._id === targetId ? { ...r, ...updatedData } : r));
+      if (onUpdateRetailers) onUpdateRetailers(updated);
+      return updated;
+    });
+
+    handleAddAuditLog({
+      id: `LOG-${Date.now().toString().slice(-4)}`,
+      timestamp: 'Just now',
+      staff: user.name,
+      actionType: 'RETAILER_UPDATED',
+      category: 'Accounts',
+      details: `Updated retailer account details for "${updatedData.name}" (Code: ${updatedData.username})`,
+      severity: 'info'
+    });
+
+    setEditingRetailer(null);
   };
 
   const handleDeleteRetailer = async (id, name, retailerItem) => {
@@ -1079,17 +1144,31 @@ export default function AdminDashboard({
                         <td>{ret.area || 'Karachi'}</td>
                         <td><small className="license-tag" style={{ background: '#e0f2fe', color: '#0369a1', padding: '2px 8px', borderRadius: '4px', fontWeight: 700, fontSize: '0.74rem' }}>{ret.licenseNo || '04-DL-VERIFIED'}</small></td>
                         <td>
-                          <span className="badge-trade-pill" style={{ background: '#dcfce7', color: '#15803d', padding: '3px 10px', borderRadius: '12px', fontWeight: 800, fontSize: '0.74rem' }}>Wholesale Trade (12-15% OFF)</span>
+                          <span className="badge-trade-pill" style={{ background: '#dcfce7', color: '#15803d', padding: '3px 10px', borderRadius: '12px', fontWeight: 800, fontSize: '0.74rem' }}>
+                            {ret.discountTier || 'Wholesale Trade (12-15% OFF)'}
+                          </span>
                         </td>
-                        <td>
-                          <button 
-                            className="btn-delete-retailer" 
-                            onClick={() => handleDeleteRetailer(ret.id, ret.name, ret)}
-                            title="Revoke retailer wholesale access"
-                            style={{ background: '#fff1f2', color: '#e11d48', border: '1px solid #fecdd3', padding: '4px 10px', borderRadius: '6px', fontSize: '0.76rem', fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                          >
-                            <Trash2 size={13} /> Remove Access
-                          </button>
+                        <td style={{ whiteSpace: 'nowrap' }}>
+                          <div style={{ display: 'inline-flex', gap: '6px', alignItems: 'center' }}>
+                            <button 
+                              type="button"
+                              className="btn-edit-retailer" 
+                              onClick={() => handleOpenEditRetailer(ret)}
+                              title="Edit retailer account details & discount tier"
+                              style={{ background: '#f0fdfa', color: '#0d9488', border: '1px solid #99f6e4', padding: '4px 10px', borderRadius: '6px', fontSize: '0.76rem', fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', transition: 'all 0.15s ease' }}
+                            >
+                              <Edit size={13} /> Edit
+                            </button>
+                            <button 
+                              type="button"
+                              className="btn-delete-retailer" 
+                              onClick={() => handleDeleteRetailer(ret.id, ret.name, ret)}
+                              title="Revoke retailer wholesale access"
+                              style={{ background: '#fff1f2', color: '#e11d48', border: '1px solid #fecdd3', padding: '4px 10px', borderRadius: '6px', fontSize: '0.76rem', fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', transition: 'all 0.15s ease' }}
+                            >
+                              <Trash2 size={13} /> Remove
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -1101,6 +1180,139 @@ export default function AdminDashboard({
         )}
         </div>
       </main>
+
+      {/* Edit Retailer Details Modal */}
+      {editingRetailer && (
+        <div className="modal-overlay" onClick={() => setEditingRetailer(null)}>
+          <div 
+            className="modal-container" 
+            style={{ maxWidth: '580px', width: '100%', background: '#ffffff', borderRadius: '16px', padding: '24px', boxShadow: '0 20px 45px rgba(15, 23, 42, 0.25)', border: '1px solid #e2e8f0' }} 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '14px', marginBottom: '18px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: '#f0fdfa', border: '1px solid #ccfbf1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Store size={20} color="#0d9488" />
+                </div>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>Edit Retailer Details</h3>
+                  <small style={{ color: '#64748b' }}>Update account information, password, or discount tier</small>
+                </div>
+              </div>
+              <button 
+                type="button" 
+                onClick={() => setEditingRetailer(null)} 
+                style={{ background: '#f1f5f9', border: 'none', borderRadius: '6px', padding: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b' }}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEditRetailer} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="form-group-compact">
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '4px' }}>
+                    <Store size={13} /> Store / Clinic Name *
+                  </label>
+                  <input 
+                    type="text" 
+                    required 
+                    style={{ width: '100%', padding: '8px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.84rem', outline: 'none' }}
+                    value={editingRetailer.name}
+                    onChange={(e) => setEditingRetailer(prev => ({ ...prev, name: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group-compact">
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '4px' }}>
+                    <UserCheck size={13} /> Store Code (Username) *
+                  </label>
+                  <input 
+                    type="text" 
+                    required 
+                    style={{ width: '100%', padding: '8px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.84rem', outline: 'none' }}
+                    value={editingRetailer.username}
+                    onChange={(e) => setEditingRetailer(prev => ({ ...prev, username: e.target.value }))}
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="form-group-compact">
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '4px' }}>
+                    <Key size={13} /> Login Password *
+                  </label>
+                  <input 
+                    type="text" 
+                    required 
+                    style={{ width: '100%', padding: '8px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.84rem', outline: 'none' }}
+                    value={editingRetailer.password}
+                    onChange={(e) => setEditingRetailer(prev => ({ ...prev, password: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group-compact">
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '4px' }}>
+                    <MapPin size={13} /> Sector / Area (Location)
+                  </label>
+                  <input 
+                    type="text" 
+                    style={{ width: '100%', padding: '8px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.84rem', outline: 'none' }}
+                    value={editingRetailer.area}
+                    onChange={(e) => setEditingRetailer(prev => ({ ...prev, area: e.target.value }))}
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="form-group-compact">
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '4px' }}>
+                    <FileCheck size={13} /> Drug License #
+                  </label>
+                  <input 
+                    type="text" 
+                    style={{ width: '100%', padding: '8px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.84rem', outline: 'none' }}
+                    value={editingRetailer.licenseNo}
+                    onChange={(e) => setEditingRetailer(prev => ({ ...prev, licenseNo: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group-compact">
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '4px' }}>
+                    <Tag size={13} /> Discount Tier
+                  </label>
+                  <select 
+                    style={{ width: '100%', padding: '8px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.84rem', outline: 'none', background: '#ffffff' }}
+                    value={editingRetailer.discountTier}
+                    onChange={(e) => setEditingRetailer(prev => ({ ...prev, discountTier: e.target.value }))}
+                  >
+                    <option value="Wholesale Trade Price (12-15% OFF)">Wholesale Trade Price (12-15% OFF)</option>
+                    <option value="VIP Clinic Partner (18% OFF)">VIP Clinic Partner (18% OFF)</option>
+                    <option value="Tier 1 Standard (10% OFF)">Tier 1 Standard (10% OFF)</option>
+                    <option value="Special Distributor (20% OFF)">Special Distributor (20% OFF)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px', borderTop: '1px solid #e2e8f0', paddingTop: '14px' }}>
+                <button 
+                  type="button" 
+                  onClick={() => setEditingRetailer(null)}
+                  style={{ padding: '8px 18px', background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.84rem', fontWeight: 700, color: '#475569', cursor: 'pointer' }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  style={{ padding: '8px 22px', background: 'linear-gradient(135deg, #0d9488 0%, #0284c7 100%)', border: 'none', borderRadius: '8px', fontSize: '0.84rem', fontWeight: 800, color: '#ffffff', cursor: 'pointer', boxShadow: '0 2px 8px rgba(13, 148, 136, 0.25)' }}
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Clickable Prescription Image Inspector Modal */}
       {selectedRx && (

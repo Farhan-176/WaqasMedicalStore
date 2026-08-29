@@ -42,6 +42,35 @@ router.post('/', async (req, res) => {
   }
 });
 
+// PUT /api/retailers/:id - Update retailer details
+router.put('/:id', async (req, res) => {
+  try {
+    const { name, username, password, area, licenseNo, discountTier, phone } = req.body;
+    const updateData = {};
+    if (name) updateData.name = name.trim();
+    if (username) updateData.username = username.trim().toLowerCase();
+    if (password) updateData.password = password.trim();
+    if (area !== undefined) updateData.area = area.trim();
+    if (licenseNo !== undefined) updateData.licenseNo = licenseNo.trim();
+    if (discountTier !== undefined) updateData.discountTier = discountTier;
+    if (phone !== undefined) updateData.phone = phone.trim();
+
+    const updated = await Retailer.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: 'Retailer not found' });
+    }
+
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update retailer details', details: err.message });
+  }
+});
+
 // DELETE /api/retailers/:id - Remove a retailer
 router.delete('/:id', async (req, res) => {
   try {
