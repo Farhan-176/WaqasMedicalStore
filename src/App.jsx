@@ -18,6 +18,7 @@ import { ShieldCheck, Truck, RefreshCw, Package, CheckCircle2, AlertCircle, Stor
 import './App.css';
 
 const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
+const CounterSaleSection = React.lazy(() => import('./components/CounterSaleSection'));
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -352,6 +353,38 @@ export default function App() {
       showToast(`Welcome ${user.name}! Wholesale Trade Rates are now ACTIVE on main screen. 🏢`, 'success');
     }
   };
+
+  // Direct Standalone Counter POS View (When opened in a separate tab/window via /?view=pos or /pos)
+  const isPosDirectMode = typeof window !== 'undefined' && (
+    window.location.search.includes('view=pos') || 
+    window.location.pathname === '/pos' ||
+    window.location.pathname.startsWith('/pos')
+  );
+
+  if (isPosDirectMode) {
+    return (
+      <ErrorBoundary fallbackTitle="Counter POS Terminal Error">
+        <Suspense fallback={
+          <div className="admin-loading-spinner">
+            <div className="spinner-ring"></div>
+            <p>Loading Counter POS Terminal...</p>
+          </div>
+        }>
+          <div className="pos-standalone-fullscreen">
+            <CounterSaleSection 
+              catalog={products} 
+              retailers={retailers}
+              currentUser={adminUser || { name: 'Cashier Terminal', role: 'admin' }}
+              onUpdateCatalog={(newCatalog) => {
+                setProducts(newCatalog);
+              }}
+              isStandalone={true}
+            />
+          </div>
+        </Suspense>
+      </ErrorBoundary>
+    );
+  }
 
   // If Admin is logged in, show full Admin Dashboard View wrapped in ErrorBoundary & Suspense
   if (adminUser) {

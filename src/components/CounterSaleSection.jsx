@@ -4,7 +4,7 @@ import {
   RotateCcw, Sparkles, User, Building2, Clock, ShieldCheck, ChevronDown,
   Package, DollarSign, ArrowRight, Zap, TrendingUp, Layers, HelpCircle,
   FileText, CreditCard, CheckCircle2, AlertCircle, PauseCircle, PlayCircle,
-  HardDrive, Usb, Cpu, X, Tag, ShoppingCart, RefreshCw
+  HardDrive, Usb, Cpu, X, Tag, ShoppingCart, RefreshCw, ExternalLink
 } from 'lucide-react';
 
 export default function CounterSaleSection({ catalog = [], onUpdateCatalog, retailers = [], currentUser }) {
@@ -81,107 +81,34 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
   const [pricingMode, setPricingMode] = useState('WHOLESALE');
   
   // Invoice & Customer
-  const [invoiceNo, setInvoiceNo] = useState('028078');
+  const [invoiceNo, setInvoiceNo] = useState(() => Math.floor(10000 + Math.random() * 90000).toString());
   const [invDate] = useState(new Date().toLocaleDateString('en-GB'));
   const [selectedCustomerId, setSelectedCustomerId] = useState('ret-3');
   const [customerOldBalance, setCustomerOldBalance] = useState(2138.00);
 
-  // Active Bill Rows
-  const [billRows, setBillRows] = useState([
-    {
-      id: 'row-1',
-      code: '6555',
-      name: 'PROVATE LOTION 20ML',
-      company: 'MENDOZA LABS',
-      packing: '20ML Bottle',
-      batchNo: 'B09',
-      expiryDate: '08/27',
-      fullQty: 2,
-      pcsQty: 0,
-      stripsPerPack: 1,
-      discPercent: 5.00,
-      rate: 127.50,
-      shopStock: 87,
-      godownStock: 140,
-      costPrice: 110.00
-    },
-    {
-      id: 'row-2',
-      code: '6559',
-      name: 'PROVATE-S LOTION',
-      company: 'MENDOZA LABS',
-      packing: '20ML Bottle',
-      batchNo: 'B14',
-      expiryDate: '09/27',
-      fullQty: 1,
-      pcsQty: 0,
-      stripsPerPack: 1,
-      discPercent: 5.00,
-      rate: 174.23,
-      shopStock: 45,
-      godownStock: 80,
-      costPrice: 152.00
-    },
-    {
-      id: 'row-3',
-      code: 'B158',
-      name: 'RE-PLAT SYP 120ML',
-      company: 'SEARLE PHARMA',
-      packing: '120ML Syrup',
-      batchNo: 'RP02',
-      expiryDate: '04/27',
-      fullQty: 1,
-      pcsQty: 0,
-      stripsPerPack: 1,
-      discPercent: 4.00,
-      rate: 388.98,
-      shopStock: 30,
-      godownStock: 60,
-      costPrice: 340.00
-    },
-    {
-      id: 'row-4',
-      code: '9225',
-      name: 'HYDRILIN SYRUP 120ML',
-      company: 'SEARLE PHARMA',
-      packing: '120ML Bottle',
-      batchNo: 'HD71',
-      expiryDate: '11/26',
-      fullQty: 2,
-      pcsQty: 0,
-      stripsPerPack: 1,
-      discPercent: 6.00,
-      rate: 148.76,
-      shopStock: 74,
-      godownStock: 150,
-      costPrice: 128.00
-    },
-    {
-      id: 'row-5',
-      code: '7414',
-      name: 'SIROLINE SYRUP 120ML',
-      company: 'MENDOZA LABS',
-      packing: '120ML Bottle',
-      batchNo: 'S12',
-      expiryDate: '11/26',
-      fullQty: 3,
-      pcsQty: 0,
-      stripsPerPack: 1,
-      discPercent: 10.00,
-      rate: 131.75,
-      shopStock: 87,
-      godownStock: 140,
-      costPrice: 115.00
-    }
-  ]);
+  // Active Bill Rows (Clean Empty Register on Load)
+  const [billRows, setBillRows] = useState([]);
 
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
   const searchInputRef = useRef(null);
+  const searchBoxRef = useRef(null);
+
+  // Auto-close search dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) {
+        setShowSearchDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Settlement Inputs
-  const [cashReceived, setCashReceived] = useState('2000.00');
+  const [cashReceived, setCashReceived] = useState('0.00');
   const [toastMsg, setToastMsg] = useState('');
   const [toastType, setToastType] = useState('success');
 
@@ -251,13 +178,18 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
     const q = searchQuery.trim().toLowerCase();
     if (!q) return [];
     return enrichedCatalog.filter(p => 
-      p.name.toLowerCase().includes(q) || 
-      p.code.toLowerCase().includes(q) ||
+      (p.name && p.name.toLowerCase().includes(q)) || 
+      (p.code && p.code.toLowerCase().includes(q)) ||
       (p.barcode && p.barcode.toLowerCase().includes(q)) ||
       (p.genericName && p.genericName.toLowerCase().includes(q)) ||
-      (p.company && p.company.toLowerCase().includes(q))
-    ).slice(0, 7);
+      (p.company && p.company.toLowerCase().includes(q)) ||
+      (p.category && p.category.toLowerCase().includes(q))
+    ).slice(0, 10);
   }, [enrichedCatalog, searchQuery]);
+
+  useEffect(() => {
+    setHighlightedIndex(0);
+  }, [searchQuery]);
 
   const triggerToast = (msg, type = 'success') => {
     setToastMsg(msg);
@@ -627,6 +559,17 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
             <span>Drafts ({parkedBills.length})</span>
           </button>
 
+          {/* Open in New Window Tab Button */}
+          <button 
+            type="button" 
+            className="pos-btn-open-tab"
+            onClick={() => window.open('/?view=pos', '_blank', 'noopener,noreferrer')}
+            title="Open Counter POS in a separate dedicated browser window/tab"
+          >
+            <ExternalLink size={13} />
+            <span>Open in New Tab</span>
+          </button>
+
           {/* F3 Clear & New Sale Button */}
           <button 
             type="button" 
@@ -642,212 +585,292 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
       </div>
 
       {/* =========================================================================
-          2. SIMPLE SEARCH & QUICK ADD BAR
+          2. RESTORED PROMINENT SEARCH & AUTOCOMPLETE BAR (WITH TP & MRP DISPLAY)
           ========================================================================= */}
-      <div className="pos-search-box-wrap">
-        <Search size={18} className="pos-search-icon" />
+      <div className="pos-search-box-wrap" ref={searchBoxRef}>
+        <Search size={17} className="pos-search-icon" />
         <input 
           ref={searchInputRef}
           type="text" 
           className="pos-clean-search-input"
-          placeholder="🔍 Search medicine by name, barcode, or generic (Press ENTER to add)..."
+          placeholder="🔍 Search medicine by name, barcode, code, or generic formula (Press ENTER to add)..."
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
             setShowSearchDropdown(true);
           }}
-          onFocus={() => setShowSearchDropdown(true)}
+          onFocus={() => {
+            if (searchQuery.trim()) setShowSearchDropdown(true);
+          }}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && searchResults.length > 0) {
-              e.preventDefault();
-              handleAddProduct(searchResults[0]);
+            if (e.key === 'ArrowDown') {
+              if (searchResults.length > 0) {
+                e.preventDefault();
+                setShowSearchDropdown(true);
+                setHighlightedIndex(prev => (prev + 1) % searchResults.length);
+              }
+            } else if (e.key === 'ArrowUp') {
+              if (searchResults.length > 0) {
+                e.preventDefault();
+                setShowSearchDropdown(true);
+                setHighlightedIndex(prev => (prev - 1 + searchResults.length) % searchResults.length);
+              }
+            } else if (e.key === 'Enter') {
+              if (searchResults.length > 0) {
+                e.preventDefault();
+                const chosen = searchResults[highlightedIndex] || searchResults[0];
+                handleAddProduct(chosen);
+              }
+            } else if (e.key === 'Escape') {
+              setShowSearchDropdown(false);
             }
           }}
         />
         <div className="pos-search-right-badges">
           <span className="search-fkey-badge">Press <b>F9</b> or <b>/</b></span>
           {searchQuery && (
-            <button className="pos-btn-clear-search" onClick={() => setSearchQuery('')}>×</button>
+            <button 
+              type="button" 
+              className="pos-btn-clear-search" 
+              onClick={() => {
+                setSearchQuery('');
+                setShowSearchDropdown(false);
+              }}
+            >
+              ×
+            </button>
           )}
         </div>
 
-        {/* Autocomplete Dropdown */}
-        {showSearchDropdown && searchResults.length > 0 && (
+        {/* Autocomplete Dropdown showing both TP (Wholesale) and MRP (Retail) */}
+        {showSearchDropdown && searchQuery.trim().length > 0 && (
           <div className="pos-search-drop-menu">
-            <div className="pos-drop-header">
-              <span>Matching Medicines ({searchResults.length})</span>
-              <small>Click to add</small>
-            </div>
-            {searchResults.map((p, idx) => (
-              <div 
-                key={p.id || idx} 
-                className="pos-search-row"
-                onClick={() => handleAddProduct(p)}
-              >
-                <div className="pos-row-code"><code>{p.code}</code></div>
-                <div className="pos-row-info">
-                  <strong>{p.name}</strong>
-                  <span>{p.company} &bull; {p.packing} &bull; Stock: {p.stock || 50}</span>
+            {searchResults.length > 0 ? (
+              <>
+                <div className="pos-drop-header">
+                  <span>Matching Medicines ({searchResults.length})</span>
+                  <small>Use &uarr;&darr; keys &bull; Press <strong>ENTER</strong> to add</small>
                 </div>
-                <div className="pos-row-price">
-                  <strong>Rs. {pricingMode === 'WHOLESALE' ? p.tradePrice.toFixed(2) : p.retailPrice.toFixed(2)}</strong>
-                  <span className="pos-add-pill">+ Add</span>
+                <div className="pos-drop-items-list">
+                  {searchResults.map((p, idx) => {
+                    const isHigh = highlightedIndex === idx;
+                    const isLowStock = (p.stock || 50) < 15;
+                    const displayRate = pricingMode === 'WHOLESALE' ? p.tradePrice.toFixed(2) : p.retailPrice.toFixed(2);
+
+                    return (
+                      <div 
+                        key={p.id || idx} 
+                        className={`pos-search-row ${isHigh ? 'highlighted' : ''}`}
+                        onClick={() => handleAddProduct(p)}
+                        onMouseEnter={() => setHighlightedIndex(idx)}
+                      >
+                        <div className="pos-row-code">
+                          <code>{p.code}</code>
+                        </div>
+                        <div className="pos-row-info">
+                          <div className="pos-row-title-line">
+                            <strong className="pos-med-name">{p.name}</strong>
+                            {p.genericName && <span className="pos-med-generic">({p.genericName})</span>}
+                          </div>
+                          <div className="pos-row-meta-line">
+                            <span className="pos-meta-company">{p.company}</span>
+                            <span className="pos-meta-dot">&bull;</span>
+                            <span className="pos-meta-pack">{p.packing}</span>
+                            <span className="pos-meta-dot">&bull;</span>
+                            <span className={`pos-stock-pill ${isLowStock ? 'low' : 'ok'}`}>
+                              {isLowStock ? `Low Stock: ${p.stock || 5}` : `Stock: ${p.stock || 50} Boxes`}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="pos-row-price">
+                          <div className="pos-dual-rate-tag">
+                            <span className="rate-tp-badge">TP: Rs. {p.tradePrice.toFixed(1)}</span>
+                            <span className="rate-mrp-badge">MRP: Rs. {p.retailPrice.toFixed(1)}</span>
+                          </div>
+                          <strong className="pos-price-amt">Rs. {displayRate}</strong>
+                          <span className={`pos-add-pill ${isHigh ? 'active-add' : ''}`}>+ Add (Enter)</span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
+              </>
+            ) : (
+              <div className="pos-search-empty-drop">
+                <p>🔍 No medicines found matching <strong>"{searchQuery}"</strong></p>
+                <small>Check spelling or try generic formula.</small>
               </div>
-            ))}
+            )}
           </div>
         )}
       </div>
 
       {/* =========================================================================
-          3. CLEAN BILLING DATA TABLE
+          3. DEDICATED PROPER PRODUCT TABLE AREA (FULL-HEIGHT WORKSPACE LIKE DOS/ERP)
           ========================================================================= */}
       <div className="pos-table-card">
         <div className="pos-table-scroll">
           <table className="pos-table">
             <thead>
               <tr>
-                <th style={{ width: '38%' }}>Medicine Name & Details</th>
-                <th style={{ width: '15%', textAlign: 'center' }}>Box / Pack</th>
-                <th style={{ width: '15%', textAlign: 'center' }}>Loose (Pcs)</th>
-                <th style={{ width: '10%', textAlign: 'center' }}>Disc %</th>
-                <th style={{ width: '12%', textAlign: 'right' }}>Rate</th>
-                <th style={{ width: '14%', textAlign: 'right' }}>Total</th>
+                <th style={{ width: '8%' }}>CODE</th>
+                <th style={{ width: '36%' }}>ITEM NAME & PACKING [F9]</th>
+                <th style={{ width: '12%', textAlign: 'center' }}>FULL (BOX)</th>
+                <th style={{ width: '12%', textAlign: 'center' }}>PCS (UNIT)</th>
+                <th style={{ width: '9%', textAlign: 'center' }}>DISC %</th>
+                <th style={{ width: '12%', textAlign: 'right' }}>RATE (TP/MRP)</th>
+                <th style={{ width: '11%', textAlign: 'right' }}>NET TOTAL</th>
                 <th style={{ width: '4%' }}></th>
               </tr>
             </thead>
             <tbody>
-              {billRows.length > 0 ? (
-                billRows.map((row, index) => {
-                  const isSelected = selectedRowIndex === index;
-                  const lineTotal = computeRowNet(row);
+              {/* Existing Billed Rows */}
+              {billRows.map((row, index) => {
+                const isSelected = selectedRowIndex === index;
+                const lineTotal = computeRowNet(row);
 
-                  return (
-                    <tr 
-                      key={row.id || index}
-                      className={`pos-table-row ${isSelected ? 'selected' : ''}`}
-                      onClick={() => setSelectedRowIndex(index)}
-                    >
-                      {/* Name & Batch */}
-                      <td>
-                        <div className="pos-med-name-group">
-                          <strong className="med-title">{row.name}</strong>
-                          <div className="med-subtitle">
-                            <span className="comp-tag">{row.company}</span>
-                            <span className="batch-tag">Batch: {row.batchNo}</span>
-                            <span className="exp-tag">Exp: {row.expiryDate}</span>
-                          </div>
+                return (
+                  <tr 
+                    key={row.id || index}
+                    className={`pos-table-row ${isSelected ? 'selected' : ''}`}
+                    onClick={() => setSelectedRowIndex(index)}
+                  >
+                    {/* Item Code */}
+                    <td>
+                      <code className="pos-grid-code">{row.code}</code>
+                    </td>
+
+                    {/* Name & Batch */}
+                    <td>
+                      <div className="pos-med-name-group">
+                        <strong className="med-title">{row.name}</strong>
+                        <div className="med-subtitle">
+                          <span className="comp-tag">{row.company}</span>
+                          <span className="batch-tag">Batch: {row.batchNo}</span>
+                          <span className="exp-tag">Exp: {row.expiryDate}</span>
                         </div>
-                      </td>
+                      </div>
+                    </td>
 
-                      {/* Box Quantity Stepper */}
-                      <td style={{ textAlign: 'center' }}>
-                        <div className="pos-stepper-box">
-                          <button 
-                            type="button" 
-                            className="pos-step-btn"
-                            onClick={(e) => { e.stopPropagation(); handleStepQty(index, 'fullQty', -1); }}
-                          >
-                            -
-                          </button>
-                          <input 
-                            type="number" 
-                            min="0"
-                            className="pos-qty-input"
-                            value={row.fullQty}
-                            onChange={(e) => handleUpdateQty(index, 'fullQty', e.target.value)}
-                          />
-                          <button 
-                            type="button" 
-                            className="pos-step-btn"
-                            onClick={(e) => { e.stopPropagation(); handleStepQty(index, 'fullQty', 1); }}
-                          >
-                            +
-                          </button>
-                        </div>
-                      </td>
-
-                      {/* Loose Quantity Stepper */}
-                      <td style={{ textAlign: 'center' }}>
-                        <div className="pos-stepper-box">
-                          <button 
-                            type="button" 
-                            className="pos-step-btn"
-                            onClick={(e) => { e.stopPropagation(); handleStepQty(index, 'pcsQty', -1); }}
-                          >
-                            -
-                          </button>
-                          <input 
-                            type="number" 
-                            min="0"
-                            className="pos-qty-input"
-                            value={row.pcsQty}
-                            onChange={(e) => handleUpdateQty(index, 'pcsQty', e.target.value)}
-                          />
-                          <button 
-                            type="button" 
-                            className="pos-step-btn"
-                            onClick={(e) => { e.stopPropagation(); handleStepQty(index, 'pcsQty', 1); }}
-                          >
-                            +
-                          </button>
-                        </div>
-                      </td>
-
-                      {/* Discount % */}
-                      <td style={{ textAlign: 'center' }}>
-                        <input 
-                          type="number" 
-                          step="1"
-                          className="pos-disc-input"
-                          value={row.discPercent}
-                          onChange={(e) => {
-                            const val = parseFloat(e.target.value) || 0;
-                            setBillRows(prev => {
-                              const updated = [...prev];
-                              updated[index] = { ...updated[index], discPercent: val };
-                              return updated;
-                            });
-                          }}
-                        />
-                      </td>
-
-                      {/* Rate */}
-                      <td style={{ textAlign: 'right' }}>
-                        <span className="pos-rate-txt">Rs. {Number(row.rate).toFixed(1)}</span>
-                      </td>
-
-                      {/* Total */}
-                      <td style={{ textAlign: 'right' }}>
-                        <strong className="pos-total-txt">Rs. {lineTotal.toFixed(1)}</strong>
-                      </td>
-
-                      {/* Delete */}
-                      <td style={{ textAlign: 'center' }}>
+                    {/* Box Quantity Stepper */}
+                    <td style={{ textAlign: 'center' }}>
+                      <div className="pos-stepper-box">
                         <button 
                           type="button" 
-                          className="pos-del-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleRemoveRow(index);
-                          }}
-                          title="Remove item"
+                          className="pos-step-btn"
+                          onClick={(e) => { e.stopPropagation(); handleStepQty(index, 'fullQty', -1); }}
                         >
-                          <Trash2 size={13} />
+                          -
                         </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <tr>
-                  <td colSpan="7" className="pos-empty-state">
-                    <ShoppingCart size={32} color="#94a3b8" />
-                    <h4>Invoice is Empty</h4>
-                    <p>Search medicine above or scan barcode to add items</p>
-                  </td>
+                        <input 
+                          type="number" 
+                          min="0"
+                          className="pos-qty-input"
+                          value={row.fullQty}
+                          onChange={(e) => handleUpdateQty(index, 'fullQty', e.target.value)}
+                        />
+                        <button 
+                          type="button" 
+                          className="pos-step-btn"
+                          onClick={(e) => { e.stopPropagation(); handleStepQty(index, 'fullQty', 1); }}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </td>
+
+                    {/* Loose Quantity Stepper */}
+                    <td style={{ textAlign: 'center' }}>
+                      <div className="pos-stepper-box">
+                        <button 
+                          type="button" 
+                          className="pos-step-btn"
+                          onClick={(e) => { e.stopPropagation(); handleStepQty(index, 'pcsQty', -1); }}
+                        >
+                          -
+                        </button>
+                        <input 
+                          type="number" 
+                          min="0"
+                          className="pos-qty-input"
+                          value={row.pcsQty}
+                          onChange={(e) => handleUpdateQty(index, 'pcsQty', e.target.value)}
+                        />
+                        <button 
+                          type="button" 
+                          className="pos-step-btn"
+                          onClick={(e) => { e.stopPropagation(); handleStepQty(index, 'pcsQty', 1); }}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </td>
+
+                    {/* Discount % */}
+                    <td style={{ textAlign: 'center' }}>
+                      <input 
+                        type="number" 
+                        step="1"
+                        className="pos-disc-input"
+                        value={row.discPercent}
+                        onChange={(e) => {
+                          const val = parseFloat(e.target.value) || 0;
+                          setBillRows(prev => {
+                            const updated = [...prev];
+                            updated[index] = { ...updated[index], discPercent: val };
+                            return updated;
+                          });
+                        }}
+                      />
+                    </td>
+
+                    {/* Rate (Active rate with TP and MRP subtags) */}
+                    <td style={{ textAlign: 'right' }}>
+                      <div className="pos-rate-box">
+                        <span className="pos-rate-txt">Rs. {Number(row.rate).toFixed(1)}</span>
+                        <div className="pos-rate-sub-tags">
+                          <span className="sub-tag-tp" title="Retailer Wholesale TP Rate">TP:{Number(row.tradePrice || row.rate).toFixed(1)}</span>
+                          <span className="sub-tag-mrp" title="Consumer Retail MRP">MRP:{Number(row.retailPrice || (row.rate * 1.15)).toFixed(1)}</span>
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Total */}
+                    <td style={{ textAlign: 'right' }}>
+                      <strong className="pos-total-txt">Rs. {lineTotal.toFixed(1)}</strong>
+                    </td>
+
+                    {/* Delete */}
+                    <td style={{ textAlign: 'center' }}>
+                      <button 
+                        type="button" 
+                        className="pos-del-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRemoveRow(index);
+                        }}
+                        title="Remove item"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+
+              {/* Blank Placeholder Rows (Maintains Stable Full-Height Table Workspace like DOS/ERP) */}
+              {Array.from({ length: Math.max(0, 7 - billRows.length) }).map((_, i) => (
+                <tr key={`blank-${i}`} className="pos-table-blank-row">
+                  <td><span className="blank-dash">&bull;</span></td>
+                  <td><span className="blank-dash">&mdash;</span></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
-              )}
+              ))}
             </tbody>
           </table>
         </div>
@@ -858,7 +881,7 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
           ========================================================================= */}
       <div className="pos-bottom-grid">
         
-        {/* Left: Quick Item Info */}
+        {/* Left: Quick Item Info (with both TP and MRP) */}
         <div className="pos-item-info-card">
           <div className="pos-info-header">
             <Package size={14} color="#0d9488" />
@@ -873,11 +896,13 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
                 <span className="info-chip">🏢 {activeItem.company}</span>
                 <span className="info-chip highlight">Counter Stock: <strong>{activeItem.shopStock} Boxes</strong></span>
                 <span className="info-chip">Godown: {activeItem.godownStock}</span>
+                <span className="info-chip rate-chip tp">🏪 Retailer TP: <strong>Rs. {Number(activeItem.tradePrice || activeItem.rate).toFixed(2)}</strong></span>
+                <span className="info-chip rate-chip mrp">🏷️ Consumer MRP: <strong>Rs. {Number(activeItem.retailPrice || (activeItem.rate * 1.15)).toFixed(2)}</strong></span>
                 <span className="info-chip">Expiry: {activeItem.expiryDate}</span>
               </div>
             </div>
           ) : (
-            <div className="pos-info-empty">Select any medicine line in table to view stock & packing info</div>
+            <div className="pos-info-empty">Select any medicine line in table to view stock, packing & both TP/MRP rates</div>
           )}
         </div>
 
