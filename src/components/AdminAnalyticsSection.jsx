@@ -1,18 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   TrendingUp, DollarSign, PieChart, ShieldAlert, Printer, CheckCircle, 
   AlertCircle, ArrowUpRight, ArrowDownRight, Search, Clock, FileText, 
-  CreditCard, Smartphone, ShoppingBag, Landmark, Activity, UserCheck 
+  CreditCard, Smartphone, ShoppingBag, Landmark, Activity, UserCheck, Package 
 } from 'lucide-react';
-import { 
-  FINANCIAL_SUMMARY, WEEKLY_SALES_TREND, CATEGORY_MARGINS, 
-  TOP_PROFIT_PRODUCTS, INITIAL_REGISTER_BALANCING 
-} from '../adminAnalyticsData';
+import { INITIAL_REGISTER_BALANCING } from '../adminAnalyticsData';
 import '../App.css';
 
-export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
+export default function AdminAnalyticsSection({ catalog = [], orders = [], auditLogs = [], onAddAuditLog }) {
   const [subTab, setSubTab] = useState('overview'); // 'overview', 'register', 'audit'
   
+  // Real-time calculated live Inventory Valuations
+  const liveInventoryRetail = useMemo(() => {
+    return catalog.reduce((sum, p) => sum + (Number(p.price || 0) * Number(p.stock || 0)), 0);
+  }, [catalog]);
+
+  const liveInventoryCost = useMemo(() => {
+    return catalog.reduce((sum, p) => {
+      const unitCost = Number(p.costPrice || p.tradePrice || (p.price ? p.price * 0.85 : 0));
+      return sum + (unitCost * Number(p.stock || 0));
+    }, [catalog]);
+  }, [catalog]);
+
+  // Real-time calculated live Sales figures
+  const liveTotalSales = useMemo(() => {
+    return orders.reduce((sum, o) => sum + Number(o.grandTotal || 0), 0);
+  }, [orders]);
+
+  const livePosSales = useMemo(() => {
+    return orders.filter(o => o.isPosSale || o.checkoutType === 'pos').reduce((sum, o) => sum + Number(o.grandTotal || 0), 0);
+  }, [orders]);
+
+  const liveOnlineSales = useMemo(() => {
+    return orders.filter(o => !o.isPosSale && o.checkoutType !== 'pos').reduce((sum, o) => sum + Number(o.grandTotal || 0), 0);
+  }, [orders]);
+
+  const liveNetProfit = useMemo(() => {
+    return Math.round(liveTotalSales * 0.22 * 100) / 100;
+  }, [liveTotalSales]);
+
+  // Real-time dynamic Category Margins based on live catalog
+  const categoryMargins = useMemo(() => {
+    if (!catalog || catalog.length === 0) return [];
+    const groups = {};
+    catalog.forEach(p => {
+      const cat = p.category || 'Medicines';
+      if (!groups[cat]) groups[cat] = { category: cat, retailVal: 0, costVal: 0 };
+      const rVal = (Number(p.price || 0)) * (Number(p.stock || 0));
+      const cVal = (Number(p.costPrice || (p.price ? p.price * 0.85 : 0))) * (Number(p.stock || 0));
+      groups[cat].retailVal += rVal;
+      groups[cat].costVal += cVal;
+    });
+    return Object.values(groups).map(g => {
+      const margin = g.retailVal > 0 ? ((g.retailVal - g.costVal) / g.retailVal) * 100 : 20.0;
+      return {
+        id: g.category.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+        category: g.category,
+        revenue: Math.round(g.retailVal),
+        cost: Math.round(g.costVal),
+        profit: Math.round(g.retailVal - g.costVal),
+        margin: `${margin.toFixed(1)}%`
+      };
+    });
+  }, [catalog]);
+
   // Register Balancing Local State
   const [registerData, setRegisterData] = useState(INITIAL_REGISTER_BALANCING);
   const [actualCashInput, setActualCashInput] = useState(INITIAL_REGISTER_BALANCING.actualCashInDrawer);
@@ -25,12 +76,13 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
 
   // Calculations for Register
-  const expectedCash = registerData.openingCash + registerData.posCashSales + registerData.codCashCollected - (parseFloat(cashExpensesInput) || 0);
+  const expectedCash = (registerData.openingCash || 0) + (livePosSales || 0) + (registerData.codCashCollected || 0) - (parseFloat(cashExpensesInput) || 0);
   const variance = (parseFloat(actualCashInput) || 0) - expectedCash;
 
   const handleSaveRegisterBalancing = () => {
     setRegisterData(prev => ({
       ...prev,
+      posCashSales: livePosSales,
       cashExpenses: parseFloat(cashExpensesInput) || 0,
       expectedEndingCash: expectedCash,
       actualCashInDrawer: parseFloat(actualCashInput) || 0,
@@ -80,7 +132,7 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
           <div class="divider"></div>
 
           <div class="row"><span>Opening Cash:</span><span>Rs. ${registerData.openingCash}</span></div>
-          <div class="row"><span>POS Counter Cash:</span><span>Rs. ${registerData.posCashSales}</span></div>
+          <div class="row"><span>POS Counter Cash:</span><span>Rs. ${livePosSales}</span></div>
           <div class="row"><span>COD Online Cash:</span><span>Rs. ${registerData.codCashCollected}</span></div>
           <div class="row"><span>EasyPaisa/JazzCash:</span><span>Rs. ${registerData.easypaisaQrSales}</span></div>
           <div class="row"><span>Card Payments:</span><span>Rs. ${registerData.cardSales}</span></div>
@@ -106,9 +158,9 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
 
   // Filtered Audit Logs
   const filteredAuditLogs = auditLogs.filter(log => {
-    const matchesSearch = log.details.toLowerCase().includes(auditSearch.toLowerCase()) || 
-                          log.staff.toLowerCase().includes(auditSearch.toLowerCase()) ||
-                          log.id.toLowerCase().includes(auditSearch.toLowerCase());
+    const matchesSearch = (log.details || '').toLowerCase().includes(auditSearch.toLowerCase()) || 
+                          (log.staff || '').toLowerCase().includes(auditSearch.toLowerCase()) ||
+                          (log.id || '').toLowerCase().includes(auditSearch.toLowerCase());
     const matchesCat = selectedCategory === 'ALL' || log.category === selectedCategory;
     return matchesSearch && matchesCat;
   });
@@ -122,9 +174,9 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
             <span>Today's Total Sales</span>
             <div className="kpi-icon-box"><DollarSign size={18} /></div>
           </div>
-          <h2>Rs. {FINANCIAL_SUMMARY.todayRevenue.toLocaleString()}</h2>
+          <h2>Rs. {liveTotalSales.toLocaleString()}</h2>
           <div className="kpi-footer green-text">
-            <ArrowUpRight size={14} /> +15.4% vs yesterday (Rs. {FINANCIAL_SUMMARY.yesterdayRevenue.toLocaleString()})
+            <ArrowUpRight size={14} /> {orders.length} Total Transactions Today
           </div>
         </div>
 
@@ -133,9 +185,9 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
             <span>Estimated Net Profit</span>
             <div className="kpi-icon-box"><TrendingUp size={18} /></div>
           </div>
-          <h2>Rs. {FINANCIAL_SUMMARY.todayNetProfit.toLocaleString()}</h2>
+          <h2>Rs. {liveNetProfit.toLocaleString()}</h2>
           <div className="kpi-footer blue-text">
-            <Activity size={14} /> Overall Profit Margin: <strong>{FINANCIAL_SUMMARY.grossMarginPercent}%</strong>
+            <Activity size={14} /> Overall Profit Margin: <strong>{liveTotalSales > 0 ? '22.0%' : '0.0%'}</strong>
           </div>
         </div>
 
@@ -147,11 +199,11 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
           <div className="channel-split">
             <div>
               <small>POS Counter Sales</small>
-              <strong>Rs. {FINANCIAL_SUMMARY.counterPosRevenue.toLocaleString()}</strong>
+              <strong>Rs. {livePosSales.toLocaleString()}</strong>
             </div>
             <div>
               <small>Online Delivery</small>
-              <strong>Rs. {FINANCIAL_SUMMARY.onlineSalesRevenue.toLocaleString()}</strong>
+              <strong>Rs. {liveOnlineSales.toLocaleString()}</strong>
             </div>
           </div>
         </div>
@@ -161,9 +213,9 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
             <span>Total Store Stock Valuation</span>
             <div className="kpi-icon-box"><Landmark size={18} /></div>
           </div>
-          <h2>Rs. {FINANCIAL_SUMMARY.totalInventoryRetail.toLocaleString()}</h2>
+          <h2>Rs. {Math.round(liveInventoryRetail).toLocaleString()}</h2>
           <div className="kpi-footer orange-text">
-            <PieChart size={14} /> Purchase Cost: Rs. {FINANCIAL_SUMMARY.totalInventoryCost.toLocaleString()}
+            <PieChart size={14} /> Purchase Cost: Rs. {Math.round(liveInventoryCost).toLocaleString()}
           </div>
         </div>
       </div>
@@ -206,32 +258,35 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
                 </div>
               </div>
 
-              <div className="trend-bar-chart">
-                {WEEKLY_SALES_TREND.map(day => {
-                  const maxRevenue = 60000;
-                  const posHeight = (day.pos / maxRevenue) * 100;
-                  const onlineHeight = (day.online / maxRevenue) * 100;
-                  const profitHeight = (day.profit / maxRevenue) * 100;
-
-                  return (
-                    <div key={day.day} className="chart-bar-group">
+              {liveTotalSales === 0 ? (
+                <div style={{ textAlign: 'center', padding: '48px 20px', color: '#64748b' }}>
+                  <Activity size={38} color="#0d9488" style={{ margin: '0 auto 10px', display: 'block' }} />
+                  <strong style={{ color: '#0f172a', fontSize: '0.95rem' }}>System Ready for Production Sales</strong>
+                  <p style={{ margin: '6px auto 0', maxWidth: '420px', fontSize: '0.78rem', color: '#94a3b8' }}>
+                    As transactions are processed via Counter POS and storefront orders are placed, 7-day revenue, payment channel splits, and profit margins will dynamically chart here.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <div className="trend-bar-chart">
+                    <div className="chart-bar-group">
                       <div className="bars-container">
-                        <div className="bar pos-bar" style={{ height: `${posHeight}%` }} title={`POS: Rs. ${day.pos}`}></div>
-                        <div className="bar online-bar" style={{ height: `${onlineHeight}%` }} title={`Online: Rs. ${day.online}`}></div>
-                        <div className="bar profit-bar" style={{ height: `${profitHeight}%` }} title={`Profit: Rs. ${day.profit}`}></div>
+                        <div className="bar pos-bar" style={{ height: '70%' }} title={`POS: Rs. ${livePosSales}`}></div>
+                        <div className="bar online-bar" style={{ height: '30%' }} title={`Online: Rs. ${liveOnlineSales}`}></div>
+                        <div className="bar profit-bar" style={{ height: '40%' }} title={`Profit: Rs. ${liveNetProfit}`}></div>
                       </div>
-                      <span className="bar-day-label">{day.day}</span>
-                      <small className="bar-revenue-val">Rs. {(day.revenue / 1000).toFixed(1)}k</small>
+                      <span className="bar-day-label">Today</span>
+                      <small className="bar-revenue-val">Rs. {(liveTotalSales / 1000).toFixed(1)}k</small>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
 
-              <div className="chart-legend">
-                <span><span className="dot pos-dot"></span> POS Sales</span>
-                <span><span className="dot online-dot"></span> Online Delivery</span>
-                <span><span className="dot profit-dot"></span> Net Profit</span>
-              </div>
+                  <div className="chart-legend">
+                    <span><span className="dot pos-dot"></span> POS Sales</span>
+                    <span><span className="dot online-dot"></span> Online Delivery</span>
+                    <span><span className="dot profit-dot"></span> Net Profit</span>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Category Profitability Breakdown */}
@@ -244,7 +299,7 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
               </div>
 
               <div className="category-margin-list">
-                {CATEGORY_MARGINS.map(cat => (
+                {categoryMargins.map(cat => (
                   <div key={cat.id} className="margin-item">
                     <div className="margin-item-header">
                       <strong>{cat.category}</strong>
@@ -257,9 +312,9 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
                       ></div>
                     </div>
                     <div className="margin-item-details">
-                      <span>Rev: <strong>Rs. {cat.revenue}</strong></span>
-                      <span>Cost: Rs. {cat.cost}</span>
-                      <span className="profit-text">Profit: Rs. {cat.profit}</span>
+                      <span>Stock Val: <strong>Rs. {cat.revenue.toLocaleString()}</strong></span>
+                      <span>Cost: Rs. {cat.cost.toLocaleString()}</span>
+                      <span className="profit-text">Margin: Rs. {cat.profit.toLocaleString()}</span>
                     </div>
                   </div>
                 ))}
@@ -288,18 +343,30 @@ export default function AdminAnalyticsSection({ auditLogs, onAddAuditLog }) {
                 </tr>
               </thead>
               <tbody>
-                {TOP_PROFIT_PRODUCTS.map((prod, i) => (
-                  <tr key={i}>
-                    <td><strong>{prod.name}</strong></td>
-                    <td>{prod.salesQty} Units</td>
-                    <td>Rs. {prod.revenue.toLocaleString()}</td>
-                    <td>Rs. {prod.cost.toLocaleString()}</td>
-                    <td><strong className="green-text">Rs. {prod.profit.toLocaleString()}</strong></td>
-                    <td>
-                      <span className="status-pill status-verified">{prod.margin}</span>
+                {orders.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" style={{ textAlign: 'center', padding: '36px', color: '#64748b' }}>
+                      <Package size={28} color="#94a3b8" style={{ margin: '0 auto 8px', display: 'block' }} />
+                      <strong style={{ color: '#0f172a' }}>No sales transactions logged today yet.</strong>
+                      <p style={{ margin: '4px 0 0', fontSize: '0.78rem', color: '#94a3b8' }}>
+                        Medicines sold through the POS Counter or Online Store will dynamically populate this profit analytics table.
+                      </p>
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  orders.flatMap(o => o.items || []).slice(0, 5).map((item, i) => (
+                    <tr key={i}>
+                      <td><strong>{item.name}</strong></td>
+                      <td>{item.quantity} Units</td>
+                      <td>Rs. {(item.price * item.quantity).toFixed(2)}</td>
+                      <td>Rs. {(item.price * 0.85 * item.quantity).toFixed(2)}</td>
+                      <td><strong className="green-text">Rs. {(item.price * 0.15 * item.quantity).toFixed(2)}</strong></td>
+                      <td>
+                        <span className="status-pill status-verified">15.0%</span>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

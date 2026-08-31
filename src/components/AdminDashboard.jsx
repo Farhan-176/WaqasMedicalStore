@@ -45,6 +45,7 @@ export default function AdminDashboard({
     licenseNo: ''
   });
   const [editingRetailer, setEditingRetailer] = useState(null);
+  const [loadedPosOrder, setLoadedPosOrder] = useState(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -565,7 +566,11 @@ export default function AdminDashboard({
           >
             <Package size={17} />
             {!isSidebarCollapsed && <span className="btn-label">Orders Queue</span>}
-            <span className="side-count-badge badge-blue">{orders.length}</span>
+            {orders.filter(o => o.status !== 'Delivered').length > 0 && (
+              <span className="side-count-badge badge-blue">
+                {orders.filter(o => o.status !== 'Delivered').length}
+              </span>
+            )}
           </button>
 
           <button 
@@ -623,47 +628,52 @@ export default function AdminDashboard({
 
       {/* Main Admin View Canvas */}
       <main className="admin-main-canvas">
-        <header className="admin-top-header">
-          <div className="header-breadcrumbs-wrap">
-            {isSidebarCollapsed && (
-              <button 
-                type="button" 
-                className="btn-canvas-toggle-sidebar"
-                onClick={() => setIsSidebarCollapsed(false)}
-                title="Expand Sidebar Navigation"
-              >
-                <Menu size={17} />
-                <span>Menu</span>
-              </button>
-            )}
-            <div className="header-breadcrumbs">
-              <span className="breadcrumb-root">Staff Hub</span>
-              <span className="breadcrumb-separator">/</span>
-              <span className="breadcrumb-active">
-                {activeTab === 'counter-sale' && 'High-Speed Counter Sale (POS)'}
-                {activeTab === 'prescriptions' && 'Rx Verification Inbox'}
-                {activeTab === 'orders' && 'Order Fulfillment Queue'}
-                {activeTab === 'store-ops' && 'Store Operations & Inventory'}
-                {activeTab === 'retailers' && 'B2B Retailer Accounts'}
-                {activeTab === 'analytics' && 'Sales & Audit Intelligence'}
+        {/* TOP ADMIN HEADER BAR (Hidden in Counter Sale POS mode for full-screen zero-scroll fit) */}
+        {activeTab !== 'counter-sale' && (
+          <header className="admin-top-header">
+            <div className="header-breadcrumbs-wrap">
+              {isSidebarCollapsed && (
+                <button 
+                  type="button" 
+                  className="btn-canvas-toggle-sidebar"
+                  onClick={() => setIsSidebarCollapsed(false)}
+                  title="Expand Sidebar Navigation"
+                >
+                  <Menu size={17} />
+                  <span>Menu</span>
+                </button>
+              )}
+              <div className="header-breadcrumbs">
+                <span className="breadcrumb-root">Staff Hub</span>
+                <span className="breadcrumb-separator">/</span>
+                <span className="breadcrumb-active">
+                  {activeTab === 'prescriptions' && 'Rx Verification Inbox'}
+                  {activeTab === 'orders' && 'Order Fulfillment Queue'}
+                  {activeTab === 'store-ops' && 'Store Operations & Inventory'}
+                  {activeTab === 'retailers' && 'B2B Retailer Accounts'}
+                  {activeTab === 'analytics' && 'Sales & Audit Intelligence'}
+                </span>
+              </div>
+            </div>
+
+            <div className="header-right-badges">
+              <span className="session-security-pill">
+                <ShieldCheck size={13} color="#10b981" /> DRAP Authorized Session
               </span>
             </div>
-          </div>
+          </header>
+        )}
 
-          <div className="header-right-badges">
-            <span className="session-security-pill">
-              <ShieldCheck size={13} color="#10b981" /> DRAP Authorized Session
-            </span>
-          </div>
-        </header>
-
-        <div className="admin-body">
+        <div className={`admin-body ${activeTab === 'counter-sale' ? 'admin-body-pos-fit' : ''}`}>
         {/* TAB 0: Standalone High-Speed Counter Sale POS */}
         {activeTab === 'counter-sale' && (
           <CounterSaleSection 
             catalog={catalog} 
             retailers={retailersList}
             currentUser={user}
+            incomingOrder={loadedPosOrder}
+            orders={orders}
+            onClearIncomingOrder={() => setLoadedPosOrder(null)}
             onUpdateCatalog={(newCatalog) => {
               setCatalog(newCatalog);
               if (onUpdateProducts) {
@@ -704,36 +714,48 @@ export default function AdminDashboard({
                   </tr>
                 </thead>
                 <tbody>
-                  {prescriptions.map(rx => (
-                    <tr key={rx.id} className={rx.status === 'Pending' ? 'row-pending' : ''}>
-                      <td><strong>{rx.id}</strong></td>
-                      <td>{rx.customerName}</td>
-                      <td>
-                        <a 
-                          href={`https://wa.me/${rx.phone.replace(/[^0-9]/g, '')}`} 
-                          target="_blank" 
-                          rel="noreferrer" 
-                          className="wa-contact-link"
-                        >
-                          <MessageSquare size={13} /> {rx.phone}
-                        </a>
-                      </td>
-                      <td>{rx.uploadedAt}</td>
-                      <td>
-                        <span className={`status-pill status-${rx.status.toLowerCase()}`}>
-                          {rx.status}
-                        </span>
-                      </td>
-                      <td><small>{rx.verifiedBy || 'Awaiting sign-off'}</small></td>
-                      <td>
-                        <div className="action-cell">
-                          <button className="btn-action-view" onClick={() => setSelectedRx(rx)}>
-                            <Eye size={14} /> Inspect Rx
-                          </button>
-                        </div>
+                  {prescriptions.length === 0 ? (
+                    <tr>
+                      <td colSpan="7" style={{ textAlign: 'center', padding: '40px 20px', color: '#64748b' }}>
+                        <FileCheck size={36} color="#0d9488" style={{ margin: '0 auto 10px', display: 'block' }} />
+                        <strong style={{ color: '#0f172a', fontSize: '0.95rem' }}>No Prescriptions Pending Review</strong>
+                        <p style={{ margin: '6px auto 0', maxWidth: '420px', fontSize: '0.78rem', color: '#94a3b8' }}>
+                          Customer prescription uploads requiring pharmacist verification will appear here in real time.
+                        </p>
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    prescriptions.map(rx => (
+                      <tr key={rx.id} className={rx.status === 'Pending' ? 'row-pending' : ''}>
+                        <td><strong>{rx.id}</strong></td>
+                        <td>{rx.customerName}</td>
+                        <td>
+                          <a 
+                            href={`https://wa.me/${rx.phone.replace(/[^0-9]/g, '')}`} 
+                            target="_blank" 
+                            rel="noreferrer" 
+                            className="wa-contact-link"
+                          >
+                            <MessageSquare size={13} /> {rx.phone}
+                          </a>
+                        </td>
+                        <td>{rx.uploadedAt}</td>
+                        <td>
+                          <span className={`status-pill status-${rx.status.toLowerCase()}`}>
+                            {rx.status}
+                          </span>
+                        </td>
+                        <td><small>{rx.verifiedBy || 'Awaiting sign-off'}</small></td>
+                        <td>
+                          <div className="action-cell">
+                            <button className="btn-action-view" onClick={() => setSelectedRx(rx)}>
+                              <Eye size={14} /> Inspect Rx
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
@@ -902,9 +924,19 @@ export default function AdminDashboard({
                                 Delivered
                               </span>
                             </td>
-                            <td>
+                            <td style={{ display: 'flex', gap: '6px' }}>
                               <button className="btn-print-slip" onClick={() => handlePrintSlip(order)}>
                                 <Printer size={13} /> Invoice Slip
+                              </button>
+                              <button 
+                                className="btn-pos-direct-load" 
+                                onClick={() => {
+                                  setLoadedPosOrder(order);
+                                  setActiveTab('counter-sale');
+                                }}
+                                title="Open this order in Counter POS"
+                              >
+                                <ShoppingCart size={13} /> POS
                               </button>
                             </td>
                           </tr>
@@ -979,6 +1011,16 @@ export default function AdminDashboard({
                             <button className="btn-print-slip" onClick={() => handlePrintSlip(order)}>
                               <Printer size={13} /> Print Slip
                             </button>
+                            <button 
+                              className="btn-pos-direct-load" 
+                              onClick={() => {
+                                setLoadedPosOrder(order);
+                                setActiveTab('counter-sale');
+                              }}
+                              title="Open and process this order directly in Counter Sale POS register"
+                            >
+                              <ShoppingCart size={13} /> Open in Counter POS
+                            </button>
                             <a 
                               href={`https://wa.me/${(order.phone || order.customer?.phone || '').replace(/[^0-9]/g, '')}`} 
                               target="_blank" 
@@ -1025,6 +1067,8 @@ export default function AdminDashboard({
         {/* TAB 4: Sales & Financial Analytics */}
         {activeTab === 'analytics' && (
           <AdminAnalyticsSection 
+            catalog={catalog}
+            orders={orders}
             auditLogs={auditLogs}
             onAddAuditLog={handleAddAuditLog}
           />

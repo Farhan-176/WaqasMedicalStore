@@ -24,16 +24,28 @@ export default function App() {
   const [showIntro, setShowIntro] = useState(true);
   const [products, setProducts] = useState(MOCK_PRODUCTS);
 
-  // Persistent Orders State (Preserved across browser refreshes)
+  // Persistent Orders State (Preserved across browser refreshes, sanitized of dummy records)
   const [orders, setOrders] = useState(() => {
     const saved = localStorage.getItem('wms_orders');
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) {}
+      try { 
+        const parsed = JSON.parse(saved);
+        return (parsed || []).filter(o => !['ORD-882190', 'ORD-882191', 'ORD-882192', 'ORD-882193'].includes(o.id));
+      } catch (e) {}
     }
     return INITIAL_FULFILLMENT_ORDERS;
   });
 
-  const [prescriptions, setPrescriptions] = useState(INITIAL_PRESCRIPTIONS);
+  const [prescriptions, setPrescriptions] = useState(() => {
+    const saved = localStorage.getItem('wms_prescriptions');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        return (parsed || []).filter(p => !['RX-901', 'RX-902'].includes(p.id));
+      } catch (e) {}
+    }
+    return INITIAL_PRESCRIPTIONS;
+  });
 
   // Persistent Retailer Accounts State (Preserved across browser refreshes)
   const [retailers, setRetailers] = useState(() => {

@@ -7,7 +7,15 @@ import {
   HardDrive, Usb, Cpu, X, Tag, ShoppingCart, RefreshCw, ExternalLink
 } from 'lucide-react';
 
-export default function CounterSaleSection({ catalog = [], onUpdateCatalog, retailers = [], currentUser }) {
+export default function CounterSaleSection({ 
+  catalog = [], 
+  onUpdateCatalog, 
+  retailers = [], 
+  currentUser,
+  incomingOrder,
+  orders = [],
+  onClearIncomingOrder 
+}) {
   // Live Clock
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   useEffect(() => {
@@ -43,11 +51,10 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
     const companies = ['MENDOZA LABS', 'GSK PAKISTAN', 'ABBOTT HEALTHCARE', 'SEARLE PHARMA', 'GETZ PHARMA', 'HILTON PHARMA', 'SAMI PHARMACEUTICALS', 'MARTIN DOW'];
     const company = p.company || companies[Math.abs(hash) % companies.length];
     
-    const packings = ['120ML Bottle', '60ML Bottle', '10x10 Tablets', '2x10 Tablets', '1x14 Tablets', '100ML Syrup', '30GM Cream', '10 Ampoules'];
-    const packing = p.packing || packings[Math.abs(hash) % packings.length];
-    
-    const godownStock = Math.abs(hash % 180) + 30;
-    const stripsPerPack = Number(p.stripsPerPack) || 10;
+    const packingTypes = ['10x10 Strips', '30 Tabs Box', '60ML Bottle', '100ml Syrup', '15g Tube', '5 Ampoules Box', '20 Strips Box'];
+    const packing = p.packaging || p.unit || packingTypes[Math.abs(hash) % packingTypes.length];
+    const godownStock = Math.abs(hash % 150) + 20;
+    const stripsPerPack = Number(p.stripsPerPack || p.unitsPerPack) || 10;
     const retailPrice = Number(p.price) || 200;
     const tradePrice = Math.round(retailPrice * 0.85 * 100) / 100; // Wholesale Trade Price
     const costPrice = Math.round(tradePrice * 0.88 * 100) / 100; // Purchase Cost
@@ -83,8 +90,8 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
   // Invoice & Customer
   const [invoiceNo, setInvoiceNo] = useState(() => Math.floor(10000 + Math.random() * 90000).toString());
   const [invDate] = useState(new Date().toLocaleDateString('en-GB'));
-  const [selectedCustomerId, setSelectedCustomerId] = useState('ret-3');
-  const [customerOldBalance, setCustomerOldBalance] = useState(2138.00);
+  const [selectedCustomerId, setSelectedCustomerId] = useState('walkin');
+  const [customerOldBalance, setCustomerOldBalance] = useState(0.00);
 
   // Active Bill Rows (Clean Empty Register on Load)
   const [billRows, setBillRows] = useState([]);
@@ -122,6 +129,7 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
     }
   });
   const [showParkedModal, setShowParkedModal] = useState(false);
+  const [showIncomingOrdersModal, setShowIncomingOrdersModal] = useState(false);
 
   const saveParkedBills = (bills) => {
     setParkedBills(bills);
@@ -130,26 +138,96 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
     } catch (e) {}
   };
 
+  // Pending Retailer Orders available to load into POS
+  const pendingRetailerOrders = useMemo(() => {
+    return (orders || []).filter(o => o.status !== 'Delivered');
+  }, [orders]);
+
+  // Load Order into POS Register
+  const handleLoadOrderToRegister = (order) => {
+    // 1. Match and assign Customer
+    const matchedRetailer = retailers.find(r => 
+      r.id === order.retailerId || 
+      r._id === order.retailerId ||
+      (order.customerName && r.name.toLowerCase() === order.customerName.toLowerCase()) ||
+      r.username === order.retailerId
+    );
+    if (matchedRetailer) {
+      setSelectedCustomerId(matchedRetailer.id || matchedRetailer._id);
+    } else {
+      setSelectedCustomerId('walkin');
+    }
+
+    // 2. Map items to POS rows
+    const rows = (order.items || []).map(item => {
+      const prod = enrichedCatalog.find(p => p.name.toLowerCase() === item.name.toLowerCase() || p.id === item.id) || {};
+      const rate = Number(item.price || prod.tradePrice || prod.price || 100);
+      const strips = Number(prod.stripsPerPack || prod.unitsPerPack) || 10;
+      return {
+        id: `row-${Date.now()}-${Math.random()}`,
+        code: prod.code || item.code || '---',
+        name: item.name,
+        company: prod.company || 'Standard Pharma',
+        packing: prod.packing || prod.unit || 'Pack',
+        batchNo: prod.batchNo || 'B441',
+        expiryDate: prod.expiryDate || '12/2026',
+        fullQty: item.quantity || 1,
+        pcsQty: 0,
+        stripsPerPack: strips,
+        discPercent: item.discountPercent || 0,
+        rate: rate,
+        tradePrice: prod.tradePrice || rate,
+        retailPrice: prod.retailPrice || (rate * 1.15),
+        shopStock: prod.shopStock || 50,
+        godownStock: prod.godownStock || 120,
+        costPrice: prod.costPrice || (rate * 0.88)
+      };
+    });
+
+    setBillRows(rows);
+    setSelectedRowIndex(0);
+    setInvoiceNo(order.id ? order.id.replace(/[^0-9]/g, '') : Math.floor(10000 + Math.random() * 90000).toString());
+    setShowIncomingOrdersModal(false);
+    triggerToast(`📦 Loaded Order #${order.id} for ${order.customerName || 'Retailer'}!`);
+  };
+
+  // Auto-load incomingOrder if passed as prop
+  useEffect(() => {
+    if (incomingOrder && incomingOrder.items && incomingOrder.items.length > 0) {
+      handleLoadOrderToRegister(incomingOrder);
+      if (onClearIncomingOrder) onClearIncomingOrder();
+    }
+  }, [incomingOrder]);
+
   // Selected Customer details
   const currentCustomer = useMemo(() => {
+    if (selectedCustomerId === 'walkin') {
+      return {
+        id: 'walkin',
+        name: 'WALK-IN CASH CUSTOMER',
+        username: '0',
+        area: 'Counter Sale (Local)',
+        licenseNo: 'N/A'
+      };
+    }
     const found = retailers.find(r => r.id === selectedCustomerId || r._id === selectedCustomerId);
     if (found) return found;
     return {
-      id: 'cust-7',
-      name: 'WAQAS MEDICAL STORE',
-      username: '7',
-      area: 'Main Wholesale Bazar, Karachi',
-      licenseNo: '04-DL-KAR-2024'
+      id: 'walkin',
+      name: 'WALK-IN CASH CUSTOMER',
+      username: '0',
+      area: 'Counter Sale (Local)',
+      licenseNo: 'N/A'
     };
   }, [retailers, selectedCustomerId]);
 
-  // Compute Line Net
+  // Compute Line Net (Full Boxes + Loose Strips / Pcs where 1 Box = stripsPerPack)
   const computeRowNet = (row) => {
     const full = Number(row.fullQty) || 0;
     const pcs = Number(row.pcsQty) || 0;
-    const strips = Number(row.stripsPerPack) || 1;
+    const strips = Number(row.stripsPerPack || row.unitsPerPack) || 10;
     const boxRate = Number(row.rate) || 0;
-    const pcsRate = boxRate / strips;
+    const pcsRate = boxRate / strips; // Rate per individual strip/pcs
     const gross = (full * boxRate) + (pcs * pcsRate);
     const disc = Number(row.discPercent) || 0;
     const net = gross * (1 - (disc / 100));
@@ -522,15 +600,15 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
               value={selectedCustomerId}
               onChange={(e) => {
                 setSelectedCustomerId(e.target.value);
-                if (e.target.value === 'ret-1') setCustomerOldBalance(4520.00);
-                else if (e.target.value === 'ret-2') setCustomerOldBalance(1200.00);
-                else setCustomerOldBalance(2138.00);
+                setCustomerOldBalance(0.00);
               }}
             >
-              <option value="ret-3">[ 7 ] WAQAS MEDICAL STORE &bull; Balance: Rs. 2,138</option>
-              <option value="ret-1">[ 12 ] ALI MEDICOS &bull; Balance: Rs. 4,520</option>
-              <option value="ret-2">[ 24 ] CITY CARE CLINIC &bull; Balance: Rs. 1,200</option>
-              <option value="walkin">[ 0 ] WALK-IN CASH CUSTOMER &bull; Balance: Rs. 0</option>
+              <option value="walkin">[ 0 ] WALK-IN CASH CUSTOMER &bull; Balance: Rs. 0.00</option>
+              {retailers.map(r => (
+                <option key={r.id || r._id} value={r.id || r._id}>
+                  [ {r.username || r.id} ] {r.name} &bull; Balance: Rs. 0.00
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -558,6 +636,20 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
             <PauseCircle size={14} />
             <span>Drafts ({parkedBills.length})</span>
           </button>
+
+          {/* Incoming Retailer B2B Orders Button */}
+          {pendingRetailerOrders.length > 0 && (
+            <button 
+              type="button" 
+              className="pos-btn-incoming-orders"
+              onClick={() => setShowIncomingOrdersModal(true)}
+              title="View and load received B2B Retailer Orders into Counter POS"
+            >
+              <span className="incoming-pulse-dot"></span>
+              <ShoppingCart size={13} />
+              <span>Retailer Orders ({pendingRetailerOrders.length})</span>
+            </button>
+          )}
 
           {/* Open in New Window Tab Button */}
           <button 
@@ -716,7 +808,7 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
                 <th style={{ width: '8%' }}>CODE</th>
                 <th style={{ width: '36%' }}>ITEM NAME & PACKING [F9]</th>
                 <th style={{ width: '12%', textAlign: 'center' }}>FULL (BOX)</th>
-                <th style={{ width: '12%', textAlign: 'center' }}>PCS (UNIT)</th>
+                <th style={{ width: '12%', textAlign: 'center' }} title="Loose Strips count (1 Box = X Strips)">STRIP (PCS)</th>
                 <th style={{ width: '9%', textAlign: 'center' }}>DISC %</th>
                 <th style={{ width: '12%', textAlign: 'right' }}>RATE (TP/MRP)</th>
                 <th style={{ width: '11%', textAlign: 'right' }}>NET TOTAL</th>
@@ -857,20 +949,24 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
                   </tr>
                 );
               })}
-
-              {/* Blank Placeholder Rows (Maintains Stable Full-Height Table Workspace like DOS/ERP) */}
-              {Array.from({ length: Math.max(0, 7 - billRows.length) }).map((_, i) => (
-                <tr key={`blank-${i}`} className="pos-table-blank-row">
-                  <td><span className="blank-dash">&bull;</span></td>
-                  <td><span className="blank-dash">&mdash;</span></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                           {/* Empty Table State when no items added */}
+              {billRows.length === 0 && (
+                <tr className="pos-empty-cart-row">
+                  <td colSpan={8} style={{ padding: '36px 20px', textAlign: 'center' }}>
+                    <div className="pos-empty-table-state">
+                      <div className="pos-empty-icon-circle">
+                        <ShoppingCart size={32} color="#0d9488" />
+                      </div>
+                      <h4 style={{ margin: '8px 0 4px', fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>
+                        Register Ready for Sales
+                      </h4>
+                      <p style={{ margin: 0, fontSize: '0.78rem', color: '#64748b' }}>
+                        Scan barcode or search medicine in the search bar above <kbd style={{ background: '#f1f5f9', padding: '1px 5px', borderRadius: '4px', border: '1px solid #cbd5e1', fontWeight: 800 }}>F9</kbd> to add items to bill.
+                      </p>
+                    </div>
+                  </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
@@ -894,15 +990,24 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
               <div className="info-chips-row">
                 <span className="info-chip">📦 {activeItem.packing}</span>
                 <span className="info-chip">🏢 {activeItem.company}</span>
-                <span className="info-chip highlight">Counter Stock: <strong>{activeItem.shopStock} Boxes</strong></span>
-                <span className="info-chip">Godown: {activeItem.godownStock}</span>
-                <span className="info-chip rate-chip tp">🏪 Retailer TP: <strong>Rs. {Number(activeItem.tradePrice || activeItem.rate).toFixed(2)}</strong></span>
-                <span className="info-chip rate-chip mrp">🏷️ Consumer MRP: <strong>Rs. {Number(activeItem.retailPrice || (activeItem.rate * 1.15)).toFixed(2)}</strong></span>
-                <span className="info-chip">Expiry: {activeItem.expiryDate}</span>
+                <span className="info-chip highlight">📦 1 Box = <strong>{activeItem.stripsPerPack || 10} Strips (PCS)</strong></span>
+                <span className="info-chip rate-chip tp">💊 Strip TP: <strong>Rs. {(Number(activeItem.tradePrice || activeItem.rate) / (activeItem.stripsPerPack || 10)).toFixed(2)}</strong></span>
+                <span className="info-chip rate-chip tp">🏪 Box TP: <strong>Rs. {Number(activeItem.tradePrice || activeItem.rate).toFixed(2)}</strong></span>
+                <span className="info-chip rate-chip mrp">🏷️ Box MRP: <strong>Rs. {Number(activeItem.retailPrice || (activeItem.rate * 1.15)).toFixed(2)}</strong></span>
+                <span className="info-chip">Counter Stock: <strong>{activeItem.shopStock} Boxes</strong></span>
+                <span className="info-chip">Exp: {activeItem.expiryDate}</span>
               </div>
             </div>
           ) : (
-            <div className="pos-info-empty">Select any medicine line in table to view stock, packing & both TP/MRP rates</div>
+            <div className="pos-info-details empty-hint">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#64748b', fontSize: '0.76rem' }}>
+                <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></span>
+                <span><strong>Shift Status:</strong> Active &bull; <strong>Register:</strong> Terminal-01 &bull; <strong>Pricing:</strong> {pricingMode === 'WHOLESALE' ? 'Wholesale TP' : 'Retail MRP'}</span>
+              </div>
+              <span style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '2px', display: 'block' }}>
+                Select any medicine line in the grid above to inspect packing, stock & both TP/MRP rates.
+              </span>
+            </div>
           )}
         </div>
 
@@ -931,14 +1036,17 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
               <span className="rs-tag">Rs.</span>
               <input 
                 type="number" 
+                step="any"
                 className="pos-cash-input"
                 value={cashReceived}
                 onChange={(e) => setCashReceived(e.target.value)}
+                placeholder="0.00"
               />
               <button 
                 type="button" 
                 className="btn-exact"
                 onClick={() => setCashReceived(totalDue.toFixed(2))}
+                title="Auto-fill exact bill amount"
               >
                 Exact
               </button>
@@ -955,7 +1063,7 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
       </div>
 
       {/* =========================================================================
-          5. PRIMARY FAST ACTIONS BAR WITH CLEAR SHORTCUT BADGES
+          5. PRIMARY FAST ACTIONS BAR (INTEGRATED SHORTCUT BADGES - ZERO REDUNDANCY)
           ========================================================================= */}
       <div className="pos-actions-bar">
         <div className="actions-left">
@@ -997,27 +1105,6 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
             <span>Complete & Print Bill (80mm)</span>
           </button>
         </div>
-      </div>
-
-      {/* =========================================================================
-          6. DEDICATED KEYBOARD SHORTCUTS REFERENCE BAR
-          ========================================================================= */}
-      <div className="pos-shortcuts-strip">
-        <div className="shortcut-item"><kbd>F3</kbd> New Sale</div>
-        <span className="sc-dot">&bull;</span>
-        <div className="shortcut-item"><kbd>F4</kbd> Hold Bill</div>
-        <span className="sc-dot">&bull;</span>
-        <div className="shortcut-item"><kbd>F6</kbd> Wholesale/Retail</div>
-        <span className="sc-dot">&bull;</span>
-        <div className="shortcut-item"><kbd>F7</kbd> Parked Drafts</div>
-        <span className="sc-dot">&bull;</span>
-        <div className="shortcut-item"><kbd>F9</kbd> / <kbd>/</kbd> Search</div>
-        <span className="sc-dot">&bull;</span>
-        <div className="shortcut-item"><kbd>F10</kbd> Print 80mm</div>
-        <span className="sc-dot">&bull;</span>
-        <div className="shortcut-item"><kbd>F12</kbd> WhatsApp</div>
-        <span className="sc-dot">&bull;</span>
-        <div className="shortcut-item"><kbd>Esc</kbd> Close</div>
       </div>
 
       {/* =========================================================================
@@ -1076,6 +1163,77 @@ export default function CounterSaleSection({ catalog = [], onUpdateCatalog, reta
                   <PauseCircle size={36} color="#94a3b8" />
                   <h4>No bills on hold</h4>
                   <p>Press <strong>Hold Bill [F4]</strong> to pause an active sale for another customer.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================================
+          INCOMING B2B RETAILER ORDERS MODAL
+          ========================================================================= */}
+      {showIncomingOrdersModal && (
+        <div className="pos-modal-overlay" onClick={() => setShowIncomingOrdersModal(false)}>
+          <div className="pos-modal-box incoming-orders-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '650px' }}>
+            <div className="pos-modal-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ShoppingCart size={18} color="#0d9488" />
+                <h3>Received Retailer Orders ({pendingRetailerOrders.length})</h3>
+              </div>
+              <button 
+                type="button" 
+                className="pos-modal-close"
+                onClick={() => setShowIncomingOrdersModal(false)}
+              >
+                &times;
+              </button>
+            </div>
+
+            <div className="pos-modal-body">
+              {pendingRetailerOrders.length > 0 ? (
+                <div className="incoming-orders-list">
+                  {pendingRetailerOrders.map((order) => (
+                    <div key={order.id} className="incoming-order-card">
+                      <div className="io-card-top">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span className="io-id-tag">{order.id}</span>
+                          <span className="order-b2b-tag">🏢 B2B Retailer</span>
+                        </div>
+                        <span className="io-time"><Clock size={12} /> {order.createdAt || 'Today'}</span>
+                        <strong className="io-total-val">Rs. {Number(order.grandTotal || 0).toFixed(2)}</strong>
+                      </div>
+
+                      <div className="io-customer-info">
+                        <strong>{order.customerName || order.customer?.name || 'Retailer Pharmacy'}</strong>
+                        <span> • {order.phone || order.customer?.phone || 'N/A'} • {order.address || 'Local Delivery'}</span>
+                      </div>
+
+                      <div className="io-items-preview">
+                        {(order.items || []).map((it, idx) => (
+                          <span key={idx} className="io-item-pill">
+                            {it.name} <b>x{it.quantity}</b>
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="io-card-footer">
+                        <button 
+                          type="button" 
+                          className="btn-load-to-pos"
+                          onClick={() => handleLoadOrderToRegister(order)}
+                        >
+                          <Zap size={14} /> Load into POS Register
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="parked-empty-state">
+                  <Package size={36} color="#94a3b8" />
+                  <h4>No pending retailer orders</h4>
+                  <p>When B2B pharmacy retailers place orders, they appear here ready for 1-click counter billing.</p>
                 </div>
               )}
             </div>

@@ -947,13 +947,18 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog, retai
                 </div>
 
                 <div className="form-group">
-                  <label>Strips Per Pack</label>
+                  <label>Strips / Pcs per Box (PCS Count) *</label>
                   <input 
                     type="number" 
                     min="1" 
+                    required
+                    placeholder="e.g. 10 or 20"
                     value={newItem.stripsPerPack} 
                     onChange={(e) => setNewItem({ ...newItem, stripsPerPack: e.target.value })}
                   />
+                  <small style={{ fontSize: '0.68rem', color: '#0d9488', display: 'block', marginTop: '2px' }}>
+                    1 Box = this many Strips. In POS, "STRIP (PCS)" charges (Box Rate ÷ this count).
+                  </small>
                 </div>
 
                 <div className="form-group">
