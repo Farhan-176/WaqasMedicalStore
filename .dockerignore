@@ -1,0 +1,17 @@
+node_modules/
+server/node_modules/
+dist/
+build/
+.env
+.env.*
+!.env.example
+*.log
+npm-debug.log*
+scratch/
+*.HTM.html
+Offer list m.HTM.html
+.git/
+.vscode/
+.idea/
+*.tmp
+*.temp

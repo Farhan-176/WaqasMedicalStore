@@ -434,7 +434,7 @@ export default function App() {
             <div className="intro-splash-content">
               <div className="intro-logo-glow-ring">
                 <img 
-                  src="/wms-icon.png" 
+                  src="/wms-icon.webp" 
                   alt="Waqas Medical Store" 
                   className="intro-splash-logo" 
                 />

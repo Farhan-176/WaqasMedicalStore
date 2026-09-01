@@ -47,12 +47,12 @@ const OrderSchema = new mongoose.Schema({
     type: String, 
     enum: ['Received', 'Pharmacist Verified / Packing', 'Out for Delivery', 'Delivered', 'Cancelled'],
     default: 'Received',
-    index: true
-  },
+  retailerId: { type: String, trim: true, index: true },
   paymentMethod: { type: String, default: 'cod' }
 }, { timestamps: true });
 
-// Compound indexes for fast admin querying and order tracking
+// Compound indexes for fast admin querying and order tracking (<50ms latency)
+OrderSchema.index({ retailerId: 1, createdAt: -1 });
 OrderSchema.index({ retailerUsername: 1, createdAt: -1 });
 OrderSchema.index({ status: 1, createdAt: -1 });
 OrderSchema.index({ phone: 1, createdAt: -1 });

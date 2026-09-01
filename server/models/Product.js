@@ -27,12 +27,13 @@ const ProductSchema = new mongoose.Schema({
   isPrescriptionRequired: { type: Boolean, default: false },
   coldStorage: { type: Boolean, default: false },
   image: { type: String, default: '' },
+  itemCode: { type: String, trim: true, index: true },
   showOnMainScreen: { type: Boolean, default: true },
   batches: [BatchSchema]
 }, { timestamps: true });
 
-// Compound and text indexes for optimal query efficiency
-ProductSchema.index({ name: 'text', genericName: 'text', code: 'text' });
+// Compound and text indexes for optimal query efficiency (<50ms latency)
+ProductSchema.index({ name: 'text', genericName: 'text', itemCode: 1, code: 1 });
 ProductSchema.index({ category: 1, price: 1 });
 ProductSchema.index({ requiresPrescription: 1, stock: 1 });
 

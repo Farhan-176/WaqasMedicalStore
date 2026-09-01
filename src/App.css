@@ -9562,11 +9562,138 @@
 
 
 
+/* ==========================================
+   PRODUCTION THERMAL SLIP PRINT STYLESHEET (@media print)
+   Optimized for 80mm & 58mm Thermal Printers (F10 / Slip Print)
+   ========================================== */
+@media print {
+  @page {
+    size: 80mm auto;
+    margin: 0mm;
+  }
 
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: 11px !important;
+    width: 80mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 
+  /* Hide all UI Chrome & Navigation Elements */
+  header,
+  nav,
+  aside,
+  footer,
+  .admin-top-header,
+  .admin-sidebar-layout,
+  .ops-header-tabs,
+  .pos-terminal-topbar,
+  .pos-catalog-panel,
+  .pos-scanner-search-box,
+  .pos-category-pills-bar,
+  .pos-items-table-wrapper,
+  .pos-customer-selector-group,
+  .btn-complete-sale,
+  .btn-print-slip,
+  .btn-fast-complete,
+  .btn-fast-add,
+  .btn-clear-pos-term,
+  .btn-sidebar-logout,
+  .btn-canvas-toggle-sidebar,
+  .session-security-pill,
+  .ops-success-banner,
+  .header-right-badges,
+  .register-actions-grid,
+  .discount-pills-wrap,
+  .pay-method-pills,
+  .cash-calculator-row,
+  .radio-switch-wrapper,
+  .navbar,
+  .banner-top,
+  .app-header {
+    display: none !important;
+  }
 
+  /* Make Main Canvas Container Full-Width Printable */
+  .admin-main-canvas,
+  .admin-portal-container,
+  .store-ops-container,
+  .wholesale-pos-terminal-container,
+  .pos-split-workspace,
+  .pos-register-panel {
+    display: block !important;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
 
+  /* Receipt Slip Styling */
+  .register-header-box {
+    text-align: center !important;
+    border-bottom: 1px dashed #000000 !important;
+    padding-bottom: 6px !important;
+    margin-bottom: 8px !important;
+  }
 
+  .register-title {
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+  }
 
+  .register-inv-code {
+    font-size: 11px !important;
+    display: block !important;
+    margin-top: 2px !important;
+  }
 
+  .register-lines-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 6px 0 !important;
+  }
 
+  .register-lines-table th {
+    border-bottom: 1px solid #000000 !important;
+    font-size: 10px !important;
+    padding: 3px 1px !important;
+    text-align: left !important;
+  }
+
+  .register-lines-table td {
+    padding: 3px 1px !important;
+    font-size: 10px !important;
+    vertical-align: top !important;
+    border-bottom: 1px dotted #e2e8f0 !important;
+  }
+
+  .fin-summary-box {
+    border-top: 1px dashed #000000 !important;
+    padding-top: 6px !important;
+    margin-top: 8px !important;
+    font-size: 11px !important;
+  }
+
+  .fin-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    margin: 2px 0 !important;
+  }
+
+  .net-payable-row {
+    font-weight: bold !important;
+    font-size: 13px !important;
+    border-top: 1px solid #000000 !important;
+    padding-top: 4px !important;
+  }
+}

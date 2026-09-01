@@ -66,7 +66,7 @@ export default function Header({
             className="navbar-brand-logo desktop-logo" 
           />
           <img 
-            src="/wms-icon.png" 
+            src="/wms-icon.webp" 
             alt="Waqas Medical Store" 
             className="navbar-brand-logo mobile-logo" 
           />
