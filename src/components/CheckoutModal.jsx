@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { X, MapPin, Truck, Store, CreditCard, ShieldCheck, ArrowRight, AlertTriangle, FileText, Upload } from 'lucide-react';
-import { DELIVERY_ZONES } from '../deliveryZones';
+import React, { useState, useMemo } from 'react';
+import { X, MapPin, Truck, Store, ShieldCheck, ArrowRight, AlertTriangle, Navigation, Info } from 'lucide-react';
+import { DELIVERY_ZONES, calculateDistanceDeliveryFee, calculateHaversineDistance, STORE_COORDINATES } from '../deliveryZones';
 
 function roundCurrency(val) {
   return Math.round((Number(val) || 0) * 100) / 100;
@@ -11,6 +11,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
   const [checkoutType, setCheckoutType] = useState('delivery'); // 'delivery' or 'pickup'
   const [rxRefNumber, setRxRefNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [serverError, setServerError] = useState('');
   const [formData, setFormData] = useState({
     name: retailerUser ? retailerUser.name : '',
     phone: '',
@@ -34,17 +35,56 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
 
   const rawSubtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const subtotal = roundCurrency(rawSubtotal);
-  const deliveryFee = checkoutType === 'pickup' ? 0 : roundCurrency(selectedZone.fee);
-  const grandTotal = roundCurrency(subtotal + deliveryFee);
+
+  // Distance-Based Delivery Cost Calculator
+  const distanceKm = selectedZone.distanceKm || 5;
+  const calculatedDeliveryFee = checkoutType === 'pickup' 
+    ? 0 
+    : calculateDistanceDeliveryFee(distanceKm);
+
+  const grandTotal = roundCurrency(subtotal + calculatedDeliveryFee);
   const isBelowMinOrder = checkoutType === 'delivery' && subtotal < selectedZone.minOrder;
-  
+
+  // Anti-Hoarding & Quotas Client Pre-Validation
+  const hoardingViolation = useMemo(() => {
+    const isRetailer = Boolean(retailerUser);
+    const maxAllowed = isRetailer ? 500 : 5;
+    const minAllowed = isRetailer ? 10 : 1;
+
+    for (const item of cartItems) {
+      const q = Number(item.quantity) || 1;
+      if (q > maxAllowed) {
+        return `Anti-Hoarding Warning: "${item.name}" quantity (${q}) exceeds the maximum quota of ${maxAllowed} ${isRetailer ? 'cartons' : 'packs'} for ${isRetailer ? 'retailers' : 'consumers'}.`;
+      }
+      if (isRetailer && q < minAllowed) {
+        return `B2B Wholesale Warning: "${item.name}" quantity (${q}) is below the minimum wholesale quota of ${minAllowed} packs.`;
+      }
+    }
+    return null;
+  }, [cartItems, retailerUser]);
+
   // B2B Retailers are licensed pharmacies and exempt from consumer prescription upload
   const requiresRx = !retailerUser && cartItems.some(item => item.requiresPrescription);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isBelowMinOrder) return;
+    if (isBelowMinOrder || hoardingViolation) return;
     setIsSubmitting(true);
+    setServerError('');
+
+    const isRetailer = Boolean(retailerUser);
+
+    const recipientDetails = {
+      name: formData.name,
+      shopName: isRetailer ? retailerUser.name : '',
+      phone: formData.phone,
+      deliveryAddress: {
+        street: formData.address,
+        area: selectedZone.name,
+        city: 'Karachi',
+        coordinates: { lat: selectedZone.lat || STORE_COORDINATES.lat, lng: selectedZone.lng || STORE_COORDINATES.lng }
+      }
+    };
 
     const payload = {
       items: cartItems.map(item => ({
@@ -57,20 +97,24 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
       })),
       customer: {
         ...formData,
-        isRetailer: Boolean(retailerUser),
-        retailerName: retailerUser ? retailerUser.name : null,
-        licenseNo: retailerUser ? retailerUser.licenseNo : null,
+        isRetailer: isRetailer,
+        retailerName: isRetailer ? retailerUser.name : null,
+        licenseNo: isRetailer ? retailerUser.licenseNo : null,
         notes: rxRefNumber ? `Prescription Ref: ${rxRefNumber}. ${formData.notes}` : formData.notes
       },
-      orderType: retailerUser ? 'b2b_retailer' : 'b2c_consumer',
-      retailerUsername: retailerUser ? retailerUser.username : '',
+      orderType: isRetailer ? 'b2b_retailer' : 'b2c_consumer',
+      retailerUsername: isRetailer ? retailerUser.username : '',
       checkoutType,
       zone: selectedZone,
       subtotal,
-      deliveryFee,
+      deliveryFee: calculatedDeliveryFee,
       grandTotal,
       requiresRx,
-      prescriptionId: rxRefNumber || null
+      prescriptionId: rxRefNumber || null,
+      // Origin Metadata Audit Trail
+      orderSource: 'WEB_APP',
+      customerType: isRetailer ? 'REGISTERED_RETAILER' : 'ONLINE_CONSUMER',
+      recipientDetails
     };
 
     const API_BASE_URL = import.meta.env.VITE_API_URL || '';
@@ -81,22 +125,30 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
+      
       if (response.ok) {
         const savedOrder = await response.json();
         setIsSubmitting(false);
         onOrderPlaced({
-          id: savedOrder.orderId || ('ORD-' + Math.floor(100000 + Math.random() * 900000)),
+          id: savedOrder.orderId || savedOrder.id || ('ORD-' + Math.floor(100000 + Math.random() * 900000)),
           items: cartItems,
           customer: formData,
           checkoutType,
           zone: selectedZone,
           subtotal: savedOrder.subtotal || subtotal,
-          deliveryFee: savedOrder.deliveryFee || deliveryFee,
+          deliveryFee: savedOrder.deliveryFee || calculatedDeliveryFee,
           grandTotal: savedOrder.grandTotal || grandTotal,
           requiresRx,
+          orderSource: savedOrder.orderSource || 'WEB_APP',
+          customerType: savedOrder.customerType || (isRetailer ? 'REGISTERED_RETAILER' : 'ONLINE_CONSUMER'),
           status: savedOrder.status || 'Received',
           createdAt: new Date().toLocaleString()
         });
+        return;
+      } else {
+        const errData = await response.json();
+        setServerError(errData.error || 'Order placement failed on server.');
+        setIsSubmitting(false);
         return;
       }
     } catch (err) {
@@ -111,9 +163,11 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
       checkoutType,
       zone: selectedZone,
       subtotal,
-      deliveryFee,
+      deliveryFee: calculatedDeliveryFee,
       grandTotal,
       requiresRx,
+      orderSource: 'WEB_APP',
+      customerType: isRetailer ? 'REGISTERED_RETAILER' : 'ONLINE_CONSUMER',
       status: 'Received',
       createdAt: new Date().toLocaleString()
     };
@@ -130,6 +184,21 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
         </div>
 
         <form className="modal-body" onSubmit={handleSubmit}>
+          {/* Server Error Alert */}
+          {serverError && (
+            <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#991b1b', padding: '10px 14px', borderRadius: '6px', fontSize: '0.85rem', marginBottom: '12px' }}>
+              ⚠️ {serverError}
+            </div>
+          )}
+
+          {/* Anti-Hoarding Warning Alert */}
+          {hoardingViolation && (
+            <div style={{ background: '#fffbe8', border: '1px solid #fde047', color: '#854d0e', padding: '10px 14px', borderRadius: '6px', fontSize: '0.85rem', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <AlertTriangle size={18} color="#ca8a04" />
+              <span>{hoardingViolation}</span>
+            </div>
+          )}
+
           {/* Order Summary Box */}
           <div className="checkout-summary-box">
             <h4>Order Summary ({cartItems.length} items)</h4>
@@ -177,7 +246,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
                 <Truck size={18} />
                 <div>
                   <strong>Home Delivery</strong>
-                  <small>Deliver to door</small>
+                  <small>Distance-calculated delivery</small>
                 </div>
               </button>
               <button 
@@ -194,10 +263,10 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
             </div>
           </div>
 
-          {/* Delivery Radius / Zone Dropdown */}
+          {/* Distance-Based Delivery Cost Preview */}
           {checkoutType === 'delivery' && (
             <div className="form-group">
-              <label><MapPin size={14} /> Select Karachi Delivery Zone / Locality *</label>
+              <label><MapPin size={14} /> Select Delivery Distance Tier *</label>
               <select 
                 value={selectedZone.id} 
                 onChange={(e) => {
@@ -205,15 +274,33 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
                   setSelectedZone(z);
                 }}
               >
-                {DELIVERY_ZONES.map(z => (
-                  <option key={z.id} value={z.id}>
-                    {z.name} - {z.fee === 0 ? 'Free Delivery' : `Rs. ${z.fee} Delivery Fee`} {z.minOrder > 0 ? `(Min. Order Rs. ${z.minOrder})` : ''}
-                  </option>
-                ))}
+                {DELIVERY_ZONES.map(z => {
+                  const fee = calculateDistanceDeliveryFee(z.distanceKm);
+                  return (
+                    <option key={z.id} value={z.id}>
+                      {z.name} - Rs. {fee} Delivery Fee
+                    </option>
+                  );
+                })}
               </select>
 
+              {/* Distance Calculator Preview Breakdown */}
+              <div style={{ background: '#f8fafc', border: '1px solid #cbd5e1', padding: '10px 12px', borderRadius: '6px', marginTop: '8px', fontSize: '0.82rem', color: '#334155' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', color: '#0284c7', marginBottom: '4px' }}>
+                  <Navigation size={14} />
+                  <span>Distance-Based Fee Calculator Formula:</span>
+                </div>
+                <div>
+                  Road Distance: <strong>~{distanceKm} km</strong> from Central Store
+                </div>
+                <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>
+                  • Base Fee (0-15 km): Rs. 250
+                  {distanceKm > 15 && ` | Extra Distance (${distanceKm - 15} km @ Rs. 30/km): +Rs. ${(distanceKm - 15) * 30}`}
+                </div>
+              </div>
+
               {isBelowMinOrder && (
-                <div className="min-order-alert">
+                <div className="min-order-alert" style={{ marginTop: '8px' }}>
                   ⚠️ Subtotal must be at least Rs. {selectedZone.minOrder} for {selectedZone.name}.
                 </div>
               )}
@@ -262,8 +349,8 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
               <span>Rs. {subtotal.toFixed(2)}</span>
             </div>
             <div className="calc-row">
-              <span>Delivery Fee</span>
-              <span>{deliveryFee === 0 ? 'FREE' : `Rs. ${deliveryFee.toFixed(2)}`}</span>
+              <span>Delivery Fee ({distanceKm} km)</span>
+              <span>{calculatedDeliveryFee === 0 ? 'FREE' : `Rs. ${calculatedDeliveryFee.toFixed(2)}`}</span>
             </div>
             <div className="calc-row grand-total">
               <span>Grand Total</span>
@@ -274,7 +361,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
           <button 
             type="submit" 
             className="btn-place-order"
-            disabled={isBelowMinOrder || isSubmitting}
+            disabled={isBelowMinOrder || Boolean(hoardingViolation) || isSubmitting}
           >
             {isSubmitting ? 'Processing Order...' : 'Confirm & Place Order'} <ArrowRight size={18} />
           </button>
