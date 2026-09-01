@@ -46,7 +46,25 @@ const OrderSchema = new mongoose.Schema({
   status: { 
     type: String, 
     enum: ['Received', 'Pharmacist Verified / Packing', 'Out for Delivery', 'Delivered', 'Cancelled'],
-    default: 'Received',
+    default: 'Received'
+  },
+  customerType: { 
+    type: String, 
+    enum: ['WALK_IN_RETAIL', 'REGISTERED_RETAILER', 'ONLINE_CONSUMER'],
+    default: 'ONLINE_CONSUMER'
+  },
+  recipientDetails: {
+    name: String,
+    shopName: String,
+    phone: String,
+    deliveryAddress: {
+      street: String,
+      area: String,
+      city: String,
+      coordinates: { lat: Number, lng: Number }
+    }
+  },
+  cashierId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   retailerId: { type: String, trim: true, index: true },
   paymentMethod: { type: String, default: 'cod' }
 }, { timestamps: true });
