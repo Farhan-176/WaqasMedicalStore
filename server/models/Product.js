@@ -29,6 +29,12 @@ const ProductSchema = new mongoose.Schema({
   image: { type: String, default: '' },
   itemCode: { type: String, trim: true, index: true },
   showOnMainScreen: { type: Boolean, default: true },
+  orderLimits: {
+    consumerMin: { type: Number, default: 1 },
+    consumerMax: { type: Number, default: 5 },
+    retailerMin: { type: Number, default: 10 },
+    retailerMax: { type: Number, default: 500 }
+  },
   batches: [BatchSchema]
 }, { timestamps: true });
 
