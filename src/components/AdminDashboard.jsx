@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   FileText, CheckCircle, XCircle, Phone, MessageSquare, Printer, 
   Eye, ShieldCheck, Package, Clock, LogOut, Search, Filter, Table, TrendingUp, Store, Plus, Trash2, Key, MapPin, UserCheck, FileCheck,
-  ChevronLeft, ChevronRight, Menu, ShoppingCart, Edit, X, Tag
+  ChevronLeft, ChevronRight, Menu, ShoppingCart, Edit, X, Tag, Smartphone, Send, User, Navigation, RefreshCw
 } from 'lucide-react';
 import { INITIAL_PRESCRIPTIONS, INITIAL_FULFILLMENT_ORDERS } from '../adminMockData';
 import { INITIAL_RETAILERS } from '../retailersData';
@@ -11,6 +11,8 @@ import { INITIAL_AUDIT_LOGS } from '../adminAnalyticsData';
 import StoreOperationsSection from './StoreOperationsSection';
 import CounterSaleSection from './CounterSaleSection';
 import AdminAnalyticsSection from './AdminAnalyticsSection';
+import WhatsAppCatalogModal from './WhatsAppCatalogModal';
+import CustomerProfileModal from './CustomerProfileModal';
 import '../App.css';
 
 export default function AdminDashboard({ 
@@ -34,7 +36,14 @@ export default function AdminDashboard({
 
   // Orders Filter & Search State
   const [orderQueueFilter, setOrderQueueFilter] = useState('all'); // 'all', 'active', 'delivered', 'b2b', 'b2c'
+  const [orderAreaFilter, setOrderAreaFilter] = useState('all'); // 'all', 'Saddar', 'Gulshan', 'DHA', 'North Nazimabad', 'Korangi'
   const [orderSearchQuery, setOrderSearchQuery] = useState('');
+
+  // Modals & Direct WhatsApp Invoice State
+  const [isWhatsAppCatalogOpen, setIsWhatsAppCatalogOpen] = useState(false);
+  const [selectedCustomerForProfile, setSelectedCustomerForProfile] = useState(null);
+  const [sendingWaOrderIds, setSendingWaOrderIds] = useState({});
+  const [toastNotification, setToastNotification] = useState(null);
 
   // Retailer State: New & Edit
   const [newRetailer, setNewRetailer] = useState({
@@ -656,7 +665,28 @@ export default function AdminDashboard({
               </div>
             </div>
 
-            <div className="header-right-badges">
+            <div className="header-right-badges" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <button 
+                type="button"
+                className="btn-whatsapp-sheet-trigger"
+                onClick={() => setIsWhatsAppCatalogOpen(true)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: '#059669',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '6px',
+                  padding: '6px 12px',
+                  fontSize: '0.82rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 6px rgba(5, 150, 105, 0.2)'
+                }}
+              >
+                <Smartphone size={14} /> Generate WhatsApp Rate Sheet
+              </button>
               <span className="session-security-pill">
                 <ShieldCheck size={13} color="#10b981" /> DRAP Authorized Session
               </span>
@@ -777,6 +807,12 @@ export default function AdminDashboard({
             if (orderQueueFilter === 'b2b' && !(order.orderType === 'b2b_retailer' || order.customer?.isRetailer)) return false;
             if (orderQueueFilter === 'b2c' && (order.orderType === 'b2b_retailer' || order.customer?.isRetailer)) return false;
 
+            // Area/Zone filter
+            if (orderAreaFilter !== 'all') {
+              const addr = (order.address || order.customer?.address || order.zone?.name || order.recipientDetails?.deliveryAddress?.area || '').toLowerCase();
+              if (!addr.includes(orderAreaFilter.toLowerCase())) return false;
+            }
+
             // Search query
             if (orderSearchQuery.trim()) {
               const q = orderSearchQuery.toLowerCase();
@@ -791,8 +827,8 @@ export default function AdminDashboard({
           return (
             <section className="admin-section">
               <div className="section-header">
-                <h2>Order Fulfillment Queue & Past Orders</h2>
-                <p>Manage incoming storefront shipments, update delivery stages, and inspect historical B2B & Consumer invoices.</p>
+                <h2>Order Fulfillment Queue & Audit Registry</h2>
+                <p>Manage incoming storefront shipments, filter by Karachi delivery zones, inspect B2B retailer lifetime ledgers, and dispatch PDF invoices directly to WhatsApp.</p>
               </div>
 
               {/* Order Stats Summary Bar */}
@@ -820,41 +856,52 @@ export default function AdminDashboard({
               </div>
 
               {/* Filter Controls & Search Bar */}
-              <div className="admin-order-controls-bar">
-                <div className="a-order-tabs">
-                  <button 
-                    className={`a-filter-pill ${orderQueueFilter === 'all' ? 'active' : ''}`}
-                    onClick={() => setOrderQueueFilter('all')}
-                  >
-                    All Orders ({orders.length})
-                  </button>
-                  <button 
-                    className={`a-filter-pill ${orderQueueFilter === 'active' ? 'active' : ''}`}
-                    onClick={() => setOrderQueueFilter('active')}
-                  >
-                    ⚡ Active Queue ({activeCount})
-                  </button>
-                  <button 
-                    className={`a-filter-pill ${orderQueueFilter === 'delivered' ? 'active' : ''}`}
-                    onClick={() => setOrderQueueFilter('delivered')}
-                  >
-                    📜 Past Delivered History ({deliveredCount})
-                  </button>
-                  <button 
-                    className={`a-filter-pill ${orderQueueFilter === 'b2b' ? 'active' : ''}`}
-                    onClick={() => setOrderQueueFilter('b2b')}
-                  >
-                    🏢 B2B Retailers ({b2bCount})
-                  </button>
-                  <button 
-                    className={`a-filter-pill ${orderQueueFilter === 'b2c' ? 'active' : ''}`}
-                    onClick={() => setOrderQueueFilter('b2c')}
-                  >
-                    🛍️ Consumers ({orders.length - b2bCount})
-                  </button>
+              <div className="admin-order-controls-bar" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+                  <div className="a-order-tabs">
+                    <button 
+                      className={`a-filter-pill ${orderQueueFilter === 'all' ? 'active' : ''}`}
+                      onClick={() => setOrderQueueFilter('all')}
+                    >
+                      All Orders ({orders.length})
+                    </button>
+                    <button 
+                      className={`a-filter-pill ${orderQueueFilter === 'active' ? 'active' : ''}`}
+                      onClick={() => setOrderQueueFilter('active')}
+                    >
+                      ⚡ Active Queue ({activeCount})
+                    </button>
+                    <button 
+                      className={`a-filter-pill ${orderQueueFilter === 'delivered' ? 'active' : ''}`}
+                      onClick={() => setOrderQueueFilter('delivered')}
+                    >
+                      📜 Past Delivered ({deliveredCount})
+                    </button>
+                    <button 
+                      className={`a-filter-pill ${orderQueueFilter === 'b2b' ? 'active' : ''}`}
+                      onClick={() => setOrderQueueFilter('b2b')}
+                    >
+                      🏢 B2B Retailers ({b2bCount})
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+                    {/* Area/Zone Dispatch Filter Dropdown */}
+                    <select 
+                      value={orderAreaFilter} 
+                      onChange={e => setOrderAreaFilter(e.target.value)}
+                      style={{ padding: '6px 10px', fontSize: '0.82rem', borderRadius: '6px', border: '1px solid #cbd5e1', background: '#fff', fontWeight: '600' }}
+                    >
+                      <option value="all">📍 All Distance Bands</option>
+                      <option value="Standard">Standard (Up to 15 km)</option>
+                      <option value="Extended">Extended (16 – 20 km)</option>
+                      <option value="Outer">Outer (21 – 25 km)</option>
+                      <option value="Far">Far (26 – 30 km)</option>
+                    </select>
+                  </div>
                 </div>
 
-                <div className="a-order-search-box">
+                <div className="a-order-search-box" style={{ width: '100%' }}>
                   <Search size={15} color="#64748b" />
                   <input 
                     type="text" 
@@ -868,79 +915,97 @@ export default function AdminDashboard({
                 </div>
               </div>
 
-              {/* VIEW 1: Past Delivered History Table (When 'delivered' filter is active) */}
+              {/* VIEW 1: Past Delivered History Table */}
               {orderQueueFilter === 'delivered' ? (
                 <div className="admin-table-wrapper">
                   <table className="admin-data-table">
                     <thead>
                       <tr>
                         <th>Order ID</th>
-                        <th>Date & Time</th>
-                        <th>Order Type</th>
+                        <th>Type</th>
                         <th>Customer / Store</th>
                         <th>Phone</th>
                         <th>Delivery Destination</th>
                         <th>Items Count</th>
                         <th>Grand Total</th>
-                        <th>Status</th>
+                        <th>Direct WhatsApp</th>
                         <th>Invoice / Slip</th>
                       </tr>
                     </thead>
                     <tbody>
                       {filteredOrders.length === 0 ? (
                         <tr>
-                          <td colSpan="10" style={{ textAlign: 'center', padding: '30px' }}>
-                            No delivered past orders found matching your search.
+                          <td colSpan="9" style={{ textAlign: 'center', padding: '30px' }}>
+                            No delivered past orders found matching your search and filter criteria.
                           </td>
                         </tr>
                       ) : (
-                        filteredOrders.map(order => (
-                          <tr key={order.id}>
-                            <td><code>{order.id}</code></td>
-                            <td><small>{order.createdAt}</small></td>
-                            <td>
-                              {(order.orderType === 'b2b_retailer' || order.customer?.isRetailer) ? (
-                                <span className="order-b2b-tag">🏢 B2B Retailer</span>
-                              ) : (
-                                <span className="order-b2c-tag">🛍️ Consumer</span>
-                              )}
-                            </td>
-                            <td><strong>{order.customerName || order.customer?.name || 'Customer'}</strong></td>
-                            <td>
-                              <a 
-                                href={`https://wa.me/${(order.phone || order.customer?.phone || '').replace(/[^0-9]/g, '')}`} 
-                                target="_blank" 
-                                rel="noreferrer" 
-                                className="wa-contact-link"
-                              >
-                                <MessageSquare size={12} /> {order.phone || order.customer?.phone || 'N/A'}
-                              </a>
-                            </td>
-                            <td><small>{order.address || order.customer?.address || 'Local Delivery'}</small></td>
-                            <td style={{ textAlign: 'center' }}>{(order.items || []).reduce((sum, it) => sum + it.quantity, 0)} Units</td>
-                            <td><strong style={{ color: '#0f766e' }}>Rs. {Number(order.grandTotal || 0).toFixed(2)}</strong></td>
-                            <td>
-                              <span className="status-pill status-delivered">
-                                Delivered
-                              </span>
-                            </td>
-                            <td style={{ display: 'flex', gap: '6px' }}>
-                              <button className="btn-print-slip" onClick={() => handlePrintSlip(order)}>
-                                <Printer size={13} /> Invoice Slip
-                              </button>
-                              <button 
-                                className="btn-pos-direct-load" 
-                                onClick={() => {
-                                  setLoadedPosOrder(order);
-                                  setActiveTab('counter-sale');
-                                }}
-                                title="Open this order in Counter POS"
-                              >
-                                <ShoppingCart size={13} /> POS
-                              </button>
-                            </td>
-                          </tr>
-                        ))
+                        filteredOrders.map(order => {
+                          const isRetailerOrder = order.orderType === 'b2b_retailer' || order.customer?.isRetailer;
+                          return (
+                            <tr key={order.id}>
+                              <td><code>{order.id}</code></td>
+                              <td>
+                                {isRetailerOrder ? (
+                                  <span className="order-b2b-tag">🏢 B2B Retailer</span>
+                                ) : (
+                                  <span className="order-b2c-tag">🛍️ Consumer</span>
+                                )}
+                              </td>
+                              <td>
+                                <strong>{order.customerName || order.customer?.name || 'Customer'}</strong>
+                                {isRetailerOrder && (
+                                  <button 
+                                    style={{ background: '#e0f2fe', border: 'none', color: '#0369a1', padding: '2px 6px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.72rem', marginLeft: '6px', fontWeight: '600' }}
+                                    onClick={() => setSelectedCustomerForProfile(order)}
+                                    title="View B2B Retailer Lifetime Audit & Purchase Ledger"
+                                  >
+                                    👤 Retailer Ledger
+                                  </button>
+                                )}
+                              </td>
+                              <td>
+                                <a 
+                                  href={`https://wa.me/${(order.phone || order.customer?.phone || '').replace(/[^0-9]/g, '')}`} 
+                                  target="_blank" 
+                                  rel="noreferrer" 
+                                  className="wa-contact-link"
+                                >
+                                  <MessageSquare size={12} /> {order.phone || order.customer?.phone || 'N/A'}
+                                </a>
+                              </td>
+                              <td><small>{order.address || order.customer?.address || 'Local Delivery'}</small></td>
+                              <td style={{ textAlign: 'center' }}>{(order.items || []).reduce((sum, it) => sum + it.quantity, 0)} Units</td>
+                              <td><strong style={{ color: '#0f766e' }}>Rs. {Number(order.grandTotal || 0).toFixed(2)}</strong></td>
+                              <td>
+                                <button 
+                                  style={{ background: '#059669', color: '#fff', border: 'none', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px', fontWeight: '600' }}
+                                  onClick={() => handleSendDirectWhatsAppInvoice(order)}
+                                  disabled={sendingWaOrderIds[order.id]}
+                                  title="Direct Server-Side PDF Dispatch to Customer Phone"
+                                >
+                                  <Smartphone size={12} />
+                                  {sendingWaOrderIds[order.id] ? 'Sending...' : 'Send Invoice'}
+                                </button>
+                              </td>
+                              <td style={{ display: 'flex', gap: '6px' }}>
+                                <button className="btn-print-slip" onClick={() => handlePrintSlip(order)}>
+                                  <Printer size={13} /> Slip
+                                </button>
+                                <button 
+                                  className="btn-pos-direct-load" 
+                                  onClick={() => {
+                                    setLoadedPosOrder(order);
+                                    setActiveTab('counter-sale');
+                                  }}
+                                  title="Open this order in Counter POS"
+                                >
+                                  <ShoppingCart size={13} /> POS
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
                       )}
                     </tbody>
                   </table>
@@ -954,85 +1019,102 @@ export default function AdminDashboard({
                       <p>No orders found matching this filter criteria.</p>
                     </div>
                   ) : (
-                    filteredOrders.map(order => (
-                      <div key={order.id} className="order-fulfillment-card">
-                        <div className="of-card-header">
-                          <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                              <h4>{order.id}</h4>
-                              {(order.orderType === 'b2b_retailer' || order.customer?.isRetailer) ? (
-                                <span className="order-b2b-tag">🏢 B2B Retailer</span>
-                              ) : (
-                                <span className="order-b2c-tag">🛍️ Consumer</span>
-                              )}
-                            </div>
-                            <small>{order.createdAt}</small>
-                          </div>
-                          <span className={`status-pill status-${order.status.toLowerCase().replace(/[^a-z]/g, '')}`}>
-                            {order.status}
-                          </span>
-                        </div>
-
-                        <div className="of-card-body-compact">
-                          <div className="of-customer-info">
-                            <p><strong>Customer:</strong> {order.customerName || order.customer?.name || 'Customer'}</p>
-                            <p><strong>Phone:</strong> {order.phone || order.customer?.phone || 'N/A'}</p>
-                            <p><strong>Address:</strong> {order.address || order.customer?.address || 'Local Delivery'}</p>
-                          </div>
-
-                          <div className="of-items-list">
-                            <h5>Ordered Items ({(order.items || []).length}):</h5>
-                            {(order.items || []).map((it, idx) => (
-                              <div key={idx} className="of-item-row">
-                                <span className="of-item-name">{it.name} (x{it.quantity})</span>
-                                <span className="of-item-price">Rs. {(it.price * it.quantity).toFixed(2)}</span>
+                    filteredOrders.map(order => {
+                      const isRetailerOrder = order.orderType === 'b2b_retailer' || order.customer?.isRetailer;
+                      return (
+                        <div key={order.id} className="order-fulfillment-card">
+                          <div className="of-card-header">
+                            <div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <h4>{order.id}</h4>
+                                {isRetailerOrder ? (
+                                  <span className="order-b2b-tag">🏢 B2B Retailer</span>
+                                ) : (
+                                  <span className="order-b2c-tag">🛍️ Consumer</span>
+                                )}
                               </div>
-                            ))}
-                            <div className="of-total-row">
-                              <span>Grand Total:</span>
-                              <strong className="price-tag">Rs. {Number(order.grandTotal || 0).toFixed(2)}</strong>
+                              <small>{order.createdAt}</small>
+                            </div>
+                            <span className={`status-pill status-${order.status.toLowerCase().replace(/[^a-z]/g, '')}`}>
+                              {order.status}
+                            </span>
+                          </div>
+
+                          <div className="of-card-body-compact">
+                            <div className="of-customer-info">
+                              <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <span><strong>Customer:</strong> {order.customerName || order.customer?.name || 'Customer'}</span>
+                                {isRetailerOrder && (
+                                  <button 
+                                    style={{ background: '#e0f2fe', border: 'none', color: '#0369a1', padding: '2px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', fontWeight: '600' }}
+                                    onClick={() => setSelectedCustomerForProfile(order)}
+                                    title="View Retailer Lifetime Ledger"
+                                  >
+                                    👤 Retailer Ledger
+                                  </button>
+                                )}
+                              </p>
+                              <p><strong>Phone:</strong> {order.phone || order.customer?.phone || 'N/A'}</p>
+                              <p><strong>Address:</strong> {order.address || order.customer?.address || 'Local Delivery'}</p>
+                            </div>
+
+                            <div className="of-items-list">
+                              <h5>Ordered Items ({(order.items || []).length}):</h5>
+                              {(order.items || []).map((it, idx) => (
+                                <div key={idx} className="of-item-row">
+                                  <span className="of-item-name">{it.name} (x{it.quantity})</span>
+                                  <span className="of-item-price">Rs. {(it.price * it.quantity).toFixed(2)}</span>
+                                </div>
+                              ))}
+                              <div className="of-total-row">
+                                <span>Grand Total:</span>
+                                <strong className="price-tag">Rs. {Number(order.grandTotal || 0).toFixed(2)}</strong>
+                              </div>
+                            </div>
+
+                            <div className="of-status-updater">
+                              <label>Update Stage:</label>
+                              <select 
+                                value={order.status} 
+                                onChange={(e) => handleUpdateOrderStatus(order.id, e.target.value)}
+                              >
+                                <option value="Received">Received</option>
+                                <option value="Pharmacist Verified / Packing">Pharmacist Verified / Packing</option>
+                                <option value="Out for Delivery">Out for Delivery</option>
+                                <option value="Delivered">Delivered</option>
+                              </select>
+                            </div>
+
+                            <div className="of-card-footer" style={{ flexWrap: 'wrap', gap: '6px' }}>
+                              <button className="btn-print-slip" onClick={() => handlePrintSlip(order)}>
+                                <Printer size={13} /> Print Slip
+                              </button>
+
+                              <button 
+                                style={{ background: '#059669', color: '#fff', border: 'none', padding: '6px 10px', borderRadius: '6px', cursor: 'pointer', fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: '4px', fontWeight: '600' }}
+                                onClick={() => handleSendDirectWhatsAppInvoice(order)}
+                                disabled={sendingWaOrderIds[order.id]}
+                                title="Direct Server-Side PDF Dispatch to Customer Phone"
+                              >
+                                <Smartphone size={13} />
+                                {sendingWaOrderIds[order.id] ? 'Sending PDF...' : 'Direct WA Invoice'}
+                              </button>
+
+                              <button 
+                                className="btn-pos-direct-load" 
+                                onClick={() => {
+                                  setLoadedPosOrder(order);
+                                  setActiveTab('counter-sale');
+                                }}
+                                title="Open and process this order directly in Counter Sale POS register"
+                              >
+                                <ShoppingCart size={13} /> Open POS
+                              </button>
                             </div>
                           </div>
-
-                          <div className="of-status-updater">
-                            <label>Update Stage:</label>
-                            <select 
-                              value={order.status} 
-                              onChange={(e) => handleUpdateOrderStatus(order.id, e.target.value)}
-                            >
-                              <option value="Received">Received</option>
-                              <option value="Pharmacist Verified / Packing">Pharmacist Verified / Packing</option>
-                              <option value="Out for Delivery">Out for Delivery</option>
-                              <option value="Delivered">Delivered</option>
-                            </select>
-                          </div>
-
-                          <div className="of-card-footer">
-                            <button className="btn-print-slip" onClick={() => handlePrintSlip(order)}>
-                              <Printer size={13} /> Print Slip
-                            </button>
-                            <button 
-                              className="btn-pos-direct-load" 
-                              onClick={() => {
-                                setLoadedPosOrder(order);
-                                setActiveTab('counter-sale');
-                              }}
-                              title="Open and process this order directly in Counter Sale POS register"
-                            >
-                              <ShoppingCart size={13} /> Open in Counter POS
-                            </button>
-                            <a 
-                              href={`https://wa.me/${(order.phone || order.customer?.phone || '').replace(/[^0-9]/g, '')}`} 
-                              target="_blank" 
-                              rel="noreferrer" 
-                              className="btn-wa-direct"
-                            >
-                              <MessageSquare size={13} /> Contact
-                            </a>
-                          </div>
                         </div>
-                      </div>
-                    ))
+                      );
+                    })
                   )}
                 </div>
               )}
@@ -1411,6 +1493,45 @@ export default function AdminDashboard({
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* WhatsApp Rate Sheet Broadcast Generator Modal */}
+      <WhatsAppCatalogModal 
+        isOpen={isWhatsAppCatalogOpen} 
+        onClose={() => setIsWhatsAppCatalogOpen(false)} 
+        products={catalog} 
+      />
+
+      {/* Customer Lifetime Profile & Audit Ledger Modal */}
+      <CustomerProfileModal 
+        isOpen={Boolean(selectedCustomerForProfile)} 
+        onClose={() => setSelectedCustomerForProfile(null)} 
+        customerInfo={selectedCustomerForProfile} 
+        orders={orders} 
+      />
+
+      {/* Direct Toast Notification Banner */}
+      {toastNotification && (
+        <div style={{
+          position: 'fixed',
+          bottom: '24px',
+          right: '24px',
+          background: '#0f172a',
+          color: '#38bdf8',
+          padding: '12px 20px',
+          borderRadius: '8px',
+          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)',
+          zIndex: 9999,
+          fontSize: '0.88rem',
+          fontWeight: '600',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          border: '1px solid #0284c7'
+        }}>
+          <Smartphone size={18} color="#38bdf8" />
+          <span>{toastNotification}</span>
         </div>
       )}
     </div>
