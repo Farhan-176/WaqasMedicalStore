@@ -81,15 +81,6 @@ export default function RetailerProfileModal({
             </div>
 
             <div className="rp-header-actions-group">
-              <button 
-                type="button" 
-                className="rp-top-logout-btn" 
-                onClick={handleLogoutClick}
-                title="Log out & switch to consumer prices"
-              >
-                <LogOut size={13} />
-                <span>Log Out</span>
-              </button>
               <button className="rp-close-btn-v2" onClick={onClose} title="Close (ESC)">
                 <X size={18} />
               </button>

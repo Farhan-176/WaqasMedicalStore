@@ -494,18 +494,6 @@ export default function App() {
           products={products}
         />
 
-        {/* Active Retailer Wholesale Mode Notification Bar */}
-        {retailerUser && (
-          <div className="retailer-active-banner">
-            <div className="banner-left">
-              <Store size={18} color="#10b981" />
-              <span>
-                <strong>B2B Wholesale Portal Active:</strong> Logged in as <strong>{retailerUser.name}</strong> ({retailerUser.area}). All catalog rates are unlocked at wholesale trade prices.
-              </span>
-            </div>
-          </div>
-        )}
-
         {/* Main Content Body */}
         <main className="main-content-body">
           {/* Healthcare Hero Banner */}

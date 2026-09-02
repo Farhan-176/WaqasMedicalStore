@@ -146,18 +146,6 @@ export default function Header({
             <span>WhatsApp</span>
           </a>
 
-          {/* If Logged in as Retailer: My Orders Button */}
-          {retailerUser && (
-            <button 
-              className="navbar-retailer-history-btn" 
-              onClick={onOpenRetailerHistory}
-              title="View your past wholesale orders, invoices, and delivery status"
-            >
-              <FileText size={15} />
-              <span>My Orders</span>
-            </button>
-          )}
-
           {/* Staff Login Button (Only for guests) */}
           {!retailerUser && (
             <button className="navbar-staff-btn" onClick={onOpenAdminLogin} title="Staff & Retailer Login">
