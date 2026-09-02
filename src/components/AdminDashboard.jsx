@@ -54,6 +54,7 @@ export default function AdminDashboard({
     licenseNo: ''
   });
   const [editingRetailer, setEditingRetailer] = useState(null);
+  const [isAddRetailerModalOpen, setIsAddRetailerModalOpen] = useState(false);
   const [loadedPosOrder, setLoadedPosOrder] = useState(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -1160,87 +1161,26 @@ export default function AdminDashboard({
         {activeTab === 'retailers' && (
           <section className="admin-section">
             <div className="ops-card">
-              <div className="ops-card-header">
+              <div className="ops-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div className="ops-header-title-block">
                   <h3>
                     Verified B2B Pharmacy Accounts 
                     <span className="ops-count-pill">{retailersList.length} Active Partners</span>
                   </h3>
-                  <p>Register and manage B2B pharmacy credentials. Registered retailers log in to unlock wholesale trade prices.</p>
+                  <p>Manage B2B pharmacy wholesale accounts. Registered retailers log in to unlock wholesale trade prices.</p>
                 </div>
+                <button 
+                  type="button" 
+                  className="btn-action-primary" 
+                  style={{ background: '#059669', color: '#fff', padding: '10px 18px', borderRadius: '8px', border: 'none', fontWeight: '700', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)' }}
+                  onClick={() => setIsAddRetailerModalOpen(true)}
+                >
+                  <Plus size={18} /> Add Retailer
+                </button>
               </div>
 
-              {/* Create New Retailer Form Card */}
-              <div className="admin-retailer-create-box">
-                <div className="arc-header">
-                  <h4><ShieldCheck size={16} color="#0d9488" /> Register New B2B Pharmacy Partner</h4>
-                  <span>Assign Store Code / Username and Password credentials for wholesale pricing access</span>
-                </div>
-                <form className="arc-form-grid" onSubmit={handleCreateRetailer}>
-                  <div className="form-group-compact">
-                    <label><Store size={13} /> Store / Clinic Name *</label>
-                    <input 
-                      type="text" 
-                      required 
-                      placeholder="e.g. Shifa Pharmacy & Clinic"
-                      value={newRetailer.name}
-                      onChange={(e) => setNewRetailer(prev => ({ ...prev, name: e.target.value }))}
-                    />
-                  </div>
-
-                  <div className="form-group-compact">
-                    <label><UserCheck size={13} /> Store Code / Username *</label>
-                    <input 
-                      type="text" 
-                      required 
-                      placeholder="e.g. shifa_pharmacy"
-                      value={newRetailer.username}
-                      onChange={(e) => setNewRetailer(prev => ({ ...prev, username: e.target.value }))}
-                    />
-                  </div>
-
-                  <div className="form-group-compact">
-                    <label><Key size={13} /> Login Password *</label>
-                    <input 
-                      type="text" 
-                      required 
-                      placeholder="e.g. pass123"
-                      value={newRetailer.password}
-                      onChange={(e) => setNewRetailer(prev => ({ ...prev, password: e.target.value }))}
-                    />
-                  </div>
-
-                  <div className="form-group-compact">
-                    <label><MapPin size={13} /> Sector / Area (Karachi)</label>
-                    <input 
-                      type="text" 
-                      placeholder="e.g. Saddar / Clifton, Karachi"
-                      value={newRetailer.area}
-                      onChange={(e) => setNewRetailer(prev => ({ ...prev, area: e.target.value }))}
-                    />
-                  </div>
-
-                  <div className="form-group-compact">
-                    <label><FileCheck size={13} /> Drug License # (Optional)</label>
-                    <input 
-                      type="text" 
-                      placeholder="e.g. 04-DL-9823"
-                      value={newRetailer.licenseNo}
-                      onChange={(e) => setNewRetailer(prev => ({ ...prev, licenseNo: e.target.value }))}
-                    />
-                  </div>
-
-                  <div className="form-group-compact arc-submit-wrap">
-                    <label>&nbsp;</label>
-                    <button type="submit" className="btn-add-retailer">
-                      <Plus size={15} /> Save & Grant Access
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              {/* Active Retailers Table with Dark Slate Header & Zebra Striping */}
-              <div className="ops-table-wrapper" style={{ marginTop: '24px' }}>
+              {/* Active Retailers Table (Main Focus) */}
+              <div className="ops-table-wrapper" style={{ marginTop: '16px' }}>
                 <table className="admin-table ops-table">
                   <thead>
                     <tr>
@@ -1306,6 +1246,131 @@ export default function AdminDashboard({
         )}
         </div>
       </main>
+
+      {/* Add New Retailer Modal Popup */}
+      {isAddRetailerModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsAddRetailerModalOpen(false)}>
+          <div 
+            className="modal-container" 
+            style={{ maxWidth: '580px', width: '100%', background: '#ffffff', borderRadius: '16px', padding: '24px', boxShadow: '0 20px 45px rgba(15, 23, 42, 0.25)', border: '1px solid #e2e8f0' }} 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '14px', marginBottom: '18px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: '#ecfdf5', border: '1px solid #a7f3d0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <ShieldCheck size={20} color="#059669" />
+                </div>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#0f172a', fontWeight: '800' }}>Register New B2B Pharmacy Partner</h3>
+                  <span style={{ fontSize: '0.8rem', color: '#64748b' }}>Assign Store Code / Username and Password for wholesale access</span>
+                </div>
+              </div>
+              <button 
+                type="button" 
+                onClick={() => setIsAddRetailerModalOpen(false)}
+                style={{ background: '#f1f5f9', border: 'none', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b' }}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form onSubmit={(e) => {
+              handleCreateRetailer(e);
+              setIsAddRetailerModalOpen(false);
+            }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div className="form-group-compact">
+                  <label style={{ fontWeight: '700', fontSize: '0.82rem', color: '#334155', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Store size={14} color="#0d9488" /> Store / Clinic Name *
+                  </label>
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder="e.g. Shifa Pharmacy & Clinic"
+                    value={newRetailer.name}
+                    onChange={(e) => setNewRetailer(prev => ({ ...prev, name: e.target.value }))}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.88rem' }}
+                  />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div className="form-group-compact">
+                    <label style={{ fontWeight: '700', fontSize: '0.82rem', color: '#334155', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <UserCheck size={14} color="#0d9488" /> Store Code / Username *
+                    </label>
+                    <input 
+                      type="text" 
+                      required 
+                      placeholder="e.g. shifa_pharmacy"
+                      value={newRetailer.username}
+                      onChange={(e) => setNewRetailer(prev => ({ ...prev, username: e.target.value }))}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.88rem' }}
+                    />
+                  </div>
+
+                  <div className="form-group-compact">
+                    <label style={{ fontWeight: '700', fontSize: '0.82rem', color: '#334155', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Key size={14} color="#0d9488" /> Login Password *
+                    </label>
+                    <input 
+                      type="text" 
+                      required 
+                      placeholder="e.g. pass123"
+                      value={newRetailer.password}
+                      onChange={(e) => setNewRetailer(prev => ({ ...prev, password: e.target.value }))}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.88rem' }}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div className="form-group-compact">
+                    <label style={{ fontWeight: '700', fontSize: '0.82rem', color: '#334155', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <MapPin size={14} color="#0d9488" /> Sector / Area (Karachi)
+                    </label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. Saddar / Clifton, Karachi"
+                      value={newRetailer.area}
+                      onChange={(e) => setNewRetailer(prev => ({ ...prev, area: e.target.value }))}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.88rem' }}
+                    />
+                  </div>
+
+                  <div className="form-group-compact">
+                    <label style={{ fontWeight: '700', fontSize: '0.82rem', color: '#334155', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <FileCheck size={14} color="#0d9488" /> Drug License # (Optional)
+                    </label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. 04-DL-9823"
+                      value={newRetailer.licenseNo}
+                      onChange={(e) => setNewRetailer(prev => ({ ...prev, licenseNo: e.target.value }))}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.88rem' }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '22px', borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
+                <button 
+                  type="button" 
+                  onClick={() => setIsAddRetailerModalOpen(false)}
+                  style={{ background: '#f1f5f9', color: '#475569', border: '1px solid #cbd5e1', padding: '9px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer' }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  style={{ background: '#059669', color: '#ffffff', border: 'none', padding: '9px 20px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                >
+                  <Plus size={16} /> Save & Grant Access
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Edit Retailer Details Modal */}
       {editingRetailer && (
