@@ -21,46 +21,57 @@ export default function WhatsAppCatalogModal({ isOpen, onClose, products = [] })
     const filtered = searchFilter 
       ? inStockItems.filter(p => 
           p.name.toLowerCase().includes(searchFilter.toLowerCase()) || 
-          (p.category && p.category.toLowerCase().includes(searchFilter.toLowerCase()))
+          (p.category && p.category.toLowerCase().includes(searchFilter.toLowerCase())) ||
+          (p.manufacturer && p.manufacturer.toLowerCase().includes(searchFilter.toLowerCase()))
         )
       : inStockItems;
 
-    // 2. Group items alphabetically by Manufacturer / Company
+    // 2. Group items alphabetically by Category / Manufacturer
     const grouped = {};
     filtered.forEach(item => {
-      const company = (item.manufacturer || item.company || item.category || 'GENERAL MEDICINES').toUpperCase();
+      const company = (item.manufacturer || item.company || item.category || 'GENERAL MEDICINES');
       if (!grouped[company]) grouped[company] = [];
       grouped[company].push(item);
     });
+
+    const formatCategoryName = (catKey) => {
+      const upper = (catKey || '').toUpperCase().trim();
+      if (upper === 'BABY-CARE' || upper === 'BABY CARE') return 'BABY CARE & INFANT ESSENTIALS';
+      if (upper === 'HYGIENE' || upper === 'HYGIENE & PERSONAL') return 'HYGIENE & PERSONAL CARE';
+      if (upper === 'MEDICINES') return 'MEDICINES & PHARMACEUTICALS';
+      if (upper === 'OTC' || upper === 'OTC & FIRST AID') return 'OTC & FIRST AID';
+      return upper.replace(/[-_]/g, ' ');
+    };
 
     const now = new Date();
     const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 
     let lines = [];
-    lines.push('==============================');
-    lines.push('💊 WAQAS MEDICAL STORE - LIVE RATE LIST');
-    lines.push(`📅 Date: ${dateStr} | ${timeStr}`);
-    lines.push('==============================\n');
+    lines.push('*🏥 WAQAS MEDICAL STORE — WHOLESALE RATE LIST*');
+    lines.push(`📅 _Date: ${dateStr} | ${timeStr}_`);
+    lines.push('📍 *Denso Hall, Saddar, Karachi*');
+    lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
-    // Sort companies alphabetically
+    // Sort categories/companies alphabetically
     const sortedCompanies = Object.keys(grouped).sort();
 
     sortedCompanies.forEach(company => {
-      lines.push(`🟢 ${company}`);
+      const cleanCompanyTitle = formatCategoryName(company);
+      lines.push(`\n*🟢 ${cleanCompanyTitle}*`);
       grouped[company].sort((a, b) => a.name.localeCompare(b.name)).forEach(prod => {
         const priceVal = (Number(prod.price) || 0).toLocaleString('en-PK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        const unitStr = prod.unit || 'Pack';
-        lines.push(`• ${prod.name.padEnd(22, ' ')} | ${unitStr.padEnd(10, ' ')} | TP: Rs. ${priceVal} [IN STOCK]`);
+        const packInfo = prod.unit ? ` (${prod.unit})` : '';
+        lines.push(`• *${prod.name}*${packInfo} — *Rs. ${priceVal}*`);
       });
-      lines.push('');
     });
 
-    lines.push("🔥 TODAY'S SCHEME DEALS:");
-    lines.push('⭐ Siroline Syp: Buy 10 + 1 FREE');
-    lines.push('⭐ Panadol 500mg: Bulk Carton Discount 5% OFF');
-    lines.push('==============================');
-    lines.push('📲 To Order: Send Item Code / Name & Quantity');
+    lines.push('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    lines.push('🔥 *WHOLESALE SCHEME DEALS:*');
+    lines.push('⭐ *Siroline Syp:* Buy 10 + 1 FREE Scheme');
+    lines.push('⭐ *Panadol 500mg:* Bulk Carton Purchase 5% Trade Discount');
+    lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    lines.push('📲 *To Place Order:* Send Medicine Name & Quantity to *0300-1234567* or reply to this broadcast.');
 
     return lines.join('\n');
   }, [products, searchFilter]);
@@ -125,7 +136,7 @@ export default function WhatsAppCatalogModal({ isOpen, onClose, products = [] })
         <div className="modal-body" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '10px' }}>
             <span style={{ fontSize: '0.88rem', color: '#475569' }}>
-              Only showing <strong>in-stock items</strong> formatted with monospace blocks and company headers.
+              Clean, mobile-optimized WhatsApp rate list formatted with bold headers and price tags.
             </span>
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
               <Filter size={15} color="#64748b" />
@@ -139,20 +150,22 @@ export default function WhatsAppCatalogModal({ isOpen, onClose, products = [] })
             </div>
           </div>
 
-          {/* Formatted Text Codebox */}
+          {/* Formatted Text Preview Card */}
           <div style={{ position: 'relative' }}>
             <pre style={{
               background: '#0f172a',
               color: '#38bdf8',
-              padding: '16px',
-              borderRadius: '8px',
-              fontFamily: 'Consolas, Monaco, "Courier New", monospace',
-              fontSize: '0.85rem',
+              padding: '18px',
+              borderRadius: '10px',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+              fontSize: '0.9rem',
+              lineHeight: '1.5',
               maxHeight: '380px',
               overflowY: 'auto',
               whiteSpace: 'pre-wrap',
               wordBreak: 'break-word',
-              border: '1px solid #334155'
+              border: '1px solid #334155',
+              boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.3)'
             }}>
               {formattedText}
             </pre>
