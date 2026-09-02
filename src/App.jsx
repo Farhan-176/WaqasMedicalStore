@@ -20,6 +20,13 @@ import './App.css';
 const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 const CounterSaleSection = React.lazy(() => import('./components/CounterSaleSection'));
 
+function getPageNumbers(current, total) {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  if (current <= 4) return [1, 2, 3, 4, 5, '...', total];
+  if (current >= total - 3) return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
+  return [1, '...', current - 1, current, current + 1, '...', total];
+}
+
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
   const [products, setProducts] = useState(MOCK_PRODUCTS);
@@ -250,6 +257,28 @@ export default function App() {
       return isVisibleOnMain && matchesCategory && matchesLetter && matchesSearch;
     })
     .sort((a, b) => a.name.localeCompare(b.name));
+
+  // Storefront Catalog Pagination State (24 products per page)
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 24;
+
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, selectedLetter, searchQuery]);
+
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1;
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      const catalogSection = document.querySelector('.catalog-section');
+      if (catalogSection) {
+        catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
 
   // Toast Notification State
   const [toast, setToast] = useState(null);
@@ -569,16 +598,64 @@ export default function App() {
                   </div>
                 </div>
               ) : (
-                <div className="products-grid">
-                  {filteredProducts.map(product => (
-                    <ProductCard 
-                      key={product.id}
-                      product={product}
-                      onAddToCart={handleAddToCart}
-                      isRetailer={Boolean(retailerUser)}
-                    />
-                  ))}
-                </div>
+                <>
+                  <div className="products-grid">
+                    {paginatedProducts.map(product => (
+                      <ProductCard 
+                        key={product.id}
+                        product={product}
+                        onAddToCart={handleAddToCart}
+                        isRetailer={Boolean(retailerUser)}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Numbered Pagination Control Bar */}
+                  {totalPages > 1 && (
+                    <div className="pagination-bar">
+                      <div className="pagination-info">
+                        Showing <strong>{startIndex + 1}–{Math.min(startIndex + ITEMS_PER_PAGE, filteredProducts.length)}</strong> of <strong>{filteredProducts.length}</strong> items (Page {currentPage} of {totalPages})
+                      </div>
+
+                      <div className="pagination-controls">
+                        <button 
+                          type="button"
+                          className="pagination-nav-btn" 
+                          onClick={() => handlePageChange(currentPage - 1)}
+                          disabled={currentPage === 1}
+                        >
+                          ‹ Previous
+                        </button>
+                        
+                        <div className="pagination-pages-list">
+                          {getPageNumbers(currentPage, totalPages).map((page, idx) => (
+                            page === '...' ? (
+                              <span key={`dots-${idx}`} className="pagination-ellipsis">...</span>
+                            ) : (
+                              <button
+                                key={page}
+                                type="button"
+                                className={`pagination-page-btn ${currentPage === page ? 'active' : ''}`}
+                                onClick={() => handlePageChange(page)}
+                              >
+                                {page}
+                              </button>
+                            )
+                          ))}
+                        </div>
+
+                        <button 
+                          type="button"
+                          className="pagination-nav-btn" 
+                          onClick={() => handlePageChange(currentPage + 1)}
+                          disabled={currentPage === totalPages}
+                        >
+                          Next ›
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </ErrorBoundary>
           </section>

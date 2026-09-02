@@ -31,27 +31,13 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
     }
   }, [retailerUser]);
 
-  if (!isOpen) return null;
-
-  const rawSubtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const subtotal = roundCurrency(rawSubtotal);
-
-  // Distance-Based Delivery Cost Calculator
-  const distanceKm = selectedZone.distanceKm || 5;
-  const calculatedDeliveryFee = checkoutType === 'pickup' 
-    ? 0 
-    : calculateDistanceDeliveryFee(distanceKm);
-
-  const grandTotal = roundCurrency(subtotal + calculatedDeliveryFee);
-  const isBelowMinOrder = checkoutType === 'delivery' && subtotal < selectedZone.minOrder;
-
   // Anti-Hoarding & Quotas Client Pre-Validation
   const hoardingViolation = useMemo(() => {
     const isRetailer = Boolean(retailerUser);
     const maxAllowed = isRetailer ? 500 : 5;
     const minAllowed = isRetailer ? 10 : 1;
 
-    for (const item of cartItems) {
+    for (const item of (cartItems || [])) {
       const q = Number(item.quantity) || 1;
       if (q > maxAllowed) {
         return `Anti-Hoarding Warning: "${item.name}" quantity (${q}) exceeds the maximum quota of ${maxAllowed} ${isRetailer ? 'cartons' : 'packs'} for ${isRetailer ? 'retailers' : 'consumers'}.`;
@@ -62,6 +48,8 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
     }
     return null;
   }, [cartItems, retailerUser]);
+
+  if (!isOpen) return null;
 
   // B2B Retailers are licensed pharmacies and exempt from consumer prescription upload
   const requiresRx = !retailerUser && cartItems.some(item => item.requiresPrescription);
