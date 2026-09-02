@@ -115,7 +115,7 @@ export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess, retai
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container admin-login-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2><Lock size={18} color="#0284c7" /> Staff & Retailer Portal Login</h2>
+          <h2><Lock size={18} color="var(--primary)" /> Staff & Retailer Portal Login</h2>
           <button className="close-btn" onClick={onClose}>×</button>
         </div>
 

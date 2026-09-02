@@ -185,7 +185,7 @@ export default function Header({
                 <div className="retailer-nav-dropdown-menu">
                   <div className="r-dropdown-header">
                     <div className="r-dropdown-avatar">
-                      <Store size={18} color="#0d9488" />
+                      <Store size={18} color="var(--secondary)" />
                     </div>
                     <div className="r-dropdown-store-info">
                       <strong className="r-dropdown-name">{retailerUser.name}</strong>

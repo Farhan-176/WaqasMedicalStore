@@ -29,6 +29,12 @@ function getPageNumbers(current, total) {
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
+
+  // Set default theme to Nordic Bio-Tech
+  React.useEffect(() => {
+    document.documentElement.setAttribute('data-theme', 'nordic-biotech');
+  }, []);
+
   const [products, setProducts] = useState(MOCK_PRODUCTS);
 
   // Persistent Orders State (Preserved across browser refreshes, sanitized of dummy records)

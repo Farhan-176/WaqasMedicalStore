@@ -60,7 +60,7 @@ export default function TrackOrderModal({ isOpen, onClose, orders, activeOrder, 
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container track-order-lookup-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2><Package size={20} color="#0284c7" /> Live Order Tracking</h2>
+          <h2><Package size={20} color="var(--primary)" /> Live Order Tracking</h2>
           <button className="close-btn" onClick={onClose}><X size={20} /></button>
         </div>
 
@@ -123,11 +123,11 @@ export default function TrackOrderModal({ isOpen, onClose, orders, activeOrder, 
               {/* Items & Address Summary */}
               <div className="track-details-accordion">
                 <div className="track-info-row">
-                  <MapPin size={15} color="#0d9488" />
+                  <MapPin size={15} color="var(--secondary)" />
                   <span><strong>Destination:</strong> {searchedOrder.address || searchedOrder.customer?.address || 'Local Delivery Address'}</span>
                 </div>
                 <div className="track-info-row">
-                  <Truck size={15} color="#0284c7" />
+                  <Truck size={15} color="var(--primary)" />
                   <span><strong>Fulfillment:</strong> {searchedOrder.checkoutType === 'pickup' ? 'Store Pickup' : 'Express Home Delivery'}</span>
                 </div>
                 <div className="track-items-mini">

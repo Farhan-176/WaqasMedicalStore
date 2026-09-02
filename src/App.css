@@ -6,7 +6,7 @@
   width: 100vw;
   height: 100vh;
   z-index: 99999;
-  background: linear-gradient(135deg, #071927 0%, #0d3b48 50%, #0f766e 100%);
+  background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #042f2e 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,11 +30,11 @@
   height: 150px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(20, 184, 166, 0.4);
+  border: 2px solid rgba(132, 204, 22, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 45px rgba(20, 184, 166, 0.4), inset 0 0 25px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 45px rgba(132, 204, 22, 0.35), inset 0 0 25px rgba(255, 255, 255, 0.2);
   margin-bottom: 24px;
   animation: logoPulse 2s infinite ease-in-out;
 }
@@ -49,7 +49,7 @@
 .intro-welcome-text {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #2dd4bf;
+  color: #84cc16;
   text-transform: uppercase;
   letter-spacing: 3px;
   margin-bottom: 6px;
@@ -60,14 +60,14 @@
   font-weight: 800;
   letter-spacing: 1.5px;
   margin: 0 0 8px 0;
-  background: linear-gradient(135deg, #ffffff 0%, #a5f3fc 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #dcfce7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .intro-subtitle {
   font-size: 0.95rem;
-  color: #94a3b8;
+  color: #a7f3d0;
   margin: 0 0 28px 0;
   font-weight: 500;
   letter-spacing: 0.3px;
@@ -85,14 +85,14 @@
 .intro-loader-progress {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #14b8a6, #38bdf8);
+  background: linear-gradient(90deg, #10b981, #84cc16);
   border-radius: var(--radius-full);
   animation: loadProgress 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .intro-tap-hint {
   font-size: 0.75rem;
-  color: #64748b;
+  color: #86efac;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 600;
@@ -300,15 +300,16 @@
 
 /* Sidebar Rx Upload Card Widget */
 .sidebar-rx-card {
-  background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+  background: var(--hero-gradient, linear-gradient(135deg, #064e3b 0%, #10b981 100%));
   color: #ffffff;
   padding: 16px;
   border-radius: var(--radius-md);
   margin-bottom: 20px;
-  box-shadow: 0 4px 16px rgba(13, 148, 136, 0.25);
+  box-shadow: var(--shadow-pure, 0 4px 16px rgba(6, 78, 59, 0.25));
   display: flex;
   flex-direction: column;
   gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .rx-card-icon {
@@ -498,7 +499,7 @@
 
 /* Compact Hero Banner */
 .compact-hero-banner {
-  background: linear-gradient(135deg, #0f766e 0%, #0284c7 100%);
+  background: var(--hero-gradient, linear-gradient(135deg, #064e3b 0%, #0d5a44 100%));
   color: #ffffff;
   padding: 22px 28px;
   border-radius: var(--radius-md);
@@ -506,7 +507,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 18px rgba(13, 148, 136, 0.15);
+  box-shadow: var(--shadow-pure, 0 4px 18px rgba(6, 78, 59, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .hero-text-block h2 {
@@ -570,17 +572,17 @@
   gap: 7px;
   padding: 10px 18px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--secondary) 0%, var(--pure-teal) 100%);
+  background: var(--btn-accent-gradient, linear-gradient(135deg, var(--secondary) 0%, var(--pure-teal) 100%));
   color: #ffffff;
   font-weight: 600;
   font-size: 0.84rem;
   transition: var(--transition);
-  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
 }
 
 .btn-rx:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
 }
 
 .btn-cart {
@@ -589,22 +591,22 @@
   gap: 8px;
   padding: 10px 18px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--primary) 0%, var(--pure-cyan) 100%);
+  background: var(--btn-primary-gradient, linear-gradient(135deg, var(--primary) 0%, var(--pure-cyan) 100%));
   color: #ffffff;
   font-weight: 600;
   font-size: 0.84rem;
   position: relative;
   transition: var(--transition);
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
+  box-shadow: 0 4px 14px rgba(6, 78, 59, 0.25);
 }
 
 .btn-cart:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35);
+  box-shadow: 0 6px 20px rgba(6, 78, 59, 0.35);
 }
 
 .cart-badge {
-  background: #f59e0b;
+  background: var(--accent, #f97316);
   color: #ffffff;
   font-size: 0.72rem;
   font-weight: 800;
@@ -614,12 +616,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 2px 6px rgba(249, 115, 22, 0.4);
 }
 
 /* Pure Healthcare Hero Banner */
 .hero-banner {
-  background: linear-gradient(135deg, #0f766e 0%, #0d9488 40%, #0284c7 100%);
+  background: var(--hero-gradient, linear-gradient(135deg, #064e3b 0%, #042f2e 45%, #0d5a44 100%));
   color: #ffffff;
   padding: 36px 32px;
   margin: 20px 28px 24px 28px;
@@ -627,6 +629,7 @@
   box-shadow: var(--shadow-pure);
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .hero-banner::before {

@@ -52,7 +52,7 @@ export default function PrescriptionModal({ isOpen, onClose }) {
 
         {submitted ? (
           <div className="modal-success">
-            <CheckCircle size={48} color="#0d9488" />
+            <CheckCircle size={48} color="var(--secondary)" />
             <h3>Prescription Submitted!</h3>
             <p>Our pharmacist will verify your Rx and contact you via WhatsApp / Call shortly.</p>
             <button className="btn-done" onClick={onClose}>Return to Shop</button>
@@ -70,7 +70,7 @@ export default function PrescriptionModal({ isOpen, onClose }) {
                 </div>
               ) : (
                 <label className="dropzone-label">
-                  <FileText size={36} color="#0284c7" />
+                  <FileText size={36} color="var(--primary)" />
                   <span>Click or drag prescription image here</span>
                   <small>Supports PNG, JPG, JPEG (Compressed on mobile)</small>
                   <input type="file" accept="image/*" onChange={handleFileChange} />

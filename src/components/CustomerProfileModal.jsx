@@ -87,10 +87,10 @@ export default function CustomerProfileModal({ isOpen, onClose, customerInfo, or
 
               <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', fontSize: '0.88rem', color: '#475569' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Phone size={14} color="#0284c7" /> {phoneQuery || 'N/A'}
+                  <Phone size={14} color="var(--primary)" /> {phoneQuery || 'N/A'}
                 </span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <MapPin size={14} color="#0284c7" /> {customerInfo.address || customerInfo.area || 'Karachi, Pakistan'}
+                  <MapPin size={14} color="var(--secondary)" /> {customerInfo.address || customerInfo.area || 'Karachi, Pakistan'}
                 </span>
               </div>
             </div>
@@ -105,23 +105,23 @@ export default function CustomerProfileModal({ isOpen, onClose, customerInfo, or
 
           {/* Metric Cards Grid */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '20px' }}>
-            <div style={{ background: '#f1f5f9', padding: '14px', borderRadius: '8px', borderLeft: '4px solid #3b82f6' }}>
+            <div style={{ background: '#f1f5f9', padding: '14px', borderRadius: '8px', borderLeft: '4px solid var(--primary)' }}>
               <span style={{ fontSize: '0.8rem', color: '#64748b' }}>Lifetime Orders</span>
               <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#1e293b', marginTop: '4px' }}>
                 {stats.totalOrders} Orders
               </div>
             </div>
 
-            <div style={{ background: '#f1f5f9', padding: '14px', borderRadius: '8px', borderLeft: '4px solid #10b981' }}>
+            <div style={{ background: '#f1f5f9', padding: '14px', borderRadius: '8px', borderLeft: '4px solid var(--secondary)' }}>
               <span style={{ fontSize: '0.8rem', color: '#64748b' }}>Total Revenue / Spend</span>
               <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#047857', marginTop: '4px' }}>
                 Rs. {stats.totalSpend.toLocaleString('en-PK', { minimumFractionDigits: 2 })}
               </div>
             </div>
 
-            <div style={{ background: '#f1f5f9', padding: '14px', borderRadius: '8px', borderLeft: '4px solid #8b5cf6' }}>
+            <div style={{ background: '#f1f5f9', padding: '14px', borderRadius: '8px', borderLeft: '4px solid #84cc16' }}>
               <span style={{ fontSize: '0.8rem', color: '#64748b' }}>Average Order Value</span>
-              <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#6d28d9', marginTop: '4px' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#365349', marginTop: '4px' }}>
                 Rs. {stats.avgOrderValue.toLocaleString('en-PK', { minimumFractionDigits: 2 })}
               </div>
             </div>
@@ -151,7 +151,7 @@ export default function CustomerProfileModal({ isOpen, onClose, customerInfo, or
                 ) : (
                   customerOrders.map(o => (
                     <tr key={o.id || o.orderId} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '10px', fontWeight: '600', color: '#0284c7' }}>{o.orderId || o.id}</td>
+                      <td style={{ padding: '10px', fontWeight: '600', color: 'var(--primary)' }}>{o.orderId || o.id}</td>
                       <td style={{ padding: '10px', color: '#64748b' }}>{o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-GB') : 'Recent'}</td>
                       <td style={{ padding: '10px' }}>
                         <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: '600' }}>

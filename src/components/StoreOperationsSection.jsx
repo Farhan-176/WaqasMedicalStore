@@ -836,14 +836,14 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog, retai
                             <div style={{ display: 'inline-flex', gap: '6px' }}>
                               <button 
                                 onClick={() => handleQuickRestock(p.id, 50)}
-                                style={{ background: '#0284c7', color: '#ffffff', border: 'none', padding: '5px 10px', borderRadius: '6px', fontSize: '0.76rem', fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                                style={{ background: 'var(--primary)', color: '#ffffff', border: 'none', padding: '5px 10px', borderRadius: '6px', fontSize: '0.76rem', fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                                 title="Add +50 pieces to stock immediately"
                               >
                                 <Plus size={13} /> +50 Pcs
                               </button>
                               <button 
                                 onClick={() => handleQuickRestock(p.id, 100)}
-                                style={{ background: '#0d9488', color: '#ffffff', border: 'none', padding: '5px 10px', borderRadius: '6px', fontSize: '0.76rem', fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                                style={{ background: 'var(--secondary)', color: '#ffffff', border: 'none', padding: '5px 10px', borderRadius: '6px', fontSize: '0.76rem', fontWeight: 800, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                                 title="Add +100 pieces to stock immediately"
                               >
                                 <Plus size={13} /> +100 Pcs
@@ -1070,7 +1070,7 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog, retai
           <div className="modal-container add-category-modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '420px', padding: '24px' }}>
             <div className="modal-header" style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Plus size={18} color="#0d9488" /> Create New Category
+                <Plus size={18} color="var(--primary)" /> Create New Category
               </h3>
               <button className="close-btn" onClick={() => setIsAddCategoryModalOpen(false)} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer' }}>×</button>
             </div>
@@ -1099,7 +1099,7 @@ export default function StoreOperationsSection({ catalog, onUpdateCatalog, retai
                 <button 
                   type="submit" 
                   className="btn-save-item"
-                  style={{ padding: '8px 18px', border: 'none', borderRadius: '8px', background: 'linear-gradient(135deg, #0d9488 0%, #10b981 100%)', color: '#ffffff', fontWeight: 800, cursor: 'pointer' }}
+                  style={{ padding: '8px 18px', border: 'none', borderRadius: '8px', background: 'var(--hero-gradient)', color: '#ffffff', fontWeight: 800, cursor: 'pointer' }}
                 >
                   + Add Category
                 </button>

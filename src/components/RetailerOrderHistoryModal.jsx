@@ -95,15 +95,15 @@ export default function RetailerOrderHistoryModal({
           <title>B2B Commercial Tax Invoice - ${order.id}</title>
           <style>
             body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 30px; max-width: 650px; margin: auto; color: #1e293b; }
-            .header { border-bottom: 2px solid #0d9488; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; }
-            .title { font-size: 22px; font-weight: 800; color: #0d9488; margin: 0; }
+            .header { border-bottom: 2px solid #064e3b; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; }
+            .title { font-size: 22px; font-weight: 800; color: #064e3b; margin: 0; }
             .subtitle { font-size: 13px; color: #64748b; margin-top: 4px; }
-            .invoice-badge { background: #f0fdf4; border: 1px solid #10b981; color: #047857; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 20px; }
+            .invoice-badge { background: #f0fdf4; border: 1px solid #10b981; color: #064e3b; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 20px; }
             .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; margin-bottom: 20px; background: #f8fafc; padding: 12px; border-radius: 8px; }
             table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-            th { background: #0d9488; color: white; text-align: left; padding: 8px; font-size: 12px; text-transform: uppercase; }
+            th { background: #064e3b; color: white; text-align: left; padding: 8px; font-size: 12px; text-transform: uppercase; }
             td { padding: 8px; border-bottom: 1px solid #e2e8f0; }
-            .total-row td { font-weight: 800; border-top: 2px solid #0d9488; font-size: 14px; }
+            .total-row td { font-weight: 800; border-top: 2px solid #064e3b; font-size: 14px; }
             .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px dashed #cbd5e1; padding-top: 15px; }
           </style>
         </head>

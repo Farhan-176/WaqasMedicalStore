@@ -274,7 +274,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onOrderPlace
 
               {/* Distance Calculator Preview Breakdown */}
               <div style={{ background: '#f8fafc', border: '1px solid #cbd5e1', padding: '10px 12px', borderRadius: '6px', marginTop: '8px', fontSize: '0.82rem', color: '#334155' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', color: '#0284c7', marginBottom: '4px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', color: 'var(--primary)', marginBottom: '4px' }}>
                   <Navigation size={14} />
                   <span>Distance-Based Fee Calculator Formula:</span>
                 </div>

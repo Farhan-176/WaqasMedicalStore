@@ -841,17 +841,17 @@ export default function AdminDashboard({
                 </div>
                 <div className="a-stat-card active-card">
                   <span className="a-stat-label">⚡ In-Progress Queue</span>
-                  <strong className="a-stat-val" style={{ color: '#0284c7' }}>{activeCount}</strong>
+                  <strong className="a-stat-val" style={{ color: 'var(--primary)' }}>{activeCount}</strong>
                   <small className="a-stat-sub">Needs packaging / delivery</small>
                 </div>
                 <div className="a-stat-card delivered-card">
                   <span className="a-stat-label">✅ Past Delivered</span>
-                  <strong className="a-stat-val" style={{ color: '#059669' }}>{deliveredCount}</strong>
+                  <strong className="a-stat-val" style={{ color: 'var(--secondary)' }}>{deliveredCount}</strong>
                   <small className="a-stat-sub">Successfully fulfilled</small>
                 </div>
                 <div className="a-stat-card revenue-card">
                   <span className="a-stat-label">💰 Total Order Value</span>
-                  <strong className="a-stat-val" style={{ color: '#0f766e' }}>Rs. {totalRevenue.toFixed(2)}</strong>
+                  <strong className="a-stat-val" style={{ color: 'var(--primary)' }}>Rs. {totalRevenue.toFixed(2)}</strong>
                   <small className="a-stat-sub">{b2bCount} B2B Wholesale orders</small>
                 </div>
               </div>
@@ -1495,7 +1495,7 @@ export default function AdminDashboard({
                 </button>
                 <button 
                   type="submit" 
-                  style={{ padding: '8px 22px', background: 'linear-gradient(135deg, #0d9488 0%, #0284c7 100%)', border: 'none', borderRadius: '8px', fontSize: '0.84rem', fontWeight: 800, color: '#ffffff', cursor: 'pointer', boxShadow: '0 2px 8px rgba(13, 148, 136, 0.25)' }}
+                  style={{ padding: '8px 22px', background: 'var(--hero-gradient)', border: 'none', borderRadius: '8px', fontSize: '0.84rem', fontWeight: 800, color: '#ffffff', cursor: 'pointer', boxShadow: '0 2px 8px rgba(6, 78, 59, 0.25)' }}
                 >
                   Save Changes
                 </button>

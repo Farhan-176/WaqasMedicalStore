@@ -594,7 +594,7 @@ export default function CounterSaleSection({
 
         <div className="pos-header-center">
           <div className="pos-cust-box">
-            <User size={14} color="#0d9488" />
+            <User size={14} color="var(--primary)" />
             <select 
               className="pos-cust-select"
               value={selectedCustomerId}
@@ -955,7 +955,7 @@ export default function CounterSaleSection({
                   <td colSpan={8} style={{ padding: '36px 20px', textAlign: 'center' }}>
                     <div className="pos-empty-table-state">
                       <div className="pos-empty-icon-circle">
-                        <ShoppingCart size={32} color="#0d9488" />
+                        <ShoppingCart size={32} color="var(--primary)" />
                       </div>
                       <h4 style={{ margin: '8px 0 4px', fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>
                         Register Ready for Sales
@@ -980,7 +980,7 @@ export default function CounterSaleSection({
         {/* Left: Quick Item Info (with both TP and MRP) */}
         <div className="pos-item-info-card">
           <div className="pos-info-header">
-            <Package size={14} color="#0d9488" />
+            <Package size={14} color="var(--secondary)" />
             <span>Selected Item Information</span>
           </div>
 
@@ -1115,7 +1115,7 @@ export default function CounterSaleSection({
           <div className="parked-modal-card" onClick={(e) => e.stopPropagation()}>
             <div className="parked-modal-header">
               <div className="parked-hdr-title">
-                <PauseCircle size={18} color="#0d9488" />
+                <PauseCircle size={18} color="var(--primary)" />
                 <h3>Held / Parked Bills ({parkedBills.length})</h3>
               </div>
               <button className="btn-close-parked-modal" onClick={() => setShowParkedModal(false)}>
@@ -1178,7 +1178,7 @@ export default function CounterSaleSection({
           <div className="pos-modal-box incoming-orders-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '650px' }}>
             <div className="pos-modal-header">
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <ShoppingCart size={18} color="#0d9488" />
+                <ShoppingCart size={18} color="var(--primary)" />
                 <h3>Received Retailer Orders ({pendingRetailerOrders.length})</h3>
               </div>
               <button 
