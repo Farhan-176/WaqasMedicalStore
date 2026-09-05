@@ -220,5 +220,243 @@ router.get('/offer-list-pdf', async (req, res) => {
   }
 });
 
+// GET /api/products/offer-list-html - Download Standalone Interactive HTML Offer List Document
+router.get('/offer-list-html', async (req, res) => {
+  try {
+    const { letter = 'ALL', shopName = '', search = '' } = req.query;
+
+    let filter = {};
+    if (search && search.trim()) {
+      const sanitized = escapeRegex(search.trim());
+      filter.$or = [
+        { name: { $regex: sanitized, $options: 'i' } },
+        { code: { $regex: sanitized, $options: 'i' } },
+        { genericName: { $regex: sanitized, $options: 'i' } }
+      ];
+    }
+
+    let products = await Product.find(filter).sort({ name: 1 });
+
+    if (letter && letter !== 'ALL') {
+      products = products.filter(p => {
+        const first = (p.name || '').trim().charAt(0).toUpperCase();
+        if (letter === '#') return !first.match(/[A-Z]/);
+        return first === letter;
+      });
+    }
+
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '/');
+
+    // Group by letter
+    const grouped = {};
+    products.forEach(p => {
+      const first = (p.name || '').trim().charAt(0).toUpperCase();
+      const l = first.match(/[A-Z]/) ? first : '#';
+      if (!grouped[l]) grouped[l] = [];
+      grouped[l].push(p);
+    });
+
+    const letters = Object.keys(grouped).sort();
+
+    let productRowsHtml = '';
+    letters.forEach(l => {
+      productRowsHtml += `<div class="letter-banner">${l}</div>\n`;
+      grouped[l].forEach(prod => {
+        const code = prod.code || prod.itemCode || String(prod._id || '').slice(-4).toUpperCase();
+        const price = (Number(prod.price) || 0).toFixed(2);
+        const disc = prod.offerDiscount || (prod.originalPrice > prod.price ? `${(((prod.originalPrice - prod.price)/prod.originalPrice)*100).toFixed(0)}%` : '10.00%');
+        const bonus = prod.bonusText || (prod.unit && prod.unit !== 'Pack / Strip' ? prod.unit : 'NET');
+
+        productRowsHtml += `
+        <div class="row item-row" data-name="${(prod.name || '').toLowerCase()}" data-code="${code.toLowerCase()}">
+          <div class="col-code">${code}</div>
+          <div class="col-name">${(prod.name || '').toUpperCase()}</div>
+          <div class="col-price">${price}</div>
+          <div class="col-qty">
+            <div class="qty-box">
+              <span class="qty-lbl">Qty</span>
+              <input type="number" min="0" class="qty-input" data-name="${prod.name}" data-price="${price}" data-code="${code}" data-disc="${disc}" oninput="calculateTotal()">
+            </div>
+          </div>
+          <div class="col-disc">${disc}</div>
+          <div class="col-bonus">${bonus}</div>
+        </div>`;
+      });
+    });
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OFFER LIST - WAQAS MEDICAL STORE</title>
+  <style>
+    body { background: #dcdcdc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 15px; }
+    .doc-container { max-width: 920px; margin: 0 auto; background: #e5e5e5; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+    .bismillah { font-size: 30px; color: #15803d; font-weight: bold; text-align: center; margin-bottom: 6px; font-family: 'Amiri', serif; }
+    .location { font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 8px; text-transform: uppercase; color: #111827; }
+    .instructions { text-align: center; font-size: 13px; color: #1e293b; line-height: 1.4; margin-bottom: 12px; }
+    .title { font-size: 32px; font-weight: 900; text-align: center; margin: 10px 0; color: #111827; }
+    .meta { display: flex; justify-content: space-between; font-weight: bold; font-size: 16px; margin-bottom: 15px; padding: 0 10px; color: #111827; }
+    .search-box { text-align: center; margin: 15px 0; }
+    .search-input { width: 90%; max-width: 500px; padding: 10px 18px; font-size: 16px; border-radius: 20px; border: 1.5px solid #d97706; text-align: center; outline: none; background: #fff; }
+    .summary-bar { background: #0f172a; color: #fff; padding: 10px 16px; border-radius: 6px; margin: 12px 0; display: none; justify-content: space-between; align-items: center; }
+    .table-header { background: #c84b4b; border-radius: 12px 12px 0 0; display: grid; grid-template-columns: 75px 1fr 95px 105px 80px 90px; padding: 10px 12px; font-weight: bold; font-size: 14px; align-items: center; color: #000; }
+    .letter-banner { background: #c84b4b; color: #fff; font-weight: bold; font-size: 16px; text-align: center; padding: 5px; border-radius: 15px; margin: 12px auto 6px auto; width: 96%; }
+    .row { display: grid; grid-template-columns: 75px 1fr 95px 105px 80px 90px; align-items: center; padding: 6px 10px; border-bottom: 1px solid #cbd5e1; font-size: 14px; background: #f0f0f0; }
+    .row:nth-child(even) { background: #e8e8e8; }
+    .col-code { font-weight: bold; font-family: monospace; color: #000; }
+    .col-name { font-weight: bold; text-transform: uppercase; color: #000; }
+    .col-price { text-align: right; font-weight: bold; padding-right: 8px; color: #000; }
+    .col-qty { text-align: center; }
+    .qty-box { display: inline-flex; align-items: center; background: #fff; border: 1.5px solid #475569; border-radius: 16px; padding: 1px 6px; width: 85px; }
+    .qty-lbl { font-size: 11px; font-weight: bold; color: #64748b; margin-right: 3px; }
+    .qty-input { border: none; outline: none; width: 100%; font-weight: bold; font-size: 15px; text-align: center; background: transparent; }
+    .col-disc { text-align: right; font-weight: bold; padding-right: 8px; color: #000; }
+    .col-bonus { text-align: center; font-weight: bold; color: #b91c1c; }
+    .bottom-panel { margin-top: 20px; background: #d1d5db; border: 2px solid #9ca3af; border-radius: 8px; padding: 15px; }
+    .shop-input { width: 100%; padding: 8px 12px; font-size: 15px; font-weight: bold; border-radius: 4px; border: 1.5px solid #475569; margin: 8px 0 14px 0; box-sizing: border-box; background: #fff; }
+    .btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .btn { padding: 10px; font-weight: bold; font-size: 13px; text-align: center; border-radius: 4px; border: 1px solid #64748b; background: #cbd5e1; cursor: pointer; }
+    .btn-wa { background: #25D366; color: #fff; border-color: #1eb956; font-size: 14px; }
+    .footer { text-align: center; margin-top: 12px; font-size: 12px; font-weight: bold; color: #334155; }
+    @media (max-width: 650px) {
+      .table-header, .row { grid-template-columns: 50px 1fr 70px 80px 60px; }
+      .col-bonus, .table-header > div:nth-child(6) { display: none; }
+      .btn-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="doc-container">
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+    <div class="location">DENSO HALL, KARACHI</div>
+    <div class="instructions">
+      <strong>MUST</strong> open/use Google Chrome for order making (Android Phone)<br>
+      <strong>MUST</strong> open/use Microsoft Edge Browser for order making (Apple iPhone)
+    </div>
+    <div class="title">OFFER LIST</div>
+    <div class="meta">
+      <span>List No : 000381</span>
+      <span>List Date : ${dateStr}</span>
+    </div>
+    <div class="search-box">
+      <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px; color: #111827;">Type Your Search e.g. Item Code, Name, Offer Rate...</div>
+      <input type="text" class="search-input" id="search" placeholder="Search your product(s)" oninput="filterItems()">
+    </div>
+    <div id="summary-bar" class="summary-bar">
+      <span id="summary-text" style="font-weight: bold; font-size: 15px; color: #38bdf8;"></span>
+      <button onclick="clearAll()" style="background:#ef4444; color:#fff; border:none; border-radius:4px; padding:4px 8px; font-weight:bold; cursor:pointer;">Clear All</button>
+    </div>
+    <div class="table-header">
+      <div>Code</div>
+      <div>Item Name</div>
+      <div style="text-align: right; padding-right:8px;">T.P.</div>
+      <div style="text-align: center;">ORDER QTY</div>
+      <div style="text-align: right; padding-right:8px;">Offer</div>
+      <div style="text-align: center;">Bonus</div>
+    </div>
+    <div id="product-list">
+      ${productRowsHtml}
+    </div>
+    <div class="bottom-panel">
+      <label style="font-weight:bold; font-size:14px; color:#111827;">ENTER YOUR SHOP NAME :</label>
+      <input type="text" id="shop-name" class="shop-input" placeholder="Enter Your Shop Name" value="${shopName}">
+      <div class="btn-grid">
+        <button class="btn" onclick="previewOrder()">Preview Order</button>
+        <button class="btn" onclick="copyOrder()">Share on iPhone</button>
+        <button class="btn btn-wa" onclick="sendWhatsApp()">Text To Whatsapp</button>
+        <button class="btn" onclick="window.print()">Generate PDF file</button>
+      </div>
+      <div class="footer">
+        POWERED BY: WAQAS MEDICAL STORE (DENSO HALL, SADDAR, KARACHI)<br>
+        For More Information... 📞 +92 300 1234567 | WhatsApp: +92 300 1234567
+      </div>
+    </div>
+  </div>
+  <script>
+    function filterItems() {
+      const q = document.getElementById('search').value.toLowerCase();
+      document.querySelectorAll('.item-row').forEach(row => {
+        const name = row.getAttribute('data-name') || '';
+        const code = row.getAttribute('data-code') || '';
+        row.style.display = (name.includes(q) || code.includes(q)) ? 'grid' : 'none';
+      });
+    }
+    function calculateTotal() {
+      const inputs = document.querySelectorAll('.qty-input');
+      let count = 0, units = 0, total = 0;
+      inputs.forEach(inp => {
+        const q = parseInt(inp.value, 10);
+        if (q > 0) {
+          count++;
+          units += q;
+          const p = parseFloat(inp.getAttribute('data-price')) || 0;
+          total += (q * p);
+        }
+      });
+      const bar = document.getElementById('summary-bar');
+      const txt = document.getElementById('summary-text');
+      if (count > 0) {
+        bar.style.display = 'flex';
+        txt.innerText = '🛒 ' + count + ' Products (' + units + ' Units) = Rs. ' + total.toLocaleString('en-PK', {minimumFractionDigits:2});
+      } else {
+        bar.style.display = 'none';
+      }
+    }
+    function clearAll() {
+      document.querySelectorAll('.qty-input').forEach(inp => inp.value = '');
+      calculateTotal();
+    }
+    function sendWhatsApp() {
+      const shop = document.getElementById('shop-name').value || 'Retail Pharmacy';
+      const inputs = document.querySelectorAll('.qty-input');
+      let orderLines = [];
+      let total = 0;
+      inputs.forEach(inp => {
+        const qty = parseInt(inp.value, 10);
+        if (qty > 0) {
+          const name = inp.getAttribute('data-name');
+          const code = inp.getAttribute('data-code');
+          const price = parseFloat(inp.getAttribute('data-price'));
+          const sub = qty * price;
+          total += sub;
+          orderLines.push('• [' + code + '] ' + name.toUpperCase() + ' x ' + qty + ' = Rs. ' + sub.toFixed(2));
+        }
+      });
+      let msg = '*🏥 WAQAS MEDICAL STORE — WHOLESALE PURCHASE ORDER*\\n';
+      msg += '*🏪 Shop Name:* ' + shop + '\\n';
+      msg += '*📅 Date:* ${dateStr}\\n';
+      msg += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n';
+      if (orderLines.length > 0) {
+        msg += '*ORDER ITEMS:*\\n' + orderLines.join('\\n') + '\\n';
+        msg += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n';
+        msg += '*💰 ESTIMATED TOTAL: Rs. ' + total.toFixed(2) + '*\\n';
+      } else {
+        msg += '*(Inquiring regarding wholesale offer list)*\\n';
+      }
+      msg += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n📍 Denso Hall, Saddar, Karachi';
+      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+    }
+    function copyOrder() {
+      sendWhatsApp();
+    }
+    function previewOrder() {
+      sendWhatsApp();
+    }
+  </script>
+</body>
+</html>`;
+
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Content-Disposition', `attachment; filename="Waqas_Medical_Store_Offer_List${letter !== 'ALL' ? '_' + letter : ''}.html"`);
+    res.send(html);
+  } catch (err) {
+    console.error('HTML Export Error:', err);
+    res.status(500).send('Error generating HTML: ' + err.message);
+  }
+});
+
 module.exports = router;
 

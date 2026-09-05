@@ -207,162 +207,42 @@ export default function WhatsAppCatalogModal({ isOpen, onClose, products = [] })
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handlePrintOrPdf = () => {
-    window.print();
-  };
-
-  // Export standalone HTML file (exact replica of desktop Offer list m.HTM.html)
+  // Direct Download of Standalone Interactive HTML File (.html)
   const handleExportStandaloneHTML = () => {
-    const htmlContent = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OFFER LIST - WAQAS MEDICAL STORE</title>
-  <style>
-    body { background: #dcdcdc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 15px; }
-    .doc-container { max-width: 900px; margin: 0 auto; background: #e5e5e5; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-    .bismillah { font-size: 28px; color: #15803d; font-weight: bold; text-align: center; margin-bottom: 6px; }
-    .location { font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 8px; text-transform: uppercase; }
-    .instructions { text-align: center; font-size: 13px; color: #1e293b; line-height: 1.4; margin-bottom: 15px; }
-    .title { font-size: 32px; font-weight: 900; text-align: center; margin: 10px 0; }
-    .meta { display: flex; justify-content: space-between; font-weight: bold; font-size: 16px; margin-bottom: 15px; }
-    .search-box { text-align: center; margin: 15px 0; }
-    .search-input { width: 90%; max-width: 500px; padding: 10px 18px; font-size: 16px; border-radius: 20px; border: 1.5px solid #d97706; text-align: center; outline: none; }
-    .table-header { background: #c84b4b; border-radius: 12px 12px 0 0; display: grid; grid-template-columns: 80px 1fr 100px 110px 85px 95px; padding: 10px 14px; font-weight: bold; font-size: 15px; align-items: center; }
-    .letter-banner { background: #c84b4b; color: #fff; font-weight: bold; font-size: 17px; text-align: center; padding: 5px; border-radius: 15px; margin: 12px auto 6px auto; width: 96%; }
-    .row { display: grid; grid-template-columns: 80px 1fr 100px 110px 85px 95px; align-items: center; padding: 6px 12px; border-bottom: 1px solid #cbd5e1; font-size: 14px; background: #f0f0f0; }
-    .row:nth-child(even) { background: #e8e8e8; }
-    .qty-box { display: inline-flex; align-items: center; background: #fff; border: 1.5px solid #475569; border-radius: 16px; padding: 1px 6px; width: 85px; }
-    .qty-box input { border: none; outline: none; width: 100%; font-weight: bold; font-size: 15px; text-align: center; background: transparent; }
-    .bottom-panel { margin-top: 20px; background: #d1d5db; border: 2px solid #9ca3af; border-radius: 8px; padding: 15px; }
-    .shop-input { width: 100%; padding: 8px 12px; font-size: 15px; font-weight: bold; border-radius: 4px; border: 1.5px solid #475569; margin: 8px 0 14px 0; box-sizing: border-box; }
-    .btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .btn { padding: 10px; font-weight: bold; font-size: 13px; text-align: center; border-radius: 4px; border: 1px solid #64748b; background: #cbd5e1; cursor: pointer; }
-    .btn-wa { background: #25D366; color: #fff; border-color: #1eb956; }
-    .footer { text-align: center; margin-top: 12px; font-size: 12px; font-weight: bold; color: #334155; }
-  </style>
-</head>
-<body>
-  <div class="doc-container">
-    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-    <div class="location">DENSO HALL, KARACHI</div>
-    <div class="instructions">
-      <strong>MUST</strong> open/use Google Chrome for order making (Android Phone)<br>
-      <strong>MUST</strong> open/use Microsoft Edge Browser for order making (Apple iPhone)
-    </div>
-    <div class="title">OFFER LIST</div>
-    <div class="meta">
-      <span>List No : 000381</span>
-      <span>List Date : ${dateStr}</span>
-    </div>
-    <div class="search-box">
-      <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">Type Your Search e.g. Item Code, Name, Offer Rate...</div>
-      <input type="text" class="search-input" id="search" placeholder="Search your product(s)" oninput="filterItems()">
-    </div>
-    <div class="table-header">
-      <div>Code</div>
-      <div>Item Name</div>
-      <div style="text-align: right;">T.P.</div>
-      <div style="text-align: center;">ORDER QTY</div>
-      <div style="text-align: right;">Offer</div>
-      <div style="text-align: center;">Bonus</div>
-    </div>
-    <div id="product-list">
-      ${inStockItems.map(p => {
-        const code = p.code || p.itemCode || '0000';
-        const price = (Number(p.price) || 0).toFixed(2);
-        const disc = p.offerDiscount || '10.00%';
-        const bonus = p.bonusText || (p.unit || 'NET');
-        return `<div class="row item-row" data-name="${p.name.toLowerCase()}" data-code="${code.toLowerCase()}">
-          <div style="font-weight:bold; font-family: monospace;">${code}</div>
-          <div style="font-weight:bold; text-transform: uppercase;">${p.name}</div>
-          <div style="text-align:right; font-weight:bold;">${price}</div>
-          <div style="text-align:center;">
-            <div class="qty-box">
-              <span style="font-size:11px; font-weight:bold; color:#64748b; margin-right:3px;">Qty</span>
-              <input type="number" min="0" class="qty-input" data-name="${p.name}" data-price="${price}" data-code="${code}" data-disc="${disc}">
-            </div>
-          </div>
-          <div style="text-align:right; font-weight:bold;">${disc}</div>
-          <div style="text-align:center; font-weight:bold; color:#b91c1c;">${bonus}</div>
-        </div>`;
-      }).join('\n')}
-    </div>
-    <div class="bottom-panel">
-      <label style="font-weight:bold; font-size:14px;">ENTER YOUR SHOP NAME :</label>
-      <input type="text" id="shop-name" class="shop-input" placeholder="Enter Your Shop Name">
-      <div class="btn-grid">
-        <button class="btn" onclick="previewOrder()">Preview Order</button>
-        <button class="btn" onclick="copyOrder()">Share / Copy</button>
-        <button class="btn btn-wa" onclick="sendWhatsApp()">Text To Whatsapp</button>
-        <button class="btn" onclick="window.print()">Generate PDF file</button>
-      </div>
-      <div class="footer">
-        POWERED BY: WAQAS MEDICAL STORE (DENSO HALL, SADDAR, KARACHI)<br>
-        For More Information... 📞 +92 300 1234567 | WhatsApp: +92 300 1234567
-      </div>
-    </div>
-  </div>
-  <script>
-    function filterItems() {
-      const q = document.getElementById('search').value.toLowerCase();
-      document.querySelectorAll('.item-row').forEach(row => {
-        const name = row.getAttribute('data-name');
-        const code = row.getAttribute('data-code');
-        row.style.display = (name.includes(q) || code.includes(q)) ? 'grid' : 'none';
-      });
-    }
-    function sendWhatsApp() {
-      const shop = document.getElementById('shop-name').value || 'Retail Pharmacy';
-      const inputs = document.querySelectorAll('.qty-input');
-      let orderLines = [];
-      let total = 0;
-      inputs.forEach(inp => {
-        const qty = parseInt(inp.value, 10);
-        if (qty > 0) {
-          const name = inp.getAttribute('data-name');
-          const code = inp.getAttribute('data-code');
-          const price = parseFloat(inp.getAttribute('data-price'));
-          const sub = qty * price;
-          total += sub;
-          orderLines.push('• [' + code + '] ' + name.toUpperCase() + ' x ' + qty + ' = Rs. ' + sub.toFixed(2));
-        }
-      });
-      let msg = '*🏥 WAQAS MEDICAL STORE — WHOLESALE PURCHASE ORDER*\\n';
-      msg += '*🏪 Shop Name:* ' + shop + '\\n';
-      msg += '*📅 Date:* ${dateStr}\\n';
-      msg += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n';
-      if (orderLines.length > 0) {
-        msg += '*ORDER ITEMS:*\\n' + orderLines.join('\\n') + '\\n';
-        msg += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n';
-        msg += '*💰 ESTIMATED TOTAL: Rs. ' + total.toFixed(2) + '*\\n';
-      } else {
-        msg += '*(No quantities specified - Inquiring regarding wholesale rate sheet)*\\n';
-      }
-      msg += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n📍 Denso Hall, Saddar, Karachi';
-      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
-    }
-    function copyOrder() {
-      alert('Order prepared for WhatsApp!');
-      sendWhatsApp();
-    }
-    function previewOrder() {
-      sendWhatsApp();
-    }
-  </script>
-</body>
-</html>`;
-
-    const blob = new Blob([htmlContent], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
+    const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+    const params = new URLSearchParams({
+      letter: selectedLetter,
+      shopName: shopName.trim(),
+      search: searchFilter.trim()
+    });
+    const downloadUrl = `${API_BASE_URL}/api/products/offer-list-html?${params.toString()}`;
     const a = document.createElement('a');
-    a.href = url;
-    a.download = `Waqas_Medical_Store_Offer_List_${dateStr.replace(/\//g, '-')}.html`;
+    a.href = downloadUrl;
+    a.setAttribute('download', `Waqas_Medical_Store_Offer_List.html`);
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  };
+
+  // Direct Download of Official PDF Document (.pdf)
+  const handleDownloadPdf = () => {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+    const params = new URLSearchParams({
+      letter: selectedLetter,
+      shopName: shopName.trim(),
+      search: searchFilter.trim()
+    });
+    const downloadUrl = `${API_BASE_URL}/api/products/offer-list-pdf?${params.toString()}`;
+    const a = document.createElement('a');
+    a.href = downloadUrl;
+    a.setAttribute('download', `Waqas_Medical_Store_Offer_List.pdf`);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  const handlePrintOrPdf = () => {
+    window.print();
   };
 
   if (!isOpen) return null;
@@ -638,8 +518,8 @@ export default function WhatsAppCatalogModal({ isOpen, onClose, products = [] })
 
                 <button 
                   className="offer-doc-btn"
-                  onClick={handlePrintOrPdf}
-                  title="Print or export as PDF"
+                  onClick={handleDownloadPdf}
+                  title="Download official PDF document"
                 >
                   <Printer size={16} /> Generate PDF file (Android)
                 </button>
