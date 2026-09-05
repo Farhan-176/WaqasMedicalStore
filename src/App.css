@@ -10135,4 +10135,567 @@ html, body {
   }
 }
 
+/* ==========================================================================
+   OFFER LIST / RATE BILL STYLING (MATCHING PHARMACY SAMPLE ORDER SHEET)
+   ========================================================================== */
+.offer-list-modal-container {
+  background: #f1f5f9;
+  border-radius: 12px;
+  width: 96%;
+  max-width: 960px;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  position: relative;
+}
+
+.offer-list-topbar {
+  background: #1e293b;
+  color: #ffffff;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 2px solid #334155;
+}
+
+.offer-list-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.offer-list-main-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin: 0;
+  color: #ffffff;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.offer-list-date-badge {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.offer-view-toggle {
+  display: flex;
+  background: #0f172a;
+  border-radius: 6px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.offer-toggle-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.offer-toggle-btn.active {
+  background: #059669;
+  color: #ffffff;
+}
+
+.offer-list-controls {
+  background: #ffffff;
+  padding: 8px 16px;
+  border-bottom: 1px solid #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.offer-list-search-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.offer-search-input-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+
+.offer-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+}
+
+.offer-search-input {
+  width: 100%;
+  padding: 7px 12px 7px 34px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  outline: none;
+  background: #f8fafc;
+  color: #0f172a;
+  box-sizing: border-box;
+}
+
+.offer-search-input:focus {
+  border-color: #059669;
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.15);
+}
+
+.offer-stats-pill {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #059669;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* Alphabet Filter Bar */
+.offer-alphabet-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  align-items: center;
+  padding-top: 2px;
+}
+
+.offer-alpha-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-right: 4px;
+  text-transform: uppercase;
+}
+
+.offer-alpha-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-weight: 700;
+  font-size: 0.74rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 24px;
+  text-align: center;
+}
+
+.offer-alpha-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.offer-alpha-btn.active {
+  background: #c83232;
+  color: #ffffff;
+  border-color: #c83232;
+  box-shadow: 0 1px 3px rgba(200, 50, 50, 0.3);
+}
+
+/* Table Column Headers */
+.offer-table-header {
+  background: #e2e8f0;
+  border-bottom: 2px solid #cbd5e1;
+  display: grid;
+  grid-template-columns: 65px 1fr 95px 90px 75px 85px;
+  padding: 8px 16px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.offer-scroll-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 16px 16px 16px;
+  background: #f8fafc;
+}
+
+/* Red Banner Pill for Categories (A, B, C...) */
+.offer-section-banner {
+  background: #c83232;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 5px 20px;
+  border-radius: 20px;
+  margin: 12px auto 6px auto;
+  width: 98%;
+  box-shadow: 0 2px 4px rgba(200, 50, 50, 0.25);
+  user-select: none;
+}
+
+/* Item Row */
+.offer-item-row {
+  display: grid;
+  grid-template-columns: 65px 1fr 95px 90px 75px 85px;
+  align-items: center;
+  padding: 6px 10px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.85rem;
+  background: #ffffff;
+  transition: background 0.15s ease;
+}
+
+.offer-item-row:nth-child(even) {
+  background: #fafafa;
+}
+
+.offer-item-row:hover {
+  background: #f1f5f9;
+}
+
+.offer-item-row.has-qty {
+  background: #ecfdf5 !important;
+  border-left: 3px solid #10b981;
+}
+
+.offer-col-code {
+  font-family: monospace;
+  font-weight: 700;
+  color: #475569;
+  font-size: 0.82rem;
+}
+
+.offer-col-name {
+  font-weight: 700;
+  color: #0f172a;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 8px;
+}
+
+.offer-col-price {
+  font-weight: 800;
+  color: #0f172a;
+  text-align: right;
+  padding-right: 8px;
+  font-size: 0.85rem;
+}
+
+/* Qty pill capsule - exactly like screenshot */
+.offer-qty-pill {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1.5px solid #94a3b8;
+  border-radius: 14px;
+  padding: 1px 6px;
+  width: 80px;
+  height: 27px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
+  transition: border-color 0.15s ease;
+}
+
+.offer-qty-pill:focus-within {
+  border-color: #059669;
+  box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2);
+}
+
+.offer-qty-pill .qty-label {
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 600;
+  margin-right: 4px;
+  user-select: none;
+}
+
+.offer-qty-pill input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #0f172a;
+  padding: 0;
+}
+
+.offer-col-disc {
+  text-align: right;
+  font-weight: 700;
+  color: #334155;
+  font-size: 0.82rem;
+  padding-right: 8px;
+}
+
+.offer-col-scheme {
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.75rem;
+  color: #b91c1c;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Bottom Bar - Exact layout of Screenshot 1 */
+.offer-bottom-panel {
+  background: #e2e8f0;
+  border-top: 2px solid #cbd5e1;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.offer-shop-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.offer-shop-label {
+  font-weight: 800;
+  font-size: 0.84rem;
+  color: #0f172a;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.offer-shop-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 6px 12px;
+  border: 1.5px solid #94a3b8;
+  border-radius: 4px;
+  background: #ffffff;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: #0f172a;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.offer-shop-input:focus {
+  border-color: #059669;
+  box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.15);
+}
+
+.offer-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.offer-btn {
+  background: #cbd5e1;
+  color: #1e293b;
+  border: 1px solid #94a3b8;
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.offer-btn:hover {
+  background: #94a3b8;
+  color: #ffffff;
+}
+
+.offer-btn-wa {
+  background: #25D366 !important;
+  color: #ffffff !important;
+  border-color: #1eb956 !important;
+}
+
+.offer-btn-wa:hover {
+  background: #1da851 !important;
+}
+
+.offer-footer-box {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 6px 12px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.offer-footer-powered {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #334155;
+  letter-spacing: 0.5px;
+}
+
+.offer-footer-contact {
+  font-size: 0.74rem;
+  color: #64748b;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Order Summary Receipt Modal */
+.offer-order-receipt-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.offer-order-receipt-card {
+  background: #ffffff;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.offer-receipt-header {
+  background: #059669;
+  color: #ffffff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.offer-receipt-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.offer-receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  margin-top: 10px;
+}
+
+.offer-receipt-table th {
+  background: #f1f5f9;
+  padding: 6px 8px;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 1.5px solid #cbd5e1;
+}
+
+.offer-receipt-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Responsive Rules for Mobile */
+@media (max-width: 768px) {
+  .offer-table-header,
+  .offer-item-row {
+    grid-template-columns: 50px 1fr 75px 76px 60px;
+  }
+  .offer-col-scheme {
+    display: none;
+  }
+  .offer-table-header > span:nth-child(6) {
+    display: none;
+  }
+  .offer-actions-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .offer-table-header,
+  .offer-item-row {
+    grid-template-columns: 42px 1fr 70px 70px;
+  }
+  .offer-col-disc,
+  .offer-table-header > span:nth-child(5) {
+    display: none;
+  }
+  .offer-qty-pill {
+    width: 68px;
+    padding: 1px 3px;
+  }
+  .offer-qty-pill .qty-label {
+    font-size: 0.68rem;
+    margin-right: 2px;
+  }
+  .offer-qty-pill input {
+    font-size: 0.78rem;
+  }
+  .offer-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Print Rules */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .offer-scroll-body,
+  .offer-scroll-body * {
+    visibility: visible;
+  }
+  .offer-scroll-body {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    overflow: visible;
+  }
+}
+
+
 
